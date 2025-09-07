@@ -502,6 +502,49 @@ class RealtimeReasoningDisplay(ctk.CTkScrollableFrame):
             daemon=True
         ).start()
         
+    def add_step(self, title: str, content: str, confidence: float = 0.0, phase: Optional[ReasoningPhase] = None):
+        """Add a reasoning step directly.
+        
+        Args:
+            title: Step title
+            content: Step content
+            confidence: Confidence level (0.0-1.0)
+            phase: Reasoning phase (defaults to current phase)
+        """
+        if not self.current_trace:
+            # Start a default session if none exists
+            self.start_reasoning("direct_step_session")
+            
+        if phase is None:
+            phase = self.current_trace.current_phase if self.current_trace else ReasoningPhase.ANALYZING_INPUT
+            
+        # Create step
+        step = ReasoningStep(
+            phase=phase,
+            title=title,
+            content=content,
+            confidence=confidence,
+            is_complete=True
+        )
+        
+        # Add step to trace and notify callbacks
+        if self.current_trace:
+            self.current_trace.add_step(step)
+            
+            # Add step widget directly
+            self._queue_update(lambda: self._add_step_widget(step))
+            
+            # Trigger callbacks
+            if self.on_step_added:
+                try:
+                    self.on_step_added(step)
+                except Exception as e:
+                    self.logger.error(f"Error in step added callback: {e}")
+                    
+            # Update confidence if needed
+            if self.current_trace.overall_confidence > 0:
+                self._queue_update(lambda: self.overall_confidence.update_confidence(self.current_trace.overall_confidence))
+        
     def _process_content_chunk(self, content: str):
         """Process content chunk in background.
         

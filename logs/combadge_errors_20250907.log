@@ -151,3 +151,7 @@ NameError: name 'ReasoningDisplay' is not defined
 2025-09-07 17:29:26 | combadge.ui.setup_wizard | ERROR | run_setup:359 | Setup failed: main thread is not in main loop
 2025-09-07 17:32:00 | combadge.core.application | ERROR | _initialize_ollama:107 | Failed to initialize Ollama: 'AppConfig' object has no attribute 'get'
 2025-09-07 18:06:03 | combadge.core.application | ERROR | _initialize_ollama:108 | Failed to initialize Ollama: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'llm_manager'. Did you mean 'ollama_manager'?
+2025-09-07 18:14:16 | combadge.intelligence.reasoning_engine | ERROR | _execute_streaming_request:278 | Streaming request failed: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=120)
+2025-09-07 18:14:54 | combadge.intelligence.reasoning_engine | ERROR | _execute_streaming_request:278 | Streaming request failed: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=120)
+2025-09-07 18:19:48 | combadge.core.application | ERROR | start_reasoning_safe:198 | Reasoning display not available
+2025-09-07 18:21:59 | combadge.core.application | ERROR | _initialize_components:92 | Reasoning display failed to initialize

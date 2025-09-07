@@ -10,15 +10,7 @@ from typing import Optional
 
 # Fix CustomTkinter scaling tracker bug with Python 3.13
 import customtkinter as ctk
-try:
-    # Disable problematic scaling tracker entirely
-    from customtkinter.windows.widgets.scaling import scaling_tracker
-    def disabled_scaling_check(self):
-        pass
-    scaling_tracker.ScalingTracker.check_dpi_scaling = disabled_scaling_check
-except Exception:
-    # If patching fails, continue normally
-    pass
+# Temporarily disable scaling tracker patch to focus on reasoning display issue
 
 from .config_manager import ConfigManager
 from .error_handler import ErrorHandler
@@ -64,9 +56,12 @@ class ComBadgeApp:
         self.config = self.config_manager.load_config()
         self.logger.info("Configuration loaded successfully")
         
-        # Create hidden main window initially
+        # Create main window
         self.main_window = MainWindow()
         self.main_window.withdraw()  # Hide until setup is complete
+        
+        # Wait for window to fully initialize
+        self.main_window.update_idletasks()
         
         # Temporarily bypass setup wizard due to threading issues
         self.logger.info("Bypassing setup wizard (temporary fix for threading issues)")
@@ -74,6 +69,13 @@ class ComBadgeApp:
         # Proceed directly to initialize components  
         self.setup_complete = True
         self._initialize_ollama()
+        
+        # Ensure reasoning display is available before showing window
+        if self.main_window.reasoning_display:
+            self.logger.info("Reasoning display successfully initialized")
+        else:
+            self.logger.error("Reasoning display failed to initialize")
+            
         self.main_window.deiconify()  # Show main window
         
         # Set window protocol after showing
@@ -177,6 +179,9 @@ class ComBadgeApp:
                     lambda: self.main_window.update_status("Checking AI model availability...", "processing")
                 )
                 
+                # Start reasoning session in UI
+                self.logger.info("Starting reasoning display session...")
+                
                 # Process with reasoning engine
                 self.logger.info("Sending request to Ollama...")
                 request_id = self.reasoning_engine.process_request(
@@ -187,6 +192,15 @@ class ComBadgeApp:
                     stream=True
                 )
                 
+                # Start reasoning session in UI
+                def start_reasoning_safe():
+                    if self.main_window and self.main_window.reasoning_display:
+                        self.main_window.reasoning_display.start_reasoning(request_id)
+                    else:
+                        self.logger.error("Reasoning display not available")
+                        
+                self.main_window.after_idle(start_reasoning_safe)
+                
                 self.logger.info(f"Ollama processing request {request_id}")
                 
                 # Update status to show we're processing with Ollama
@@ -194,11 +208,42 @@ class ComBadgeApp:
                     lambda: self.main_window.update_status("Processing with Ollama LLM...", "processing")
                 )
                 
-                # The reasoning engine will handle streaming results through the reasoning display
-                # For now, we'll mark as completed after initiating the request
-                self.main_window.after_idle(
-                    lambda: self.main_window.update_status("Processing completed", "success")
-                )
+                # Set up callback to receive streaming results
+                if hasattr(self.reasoning_engine, 'stream_processor'):
+                    # Connect stream processor to reasoning display
+                    original_on_chunk = getattr(self.reasoning_engine.stream_processor, 'on_chunk_received', None)
+                    def chunk_handler(chunk_content):
+                        # Forward chunks to reasoning display
+                        def add_chunk_safe():
+                            if self.main_window and self.main_window.reasoning_display:
+                                self.main_window.reasoning_display.add_content_chunk(chunk_content)
+                                
+                        self.main_window.after_idle(add_chunk_safe)
+                        # Call original handler if it exists
+                        if original_on_chunk:
+                            original_on_chunk(chunk_content)
+                    
+                    self.reasoning_engine.stream_processor.on_chunk_received = chunk_handler
+                    
+                    # Set up completion callback
+                    original_on_complete = getattr(self.reasoning_engine.stream_processor, 'on_processing_complete', None)
+                    def completion_handler(result):
+                        # Mark reasoning as complete in UI
+                        def complete_reasoning_safe():
+                            if self.main_window and self.main_window.reasoning_display:
+                                self.main_window.reasoning_display.complete_reasoning()
+                                
+                        def update_status_safe():
+                            if self.main_window:
+                                self.main_window.update_status("Processing completed - Check results", "success")
+                                
+                        self.main_window.after_idle(complete_reasoning_safe)
+                        self.main_window.after_idle(update_status_safe)
+                        # Call original handler if it exists
+                        if original_on_complete:
+                            original_on_complete(result)
+                    
+                    self.reasoning_engine.stream_processor.on_processing_complete = completion_handler
                 
             except Exception as e:
                 self.logger.error(f"Error processing input with Ollama: {e}")

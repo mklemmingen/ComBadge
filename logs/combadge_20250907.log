@@ -476,3 +476,331 @@ TypeError: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'l
 2025-09-07 18:12:16 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
 2025-09-07 18:12:16 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
 2025-09-07 18:12:16 | combadge.core.application | INFO | processing_thread:190 | Ollama processing request 2d983786
+2025-09-07 18:12:47 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config', wd=1, mask=IN_ISDIR|IN_OPEN, cookie=0, name=''>
+2025-09-07 18:12:47 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config', wd=1, mask=IN_CLOSE_NOWRITE|IN_ISDIR, cookie=0, name=''>
+2025-09-07 18:12:53 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: Create a Task for 4pm for E243...
+2025-09-07 18:12:53 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: Create a Task for 4pm for E243...
+2025-09-07 18:12:53 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:12:53 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:12:53 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:12:53 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:12:53 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:12:53 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:12:53 | combadge.intelligence.llm_manager | INFO | ensure_model_available:385 | Model qwen2.5:7b is already available
+2025-09-07 18:12:53 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:12:53 | combadge.core.application | INFO | processing_thread:181 | Sending request to Ollama...
+2025-09-07 18:12:53 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: d90645d9
+2025-09-07 18:12:53 | combadge.intelligence.chain_of_thought.stream_processor | WARNING | start_processing:96 | Stream processor already running, stopping previous stream
+2025-09-07 18:12:53 | combadge.intelligence.chain_of_thought.stream_processor | INFO | stop_processing:118 | Stopping stream processing
+2025-09-07 18:12:53 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:358 | UI update loop ended
+2025-09-07 18:12:54 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:222 | Chunk processing loop ended
+2025-09-07 18:12:54 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: d90645d9
+2025-09-07 18:12:54 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:12:54 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:12:54 | combadge.core.application | INFO | processing_thread:190 | Ollama processing request d90645d9
+2025-09-07 18:12:54 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:14:08 | combadge.core.application | INFO | _on_closing:257 | Shutting down ComBadge application
+2025-09-07 18:14:16 | combadge.intelligence.reasoning_engine | ERROR | _execute_streaming_request:278 | Streaming request failed: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=120)
+2025-09-07 18:14:54 | combadge.intelligence.reasoning_engine | ERROR | _execute_streaming_request:278 | Streaming request failed: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=120)
+2025-09-07 18:15:10 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:15:10 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:15:10 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:15:10 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:15:10 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:15:10 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:15:11 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:15:11 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:15:11 | combadge.core.application | INFO | _initialize_ollama:97 | Initializing reasoning engine...
+2025-09-07 18:15:11 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:15:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:15:12 | combadge.core.application | INFO | _start_main_loop:286 | Starting main event loop
+2025-09-07 18:15:21 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: Create Contract Task at 4pm...
+2025-09-07 18:15:21 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: Create Contract Task at 4pm...
+2025-09-07 18:15:21 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:15:21 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:15:21 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:15:21 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:15:21 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:15:21 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:15:21 | combadge.intelligence.llm_manager | INFO | ensure_model_available:385 | Model qwen2.5:7b is already available
+2025-09-07 18:15:21 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:15:21 | combadge.core.application | INFO | processing_thread:181 | Starting reasoning display session...
+2025-09-07 18:15:21 | combadge.core.application | INFO | processing_thread:184 | Sending request to Ollama...
+2025-09-07 18:15:21 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: 533efeb8
+2025-09-07 18:15:21 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: 533efeb8
+2025-09-07 18:15:21 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:15:21 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:15:21 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:15:21 | combadge.core.application | INFO | processing_thread:198 | Ollama processing request 533efeb8
+2025-09-07 18:16:14 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: Create Contract Task at 4pm...
+2025-09-07 18:16:14 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: Create Contract Task at 4pm...
+2025-09-07 18:16:14 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:16:14 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:16:14 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:16:14 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:16:14 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:16:14 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:16:14 | combadge.intelligence.llm_manager | INFO | ensure_model_available:385 | Model qwen2.5:7b is already available
+2025-09-07 18:16:14 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:16:14 | combadge.core.application | INFO | processing_thread:181 | Starting reasoning display session...
+2025-09-07 18:16:14 | combadge.core.application | INFO | processing_thread:184 | Sending request to Ollama...
+2025-09-07 18:16:14 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: 9e794fe8
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | WARNING | start_processing:96 | Stream processor already running, stopping previous stream
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | stop_processing:118 | Stopping stream processing
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:358 | UI update loop ended
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:222 | Chunk processing loop ended
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: 9e794fe8
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:16:14 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:16:14 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:16:14 | combadge.core.application | INFO | processing_thread:198 | Ollama processing request 9e794fe8
+2025-09-07 18:19:34 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:19:34 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:19:34 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:19:34 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:19:34 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:19:34 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:19:35 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:19:35 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:19:35 | combadge.core.application | INFO | _initialize_ollama:97 | Initializing reasoning engine...
+2025-09-07 18:19:35 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:19:35 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:19:35 | combadge.core.application | INFO | _start_main_loop:295 | Starting main event loop
+2025-09-07 18:19:48 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: create a task for 3 pm for 839...
+2025-09-07 18:19:48 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: create a task for 3 pm for 839...
+2025-09-07 18:19:48 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:19:48 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:19:48 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:19:48 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:19:48 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:19:48 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:19:48 | combadge.intelligence.llm_manager | INFO | ensure_model_available:385 | Model qwen2.5:7b is already available
+2025-09-07 18:19:48 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:19:48 | combadge.core.application | INFO | processing_thread:181 | Starting reasoning display session...
+2025-09-07 18:19:48 | combadge.core.application | INFO | processing_thread:184 | Sending request to Ollama...
+2025-09-07 18:19:48 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: f1cccb8c
+2025-09-07 18:19:48 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: f1cccb8c
+2025-09-07 18:19:48 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:19:48 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:19:48 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:19:48 | combadge.core.application | ERROR | start_reasoning_safe:198 | Reasoning display not available
+2025-09-07 18:19:49 | combadge.core.application | INFO | processing_thread:202 | Ollama processing request f1cccb8c
+2025-09-07 18:20:25 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "POST /api/generate HTTP/1.1" 200 None
+2025-09-07 18:20:25 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:28 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:30 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:30 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:31 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:31 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:31 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:32 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:32 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:33 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:33 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:34 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:34 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:34 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:35 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:35 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:36 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:36 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:37 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:37 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:38 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:38 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:38 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:39 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:39 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:39 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:40 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:40 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:41 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:41 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:42 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:42 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:42 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:43 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:43 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:44 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:44 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:44 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:45 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:45 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:46 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:46 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:46 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:47 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:47 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:47 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:48 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:48 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:49 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:49 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:49 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:50 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:50 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:50 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:51 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:51 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:52 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:52 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:53 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:53 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:53 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:54 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:54 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:55 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:56 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:56 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:57 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:57 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:58 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:58 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:58 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:59 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:59 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:20:59 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:00 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:00 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:01 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:01 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:01 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:02 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:02 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:03 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:03 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:03 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:04 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:04 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:05 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:05 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:06 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:06 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:06 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:07 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:07 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:08 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:08 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:09 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:09 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:09 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:10 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:10 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:10 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:11 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:11 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:12 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:12 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:12 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:13 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:13 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:13 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:14 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:14 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:14 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:15 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:15 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:16 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:16 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:16 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:17 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:17 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:17 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:18 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:18 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:18 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:19 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:19 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:20 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:20 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:21 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:21 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:22 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:22 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:22 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:23 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:23 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:23 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:24 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:24 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:25 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:25 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:25 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:26 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:26 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:27 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:27 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:28 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:28 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:29 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:30 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:30 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:31 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:31 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:32 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:32 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:32 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:33 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:33 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:34 | combadge.intelligence.chain_of_thought.stream_processor | DEBUG | _send_ui_update:378 | UI Update: content_update
+2025-09-07 18:21:58 | combadge.core.application | INFO | run:61 | Starting ComBadge application
+2025-09-07 18:21:58 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:21:58 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:21:58 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:21:58 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:21:58 | combadge.core.application | INFO | _initialize_components:72 | Configuration loaded successfully
+2025-09-07 18:21:59 | combadge.core.application | INFO | _initialize_components:82 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:21:59 | combadge.core.application | INFO | _initialize_ollama:105 | Initializing Ollama server manager...
+2025-09-07 18:21:59 | combadge.core.application | INFO | _initialize_ollama:114 | Initializing reasoning engine...
+2025-09-07 18:21:59 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:21:59 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:21:59 | combadge.core.application | ERROR | _initialize_components:92 | Reasoning display failed to initialize
+2025-09-07 18:21:59 | combadge.core.application | INFO | _start_main_loop:312 | Starting main event loop
+2025-09-07 18:26:40 | src.combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: direct_step_session
+2025-09-07 18:26:40 | src.combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: direct_step_session
+2025-09-07 18:26:56 | src.combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: direct_step_session
+2025-09-07 18:26:56 | src.combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: direct_step_session
+2025-09-07 18:27:11 | src.combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: direct_step_session
+2025-09-07 18:27:11 | src.combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: direct_step_session
+2025-09-07 18:27:12 | src.combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: streaming_test
+2025-09-07 18:27:12 | src.combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: streaming_test
+2025-09-07 18:27:50 | combadge.core.application | INFO | run:46 | Starting ComBadge application
+2025-09-07 18:27:50 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:27:50 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:27:50 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:27:50 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:27:50 | combadge.core.application | INFO | _initialize_components:57 | Configuration loaded successfully
+2025-09-07 18:27:50 | combadge.core.application | INFO | _initialize_components:67 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:27:50 | combadge.core.application | INFO | _initialize_ollama:90 | Initializing Ollama server manager...
+2025-09-07 18:27:50 | combadge.core.application | INFO | _initialize_ollama:99 | Initializing reasoning engine...
+2025-09-07 18:27:50 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:27:50 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:27:50 | combadge.core.application | INFO | _initialize_components:75 | Reasoning display successfully initialized
+2025-09-07 18:27:50 | combadge.core.application | INFO | _start_main_loop:297 | Starting main event loop
+2025-09-07 18:28:12 | combadge.core.application | INFO | _handle_text_submission:130 | Processing submitted text: Create a contract task at 4pm...
+2025-09-07 18:28:12 | combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: direct_step_session
+2025-09-07 18:28:12 | combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: direct_step_session
+2025-09-07 18:28:12 | combadge.core.application | INFO | processing_thread:162 | Starting Ollama processing for input: Create a contract task at 4pm...
+2025-09-07 18:28:12 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:28:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:28:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:28:12 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:28:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:28:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:28:12 | combadge.intelligence.llm_manager | INFO | ensure_model_available:385 | Model qwen2.5:7b is already available
+2025-09-07 18:28:12 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:28:12 | combadge.core.application | INFO | processing_thread:183 | Starting reasoning display session...
+2025-09-07 18:28:12 | combadge.core.application | INFO | processing_thread:186 | Sending request to Ollama...
+2025-09-07 18:28:12 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: 287343ba
+2025-09-07 18:28:12 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: 287343ba
+2025-09-07 18:28:12 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:28:12 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:28:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:28:12 | combadge.core.application | INFO | processing_thread:204 | Ollama processing request 287343ba
+2025-09-07 18:28:13 | combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: 287343ba
+2025-09-07 18:28:13 | combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: 287343ba

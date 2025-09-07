@@ -27,20 +27,20 @@ class MainWindow(ctk.CTk):
         self.theme = Theme()
         self.event_handler = EventHandler(self)
         
-        # Window configuration
-        self._setup_window()
-        self._create_layout()
-        self._setup_keyboard_shortcuts()
-        
-        # Component references
+        # Initialize component references
         self.input_panel: Optional[InputPanel] = None
         self.status_indicators: Optional[StatusIndicators] = None
         self.reasoning_display: Optional[RealtimeReasoningDisplay] = None
         
-        # Callbacks
+        # Initialize callbacks
         self.on_submit: Optional[Callable[[str], None]] = None
         self.on_clear: Optional[Callable[[], None]] = None
         self.on_regenerate: Optional[Callable[[], None]] = None
+        
+        # Window configuration
+        self._setup_window()
+        self._create_layout()
+        self._setup_keyboard_shortcuts()
         
     def _setup_window(self):
         """Configure main window properties."""
