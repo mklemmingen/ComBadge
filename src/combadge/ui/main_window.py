@@ -12,7 +12,7 @@ import customtkinter as ctk
 from .styles.themes import Theme
 from .components.input_panel import InputPanel
 from .components.status_indicators import StatusIndicators
-from .components.reasoning_display import ReasoningDisplay
+from .components.reasoning_display import RealtimeReasoningDisplay
 from .utils.event_handlers import EventHandler
 
 
@@ -35,7 +35,7 @@ class MainWindow(ctk.CTk):
         # Component references
         self.input_panel: Optional[InputPanel] = None
         self.status_indicators: Optional[StatusIndicators] = None
-        self.reasoning_display: Optional[ReasoningDisplay] = None
+        self.reasoning_display: Optional[RealtimeReasoningDisplay] = None
         
         # Callbacks
         self.on_submit: Optional[Callable[[str], None]] = None
@@ -44,7 +44,7 @@ class MainWindow(ctk.CTk):
         
     def _setup_window(self):
         """Configure main window properties."""
-        self.title("ComBadge - Fleet Management Assistant")
+        self.title("ComBadge - NLP to API Converter")
         self.geometry("1200x800")
         self.minsize(800, 600)
         
@@ -87,11 +87,12 @@ class MainWindow(ctk.CTk):
         
     def _create_header(self):
         """Create header with title and branding."""
+        frame_style = self.theme.create_frame_style(elevated=True)
+        frame_style["corner_radius"] = 0  # Override theme default for header
         header_frame = ctk.CTkFrame(
             self,
             height=80,
-            corner_radius=0,
-            **self.theme.create_frame_style(elevated=True)
+            **frame_style
         )
         header_frame.grid(row=0, column=0, sticky="ew", padx=0, pady=0)
         header_frame.grid_propagate(False)
@@ -102,14 +103,14 @@ class MainWindow(ctk.CTk):
             header_frame,
             text="ComBadge",
             font=self.theme.get_title_font(),
-            text_color=self.theme.colors.mercedes_blue
+            text_color=self.theme.colors.accent_blue
         )
         title_label.grid(row=0, column=0, padx=20, pady=20, sticky="w")
         
         # Subtitle
         subtitle_label = ctk.CTkLabel(
             header_frame,
-            text="Fleet Management Natural Language Processor",
+            text="Natural Language to API Converter",
             font=self.theme.get_body_font(),
             text_color=self.theme.colors.text_secondary
         )
@@ -164,7 +165,7 @@ class MainWindow(ctk.CTk):
         right_panel.grid_rowconfigure(0, weight=1)
         
         # Reasoning display
-        self.reasoning_display = ReasoningDisplay(right_panel, self.theme)
+        self.reasoning_display = RealtimeReasoningDisplay(right_panel, self.theme)
         self.reasoning_display.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         
         # Connect event handlers
@@ -172,11 +173,12 @@ class MainWindow(ctk.CTk):
         
     def _create_footer(self):
         """Create footer with developer attribution and shortcuts."""
+        footer_style = self.theme.create_frame_style(elevated=False)
+        footer_style["corner_radius"] = 0  # Override theme default for footer
         footer_frame = ctk.CTkFrame(
             self,
             height=30,
-            corner_radius=0,
-            **self.theme.create_frame_style(elevated=False)
+            **footer_style
         )
         footer_frame.grid(row=2, column=0, sticky="ew", padx=0, pady=0)
         footer_frame.grid_propagate(False)
@@ -203,7 +205,7 @@ class MainWindow(ctk.CTk):
         # Making developer attribution clickable
         developer_link.bind("<Button-1>", self._open_developer_github)
         developer_link.bind("<Enter>", lambda e: developer_link.configure(
-            text_color=self.theme.colors.mercedes_blue,
+            text_color=self.theme.colors.accent_blue,
             cursor="hand2"
         ))
         developer_link.bind("<Leave>", lambda e: developer_link.configure(

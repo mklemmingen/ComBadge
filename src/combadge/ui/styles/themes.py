@@ -213,12 +213,14 @@ class Theme:
         Returns:
             Style configuration dictionary
         """
-        return {
+        style = {
             "corner_radius": 8,
             "border_width": 1 if elevated else 0,
             "fg_color": self.colors.secondary_bg if elevated else self.colors.primary_bg,
-            "border_color": self.colors.border if elevated else "transparent"
         }
+        if elevated:
+            style["border_color"] = self.colors.border
+        return style
         
     def create_input_style(self, focused: bool = False) -> Dict[str, str]:
         """Create input field style configuration.

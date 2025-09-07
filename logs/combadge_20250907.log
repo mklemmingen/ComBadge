@@ -1,0 +1,478 @@
+2025-09-07 16:32:12 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:32:12 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:32:12 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:32:12 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:32:12 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:32:12 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:32:12 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: customtkinter.windows.widgets.ctk_frame.CTkFrame() got multiple values for keyword argument 'corner_radius'
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 80, in _create_layout
+    self._create_header()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 90, in _create_header
+    header_frame = ctk.CTkFrame(
+        self,
+    ...<2 lines>...
+        **self.theme.create_frame_style(elevated=True)
+    )
+TypeError: customtkinter.windows.widgets.ctk_frame.CTkFrame() got multiple values for keyword argument 'corner_radius'
+2025-09-07 16:48:17 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:48:17 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:48:17 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:48:17 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:48:17 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:48:17 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:48:17 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: 'ThemeColors' object has no attribute 'mercedes_blue'
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 80, in _create_layout
+    self._create_header()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 106, in _create_header
+    text_color=self.theme.colors.mercedes_blue
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ThemeColors' object has no attribute 'mercedes_blue'
+2025-09-07 16:49:09 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:49:09 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:49:09 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:49:09 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:49:09 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:49:09 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:49:09 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: transparency is not allowed for this attribute
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 83, in _create_layout
+    self._create_main_content()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 131, in _create_main_content
+    main_container = ctk.CTkFrame(
+        self,
+        **self.theme.create_frame_style(elevated=False)
+    )
+  File "/home/mklemmingen/PycharmProjects/combadge/venv/lib/python3.13/site-packages/customtkinter/windows/widgets/ctk_frame.py", line 36, in __init__
+    self._border_color = ThemeManager.theme["CTkFrame"]["border_color"] if border_color is None else self._check_color_type(border_color)
+                                                                                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/mklemmingen/PycharmProjects/combadge/venv/lib/python3.13/site-packages/customtkinter/windows/widgets/appearance_mode/appearance_mode_base_class.py", line 55, in _check_color_type
+    raise ValueError(f"transparency is not allowed for this attribute")
+ValueError: transparency is not allowed for this attribute
+2025-09-07 16:52:11 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:52:11 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:52:11 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:52:11 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:52:11 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:52:11 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:52:11 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: customtkinter.windows.widgets.ctk_textbox.CTkTextbox() got multiple values for keyword argument 'font'
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 83, in _create_layout
+    self._create_main_content()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 151, in _create_main_content
+    self.input_panel = InputPanel(left_panel, self.theme)
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 30, in __init__
+    self._setup_layout()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 43, in _setup_layout
+    self._create_text_area()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 82, in _create_text_area
+    self.text_area = ctk.CTkTextbox(
+                     ~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<2 lines>...
+        **self.theme.create_input_style()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: customtkinter.windows.widgets.ctk_textbox.CTkTextbox() got multiple values for keyword argument 'font'
+2025-09-07 16:53:28 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:53:28 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:53:28 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:53:28 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:53:28 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:53:28 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:53:29 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: 'ThemeColors' object has no attribute 'mercedes_blue'
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 83, in _create_layout
+    self._create_main_content()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 151, in _create_main_content
+    self.input_panel = InputPanel(left_panel, self.theme)
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 30, in __init__
+    self._setup_layout()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 43, in _setup_layout
+    self._create_text_area()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 98, in _create_text_area
+    self._create_context_menu()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/components/input_panel.py", line 137, in _create_context_menu
+    activebackground=self.theme.colors.mercedes_blue,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ThemeColors' object has no attribute 'mercedes_blue'
+2025-09-07 16:57:10 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 16:57:10 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 16:57:10 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 16:57:10 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 16:57:10 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 16:57:10 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 16:57:10 | combadge.core.error_handler | CRITICAL | handle_critical_error:119 | Critical error occurred: name 'ReasoningDisplay' is not defined
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 43, in run
+    self._initialize_components()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 56, in _initialize_components
+    self.main_window = MainWindow()
+                       ~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 32, in __init__
+    self._create_layout()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 83, in _create_layout
+    self._create_main_content()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/ui/main_window.py", line 168, in _create_main_content
+    self.reasoning_display = ReasoningDisplay(right_panel, self.theme)
+                             ^^^^^^^^^^^^^^^^
+NameError: name 'ReasoningDisplay' is not defined
+2025-09-07 17:01:31 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 17:01:31 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:01:31 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:01:31 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:01:31 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:01:31 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 17:01:32 | combadge.core.application | INFO | _initialize_components:60 | Checking Ollama setup status...
+2025-09-07 17:01:32 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:01:32 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:01:32 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:01:32 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:01:32 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:01:32 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:01:33 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:01:33 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:01:33 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:01:33 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:01:33 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:01:33 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:01:36 | combadge.ui.setup_wizard | ERROR | run_setup:351 | Setup failed: main thread is not in main loop
+2025-09-07 17:22:22 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 17:22:22 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:22:22 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:22:22 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:22:22 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:22:22 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 17:22:23 | combadge.core.application | INFO | _initialize_components:60 | Checking Ollama setup status...
+2025-09-07 17:22:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:22:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:22:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:26 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 17:22:26 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/default_config.yaml', wd=1, mask=IN_OPEN, cookie=0, name='default_config.yaml'>
+2025-09-07 17:22:26 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/default_config.yaml', wd=1, mask=IN_CLOSE_NOWRITE, cookie=0, name='default_config.yaml'>
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/development.yaml', wd=1, mask=IN_OPEN, cookie=0, name='development.yaml'>
+2025-09-07 17:22:26 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/development.yaml', wd=1, mask=IN_CLOSE_NOWRITE, cookie=0, name='development.yaml'>
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/user_preferences.yaml', wd=1, mask=IN_OPEN, cookie=0, name='user_preferences.yaml'>
+2025-09-07 17:22:26 | watchdog.observers.inotify_buffer | DEBUG | _group_events:52 | in-event <InotifyEvent: src_path=b'config/user_preferences.yaml', wd=1, mask=IN_CLOSE_NOWRITE, cookie=0, name='user_preferences.yaml'>
+2025-09-07 17:22:26 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:22:26 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 17:22:26 | combadge.ui.setup_wizard | ERROR | run_setup:351 | Setup failed: main thread is not in main loop
+2025-09-07 17:22:27 | combadge.core.application | INFO | _initialize_components:60 | Checking Ollama setup status...
+2025-09-07 17:22:27 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:22:27 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:27 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:22:27 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:22:27 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:22:30 | combadge.ui.setup_wizard | ERROR | run_setup:351 | Setup failed: main thread is not in main loop
+2025-09-07 17:24:57 | combadge.core.application | INFO | run:42 | Starting ComBadge application
+2025-09-07 17:24:57 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:24:57 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:24:57 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:24:57 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:24:57 | combadge.core.application | INFO | _initialize_components:53 | Configuration loaded successfully
+2025-09-07 17:24:57 | combadge.core.application | INFO | _initialize_components:60 | Checking Ollama setup status...
+2025-09-07 17:24:57 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:24:57 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:24:57 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:24:57 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:24:57 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:24:57 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:24:58 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:24:58 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:24:58 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:24:58 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:24:58 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:24:58 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:25:01 | combadge.ui.setup_wizard | ERROR | run_setup:359 | Setup failed: main thread is not in main loop
+2025-09-07 17:29:22 | combadge.core.application | INFO | run:59 | Starting ComBadge application
+2025-09-07 17:29:22 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:29:22 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:29:22 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:29:22 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:29:22 | combadge.core.application | INFO | _initialize_components:70 | Configuration loaded successfully
+2025-09-07 17:29:22 | combadge.core.application | INFO | _initialize_components:77 | Checking Ollama setup status...
+2025-09-07 17:29:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:29:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:29:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:88 | Found Ollama at: ollama
+2025-09-07 17:29:23 | combadge.intelligence.ollama_installer | INFO | is_ollama_installed:89 | Version: ollama version is 0.11.10
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:29:23 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:29:26 | combadge.ui.setup_wizard | ERROR | run_setup:359 | Setup failed: main thread is not in main loop
+2025-09-07 17:31:59 | combadge.core.application | INFO | run:59 | Starting ComBadge application
+2025-09-07 17:31:59 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:31:59 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:31:59 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:31:59 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:31:59 | combadge.core.application | INFO | _initialize_components:70 | Configuration loaded successfully
+2025-09-07 17:32:00 | combadge.core.application | INFO | _initialize_components:77 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 17:32:00 | combadge.core.application | INFO | _initialize_ollama:93 | Initializing Ollama server manager...
+2025-09-07 17:32:00 | combadge.core.application | ERROR | _initialize_ollama:107 | Failed to initialize Ollama: 'AppConfig' object has no attribute 'get'
+2025-09-07 17:32:00 | combadge.core.error_handler | WARNING | _log_error:181 | Ollama initialization failed: 'AppConfig' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 95, in _initialize_ollama
+    model_name=self.config.get('llm', {}).get('model', 'qwen2.5:14b')
+               ^^^^^^^^^^^^^^^
+  File "/home/mklemmingen/PycharmProjects/combadge/venv/lib/python3.13/site-packages/pydantic/main.py", line 991, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'AppConfig' object has no attribute 'get'
+2025-09-07 17:32:00 | combadge.core.application | INFO | _start_main_loop:220 | Starting main event loop
+2025-09-07 17:32:15 | combadge.core.application | INFO | _handle_text_submission:124 | Processing submitted text: Reserve vehicle 123...
+2025-09-07 17:34:07 | combadge.core.application | INFO | run:50 | Starting ComBadge application
+2025-09-07 17:34:07 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:34:07 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:34:07 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:34:07 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:34:07 | combadge.core.application | INFO | _initialize_components:61 | Configuration loaded successfully
+2025-09-07 17:34:08 | combadge.core.application | INFO | _initialize_components:68 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 17:34:08 | combadge.core.application | INFO | _initialize_ollama:84 | Initializing Ollama server manager...
+2025-09-07 17:34:08 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:34:08 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:34:08 | combadge.core.application | INFO | _start_main_loop:211 | Starting main event loop
+2025-09-07 17:34:15 | combadge.core.application | INFO | _handle_text_submission:115 | Processing submitted text: Reserve 123 for tomorrow...
+2025-09-07 17:34:28 | combadge.core.application | INFO | _handle_clear_request:197 | Clearing UI content
+2025-09-07 17:34:29 | combadge.core.application | INFO | _handle_clear_request:197 | Clearing UI content
+2025-09-07 17:34:31 | combadge.core.application | INFO | _handle_clear_request:197 | Clearing UI content
+2025-09-07 17:34:31 | combadge.core.application | INFO | _handle_regenerate_request:201 | Regenerating last result
+2025-09-07 17:34:56 | combadge.core.application | INFO | run:52 | Starting ComBadge application
+2025-09-07 17:34:56 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:34:56 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:34:56 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:34:56 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:34:56 | combadge.core.application | INFO | _initialize_components:63 | Configuration loaded successfully
+2025-09-07 17:34:56 | combadge.core.application | INFO | _initialize_components:70 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 17:34:56 | combadge.core.application | INFO | _initialize_ollama:86 | Initializing Ollama server manager...
+2025-09-07 17:34:56 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:34:56 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:34:56 | combadge.core.application | INFO | _start_main_loop:213 | Starting main event loop
+2025-09-07 17:42:01 | combadge.core.application | INFO | run:52 | Starting ComBadge application
+2025-09-07 17:42:01 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:42:01 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:42:01 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:42:01 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:42:01 | combadge.core.application | INFO | _initialize_components:63 | Configuration loaded successfully
+2025-09-07 17:42:01 | combadge.core.application | INFO | _initialize_components:70 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 17:42:01 | combadge.core.application | INFO | _initialize_ollama:86 | Initializing Ollama server manager...
+2025-09-07 17:42:01 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:42:01 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:42:01 | combadge.core.application | INFO | _start_main_loop:213 | Starting main event loop
+2025-09-07 17:42:24 | combadge.core.application | INFO | _handle_text_submission:117 | Processing submitted text: Create a Contract for 123 at 4 pm...
+2025-09-07 17:42:51 | combadge.core.application | INFO | _on_closing:218 | Shutting down ComBadge application
+2025-09-07 17:43:16 | combadge.core.application | INFO | run:52 | Starting ComBadge application
+2025-09-07 17:43:16 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 17:43:16 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 17:43:16 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 17:43:16 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 17:43:16 | combadge.core.application | INFO | _initialize_components:63 | Configuration loaded successfully
+2025-09-07 17:43:17 | combadge.core.application | INFO | _initialize_components:70 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 17:43:17 | combadge.core.application | INFO | _initialize_ollama:86 | Initializing Ollama server manager...
+2025-09-07 17:43:17 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 17:43:17 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 17:43:17 | combadge.core.application | INFO | _start_main_loop:213 | Starting main event loop
+2025-09-07 17:43:27 | combadge.core.application | INFO | _handle_text_submission:117 | Processing submitted text: Run Contract 123 at 4pm...
+2025-09-07 17:43:49 | combadge.core.application | INFO | _handle_clear_request:199 | Clearing UI content
+2025-09-07 17:44:59 | combadge.core.application | INFO | _handle_clear_request:199 | Clearing UI content
+2025-09-07 17:45:01 | combadge.core.application | INFO | _on_closing:218 | Shutting down ComBadge application
+2025-09-07 18:06:02 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:06:02 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:06:02 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:06:02 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:06:02 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:06:02 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:06:03 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:06:03 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:06:03 | combadge.core.application | INFO | _initialize_ollama:94 | Initializing reasoning engine...
+2025-09-07 18:06:03 | combadge.core.application | ERROR | _initialize_ollama:108 | Failed to initialize Ollama: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'llm_manager'. Did you mean 'ollama_manager'?
+2025-09-07 18:06:03 | combadge.core.error_handler | WARNING | _log_error:181 | Ollama initialization failed: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'llm_manager'. Did you mean 'ollama_manager'?
+Traceback (most recent call last):
+  File "/home/mklemmingen/PycharmProjects/combadge/src/combadge/core/application.py", line 95, in _initialize_ollama
+    self.reasoning_engine = ChainOfThoughtEngine(
+                            ~~~~~~~~~~~~~~~~~~~~^
+        llm_manager=self.ollama_manager
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'llm_manager'. Did you mean 'ollama_manager'?
+2025-09-07 18:06:03 | combadge.core.application | INFO | _start_main_loop:221 | Starting main event loop
+2025-09-07 18:06:45 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:06:45 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:06:45 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:06:45 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:06:45 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:06:45 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:06:45 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:06:45 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:06:45 | combadge.core.application | INFO | _initialize_ollama:94 | Initializing reasoning engine...
+2025-09-07 18:06:45 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:06:45 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:06:46 | combadge.core.application | INFO | _start_main_loop:221 | Starting main event loop
+2025-09-07 18:07:07 | combadge.core.application | INFO | _handle_text_submission:125 | Processing submitted text: Create a Task at 4pm...
+2025-09-07 18:07:07 | combadge.core.application | INFO | processing_thread:157 | Starting Ollama processing for input: Create a Task at 4pm...
+2025-09-07 18:07:07 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:07:07 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:07:07 | combadge.intelligence.llm_manager | INFO | ensure_model_available:389 | Model qwen2.5:7b not found, downloading...
+2025-09-07 18:07:07 | combadge.intelligence.llm_manager | INFO | download_model:312 | Starting download of model: qwen2.5:7b
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:07 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "POST /api/pull HTTP/1.1" 200 None
+2025-09-07 18:07:12 | combadge.core.application | INFO | _handle_text_submission:125 | Processing submitted text: Create a Task at 4pm
+...
+2025-09-07 18:07:12 | combadge.core.application | INFO | processing_thread:157 | Starting Ollama processing for input: Create a Task at 4pm
+...
+2025-09-07 18:07:12 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:07:12 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:07:12 | combadge.intelligence.llm_manager | INFO | ensure_model_available:389 | Model qwen2.5:7b not found, downloading...
+2025-09-07 18:07:12 | combadge.intelligence.llm_manager | INFO | download_model:312 | Starting download of model: qwen2.5:7b
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:07:12 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "POST /api/pull HTTP/1.1" 200 None
+2025-09-07 18:09:21 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:09:21 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:09:21 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:09:21 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:09:21 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:09:21 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:09:22 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:09:22 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:09:22 | combadge.core.application | INFO | _initialize_ollama:97 | Initializing reasoning engine...
+2025-09-07 18:09:22 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:09:22 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:09:22 | combadge.core.application | INFO | _start_main_loop:252 | Starting main event loop
+2025-09-07 18:09:31 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: Create a Task at 4pm...
+2025-09-07 18:09:31 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: Create a Task at 4pm...
+2025-09-07 18:09:31 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:09:31 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:09:31 | combadge.intelligence.llm_manager | INFO | ensure_model_available:389 | Model qwen2.5:7b not found, downloading...
+2025-09-07 18:09:31 | combadge.intelligence.llm_manager | INFO | download_model:312 | Starting download of model: qwen2.5:7b
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:09:31 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "POST /api/pull HTTP/1.1" 200 None
+2025-09-07 18:10:46 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 18:10:46 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:10:46 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:10:46 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:10:46 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:10:46 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 18:10:47 | combadge.core.application | INFO | _initialize_components:72 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:10:47 | combadge.core.application | INFO | _initialize_ollama:88 | Initializing Ollama server manager...
+2025-09-07 18:10:47 | combadge.core.application | INFO | _initialize_ollama:97 | Initializing reasoning engine...
+2025-09-07 18:10:47 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:10:47 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:10:47 | combadge.core.application | INFO | _start_main_loop:252 | Starting main event loop
+2025-09-07 18:10:56 | combadge.core.application | INFO | _handle_text_submission:128 | Processing submitted text: Create a Task for 4pm for E243...
+2025-09-07 18:10:56 | combadge.core.application | INFO | processing_thread:160 | Starting Ollama processing for input: Create a Task for 4pm for E243...
+2025-09-07 18:10:56 | combadge.intelligence.reasoning_engine | INFO | start_engine:102 | Starting Chain of Thought reasoning engine
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:10:56 | combadge.intelligence.llm_manager | INFO | start_server:93 | Ollama server is already running
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 13
+2025-09-07 18:10:56 | combadge.intelligence.llm_manager | INFO | ensure_model_available:389 | Model qwen2.5:7b not found, downloading...
+2025-09-07 18:10:56 | combadge.intelligence.llm_manager | INFO | download_model:312 | Starting download of model: qwen2.5:7b
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:10:56 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "POST /api/pull HTTP/1.1" 200 None
+2025-09-07 18:12:16 | combadge.intelligence.llm_manager | INFO | download_model:336 | Model qwen2.5:7b downloaded successfully
+2025-09-07 18:12:16 | combadge.intelligence.reasoning_engine | INFO | start_engine:116 | Chain of Thought engine started successfully
+2025-09-07 18:12:16 | combadge.core.application | INFO | processing_thread:181 | Sending request to Ollama...
+2025-09-07 18:12:16 | combadge.intelligence.reasoning_engine | INFO | process_request:172 | Processing reasoning request: 2d983786
+2025-09-07 18:12:16 | combadge.intelligence.chain_of_thought.stream_processor | INFO | start_processing:99 | Starting stream processing for: 2d983786
+2025-09-07 18:12:16 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _process_chunks_loop:200 | Started chunk processing loop
+2025-09-07 18:12:16 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:12:16 | combadge.intelligence.chain_of_thought.stream_processor | INFO | _ui_update_loop:338 | Started UI update loop (interval: 50ms)
+2025-09-07 18:12:16 | combadge.core.application | INFO | processing_thread:190 | Ollama processing request 2d983786

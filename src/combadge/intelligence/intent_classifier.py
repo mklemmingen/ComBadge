@@ -1,6 +1,6 @@
-"""Intent Classifier for Fleet Management Operations
+"""Intent Classifier for API Operations
 
-Classifies natural language requests into structured fleet management operation types
+Classifies natural language requests into structured API operation types
 with confidence scoring and multi-intent handling capabilities.
 """
 
@@ -13,15 +13,15 @@ from collections import defaultdict
 from ..core.logging_manager import LoggingManager
 
 
-class FleetIntent(Enum):
-    """Fleet management operation intent categories."""
-    CREATE_VEHICLE = "create_vehicle"
-    SCHEDULE_MAINTENANCE = "schedule_maintenance"
+class APIIntent(Enum):
+    """Generic API operation intent categories."""
+    CREATE_RESOURCE = "create_resource"
+    SCHEDULE_TASK = "schedule_task"
     MAKE_RESERVATION = "make_reservation"
-    ASSIGN_PARKING = "assign_parking"
+    ASSIGN_RESOURCE = "assign_resource"
     UPDATE_STATUS = "update_status"
     QUERY_INFORMATION = "query_information"
-    TRANSFER_VEHICLE = "transfer_vehicle"
+    TRANSFER_RESOURCE = "transfer_resource"
     CANCEL_OPERATION = "cancel_operation"
     UNKNOWN = "unknown"
 
@@ -29,7 +29,7 @@ class FleetIntent(Enum):
 @dataclass
 class IntentMatch:
     """Represents a classified intent with confidence and evidence."""
-    intent: FleetIntent
+    intent: APIIntent
     confidence: float
     evidence: List[str] = field(default_factory=list)
     keywords_matched: List[str] = field(default_factory=list)
@@ -65,73 +65,73 @@ class IntentClassifier:
         self.confidence_threshold = 0.6
         self.multi_intent_threshold = 0.4
         
-    def _build_intent_patterns(self) -> Dict[FleetIntent, List[str]]:
+    def _build_intent_patterns(self) -> Dict[APIIntent, List[str]]:
         """Build regex patterns for each intent type.
         
         Returns:
             Dictionary mapping intents to regex patterns
         """
         return {
-            FleetIntent.CREATE_VEHICLE: [
-                r'\b(?:add|create|register|new|setup)\s+(?:vehicle|car|truck|van)',
-                r'\b(?:vehicle|car|truck|van)\s+(?:registration|creation|setup)',
-                r'\b(?:onboard|enroll)\s+(?:new\s+)?(?:vehicle|car|truck|van)',
-                r'\bregister\s+(?:new\s+)?(?:vehicle|car|truck|van)',
+            APIIntent.CREATE_RESOURCE: [
+                r'\b(?:add|create|register|new|setup)\s+(?:resource|item|entry|object)',
+                r'\b(?:resource|item|entry|object)\s+(?:registration|creation|setup)',
+                r'\b(?:onboard|enroll)\s+(?:new\s+)?(?:resource|item|entry|object)',
+                r'\bregister\s+(?:new\s+)?(?:resource|item|entry|object)',
             ],
             
-            FleetIntent.SCHEDULE_MAINTENANCE: [
-                r'\b(?:schedule|book|arrange|plan)\s+(?:maintenance|service|repair|inspection)',
-                r'\b(?:maintenance|service|repair|inspection)\s+(?:schedule|booking|appointment)',
-                r'\b(?:need|due|time)\s+for\s+(?:maintenance|service|repair|inspection)',
+            APIIntent.SCHEDULE_TASK: [
+                r'\b(?:schedule|book|arrange|plan)\s+(?:task|job|process|operation)',
+                r'\b(?:task|job|process|operation)\s+(?:schedule|booking|appointment)',
+                r'\b(?:need|due|time)\s+for\s+(?:task|job|process|operation)',
                 r'\b(?:oil\s+change|tune.?up|brake|tire|engine)\s+(?:service|maintenance)',
                 r'\bservice\s+(?:reminder|due|needed|required)',
                 r'\b(?:preventive|routine|scheduled)\s+maintenance',
             ],
             
-            FleetIntent.MAKE_RESERVATION: [
-                r'\b(?:reserve|book|schedule|allocate)\s+(?:vehicle|car|truck|van)',
-                r'\b(?:vehicle|car|truck|van)\s+(?:reservation|booking)',
-                r'\b(?:need|require|want)\s+(?:to\s+)?(?:reserve|book)\s+(?:a\s+)?(?:vehicle|car|truck|van)',
-                r'\breservation\s+for\s+(?:vehicle|car|truck|van)',
-                r'\b(?:client|meeting|trip|appointment)\s+(?:vehicle|car|truck|van)',
-                r'\bassign\s+(?:vehicle|car|truck|van)\s+(?:to|for)',
+            APIIntent.MAKE_RESERVATION: [
+                r'\b(?:reserve|book|schedule|allocate)\s+(?:resource|item|entry|object)',
+                r'\b(?:resource|item|entry|object)\s+(?:reservation|booking)',
+                r'\b(?:need|require|want)\s+(?:to\s+)?(?:reserve|book)\s+(?:a\s+)?(?:resource|item|entry|object)',
+                r'\breservation\s+for\s+(?:resource|item|entry|object)',
+                r'\b(?:client|meeting|trip|appointment)\s+(?:resource|item|entry|object)',
+                r'\bassign\s+(?:resource|item|entry|object)\s+(?:to|for)',
             ],
             
-            FleetIntent.ASSIGN_PARKING: [
+            APIIntent.ASSIGN_RESOURCE: [
                 r'\b(?:assign|allocate|move|park)\s+(?:to\s+)?(?:parking|lot|space|spot|garage)',
                 r'\b(?:parking|lot|space|spot|garage)\s+(?:assignment|allocation)',
-                r'\bmove\s+(?:vehicle|car|truck|van)\s+(?:to|from)',
-                r'\b(?:relocate|transfer)\s+(?:vehicle|car|truck|van)',
+                r'\bmove\s+(?:resource|item|entry|object)\s+(?:to|from)',
+                r'\b(?:relocate|transfer)\s+(?:resource|item|entry|object)',
                 r'\bparking\s+(?:spot|space|lot)\s+(?:assignment|change)',
                 r'\b(?:building|floor|level)\s+(?:\d+|[a-z]+)\s+parking',
             ],
             
-            FleetIntent.UPDATE_STATUS: [
+            APIIntent.UPDATE_STATUS: [
                 r'\b(?:update|change|modify|edit)\s+(?:status|information|details)',
                 r'\bstatus\s+(?:update|change|modification)',
                 r'\b(?:mark|set)\s+(?:as\s+)?(?:available|unavailable|in.?use|maintenance|retired)',
-                r'\b(?:activate|deactivate|enable|disable)\s+(?:vehicle|car|truck|van)',
-                r'\bchange\s+(?:vehicle|car|truck|van)\s+(?:status|state)',
+                r'\b(?:activate|deactivate|enable|disable)\s+(?:resource|item|entry|object)',
+                r'\bchange\s+(?:resource|item|entry|object)\s+(?:status|state)',
             ],
             
-            FleetIntent.QUERY_INFORMATION: [
+            APIIntent.QUERY_INFORMATION: [
                 r'\b(?:where\s+is|what\s+is|when\s+is|who\s+has|which\s+vehicle)',
-                r'\b(?:check|find|search|lookup|show|display)\s+(?:vehicle|car|truck|van|status)',
-                r'\b(?:status|location|availability|schedule)\s+(?:of|for)\s+(?:vehicle|car|truck|van)',
-                r'\b(?:vehicle|car|truck|van)\s+(?:information|details|status)',
+                r'\b(?:check|find|search|lookup|show|display)\s+(?:resource|item|entry|object|status)',
+                r'\b(?:status|location|availability|schedule)\s+(?:of|for)\s+(?:resource|item|entry|object)',
+                r'\b(?:resource|item|entry|object)\s+(?:information|details|status)',
                 r'\b(?:available|free)\s+(?:vehicles|cars|trucks|vans)',
                 r'\blist\s+(?:all\s+)?(?:vehicles|cars|trucks|vans)',
             ],
             
-            FleetIntent.TRANSFER_VEHICLE: [
-                r'\btransfer\s+(?:vehicle|car|truck|van)',
-                r'\bmove\s+(?:vehicle|car|truck|van)\s+(?:from|to)',
-                r'\brelocate\s+(?:vehicle|car|truck|van)',
-                r'\b(?:change|switch)\s+(?:vehicle|car|truck|van)\s+(?:location|assignment)',
-                r'\bassign\s+(?:vehicle|car|truck|van)\s+(?:to|from)\s+(?:different|new)',
+            APIIntent.TRANSFER_RESOURCE: [
+                r'\btransfer\s+(?:resource|item|entry|object)',
+                r'\bmove\s+(?:resource|item|entry|object)\s+(?:from|to)',
+                r'\brelocate\s+(?:resource|item|entry|object)',
+                r'\b(?:change|switch)\s+(?:resource|item|entry|object)\s+(?:location|assignment)',
+                r'\bassign\s+(?:resource|item|entry|object)\s+(?:to|from)\s+(?:different|new)',
             ],
             
-            FleetIntent.CANCEL_OPERATION: [
+            APIIntent.CANCEL_OPERATION: [
                 r'\b(?:cancel|abort|stop|remove|delete)\s+(?:reservation|booking|maintenance|appointment)',
                 r'\b(?:reservation|booking|maintenance|appointment)\s+(?:cancellation|removal)',
                 r'\bno\s+longer\s+need',
@@ -140,56 +140,56 @@ class IntentClassifier:
             ]
         }
     
-    def _build_intent_keywords(self) -> Dict[FleetIntent, Dict[str, float]]:
+    def _build_intent_keywords(self) -> Dict[APIIntent, Dict[str, float]]:
         """Build keyword weightings for each intent type.
         
         Returns:
             Dictionary mapping intents to keywords with confidence weights
         """
         return {
-            FleetIntent.CREATE_VEHICLE: {
+            APIIntent.CREATE_RESOURCE: {
                 "new": 0.8, "add": 0.9, "create": 0.9, "register": 0.8,
                 "setup": 0.7, "onboard": 0.8, "enroll": 0.7, "vehicle": 0.6,
                 "car": 0.6, "truck": 0.6, "van": 0.6, "fleet": 0.5
             },
             
-            FleetIntent.SCHEDULE_MAINTENANCE: {
+            APIIntent.SCHEDULE_TASK: {
                 "maintenance": 0.9, "service": 0.8, "repair": 0.8, "inspection": 0.7,
                 "schedule": 0.7, "book": 0.6, "oil": 0.6, "brake": 0.6,
                 "tire": 0.6, "engine": 0.6, "tune-up": 0.7, "checkup": 0.6,
                 "due": 0.8, "overdue": 0.9, "preventive": 0.7, "routine": 0.6
             },
             
-            FleetIntent.MAKE_RESERVATION: {
+            APIIntent.MAKE_RESERVATION: {
                 "reserve": 0.9, "book": 0.8, "reservation": 0.9, "booking": 0.8,
                 "allocate": 0.7, "assign": 0.6, "client": 0.6, "meeting": 0.7,
                 "trip": 0.7, "appointment": 0.6, "need": 0.5, "require": 0.5
             },
             
-            FleetIntent.ASSIGN_PARKING: {
+            APIIntent.ASSIGN_RESOURCE: {
                 "parking": 0.9, "park": 0.8, "lot": 0.7, "space": 0.7,
                 "spot": 0.7, "garage": 0.7, "move": 0.6, "relocate": 0.8,
                 "building": 0.6, "floor": 0.5, "level": 0.5, "assign": 0.7
             },
             
-            FleetIntent.UPDATE_STATUS: {
+            APIIntent.UPDATE_STATUS: {
                 "update": 0.9, "change": 0.8, "modify": 0.8, "status": 0.9,
                 "available": 0.7, "unavailable": 0.8, "in-use": 0.7, "active": 0.6,
                 "inactive": 0.7, "retired": 0.8, "enable": 0.7, "disable": 0.7
             },
             
-            FleetIntent.QUERY_INFORMATION: {
+            APIIntent.QUERY_INFORMATION: {
                 "where": 0.8, "what": 0.7, "when": 0.7, "who": 0.7, "which": 0.7,
                 "check": 0.8, "find": 0.8, "search": 0.8, "show": 0.7,
                 "display": 0.7, "list": 0.8, "available": 0.6, "status": 0.7
             },
             
-            FleetIntent.TRANSFER_VEHICLE: {
+            APIIntent.TRANSFER_RESOURCE: {
                 "transfer": 0.9, "move": 0.8, "relocate": 0.8, "reassign": 0.8,
                 "switch": 0.7, "change": 0.6, "from": 0.5, "to": 0.5
             },
             
-            FleetIntent.CANCEL_OPERATION: {
+            APIIntent.CANCEL_OPERATION: {
                 "cancel": 0.9, "abort": 0.8, "stop": 0.7, "remove": 0.7,
                 "delete": 0.8, "withdraw": 0.8, "retract": 0.7, "no": 0.6,
                 "longer": 0.6, "cancellation": 0.9
@@ -343,8 +343,8 @@ class IntentClassifier:
         """
         intent_matches = []
         
-        for intent in FleetIntent:
-            if intent == FleetIntent.UNKNOWN:
+        for intent in APIIntent:
+            if intent == APIIntent.UNKNOWN:
                 continue
                 
             match = self._score_intent(text, intent)
@@ -352,14 +352,14 @@ class IntentClassifier:
         
         # Add unknown intent as fallback
         unknown_match = IntentMatch(
-            intent=FleetIntent.UNKNOWN,
+            intent=APIIntent.UNKNOWN,
             confidence=max(0.1, 1.0 - max(m.confidence for m in intent_matches))
         )
         intent_matches.append(unknown_match)
         
         return intent_matches
     
-    def _score_intent(self, text: str, intent: FleetIntent) -> IntentMatch:
+    def _score_intent(self, text: str, intent: APIIntent) -> IntentMatch:
         """Score a specific intent for the given text.
         
         Args:
@@ -409,9 +409,9 @@ class IntentClassifier:
                 evidence.append(f"Negation detected: {negation_pattern}")
         
         # Apply negation penalty
-        if negation_penalty > 0 and intent != FleetIntent.CANCEL_OPERATION:
+        if negation_penalty > 0 and intent != APIIntent.CANCEL_OPERATION:
             base_confidence *= (1.0 - min(negation_penalty, 0.8))
-        elif negation_penalty > 0 and intent == FleetIntent.CANCEL_OPERATION:
+        elif negation_penalty > 0 and intent == APIIntent.CANCEL_OPERATION:
             base_confidence += negation_penalty  # Negation boosts cancel intent
         
         # Normalize confidence to 0-1 range
@@ -496,12 +496,12 @@ class IntentClassifier:
             notes.append("Classification based on context clues only")
         
         # Unknown intent note
-        if primary_intent.intent == FleetIntent.UNKNOWN:
+        if primary_intent.intent == APIIntent.UNKNOWN:
             notes.append("No clear intent detected - may need human review")
         
         return notes
     
-    def get_intent_description(self, intent: FleetIntent) -> str:
+    def get_intent_description(self, intent: APIIntent) -> str:
         """Get human-readable description of intent.
         
         Args:
@@ -511,15 +511,15 @@ class IntentClassifier:
             Human-readable description
         """
         descriptions = {
-            FleetIntent.CREATE_VEHICLE: "Add a new vehicle to the fleet system",
-            FleetIntent.SCHEDULE_MAINTENANCE: "Schedule maintenance, service, or repairs for a vehicle",
-            FleetIntent.MAKE_RESERVATION: "Reserve a vehicle for specific use or time period",
-            FleetIntent.ASSIGN_PARKING: "Assign parking space or move vehicle to different location",
-            FleetIntent.UPDATE_STATUS: "Update vehicle status or information in the system",
-            FleetIntent.QUERY_INFORMATION: "Query vehicle information, status, or availability",
-            FleetIntent.TRANSFER_VEHICLE: "Transfer vehicle between locations, users, or assignments",
-            FleetIntent.CANCEL_OPERATION: "Cancel existing reservation, maintenance, or other operation",
-            FleetIntent.UNKNOWN: "Intent could not be determined from the input"
+            APIIntent.CREATE_RESOURCE: "Add a new vehicle to the fleet system",
+            APIIntent.SCHEDULE_TASK: "Schedule maintenance, service, or repairs for a vehicle",
+            APIIntent.MAKE_RESERVATION: "Reserve a vehicle for specific use or time period",
+            APIIntent.ASSIGN_RESOURCE: "Assign parking space or move vehicle to different location",
+            APIIntent.UPDATE_STATUS: "Update vehicle status or information in the system",
+            APIIntent.QUERY_INFORMATION: "Query vehicle information, status, or availability",
+            APIIntent.TRANSFER_RESOURCE: "Transfer vehicle between locations, users, or assignments",
+            APIIntent.CANCEL_OPERATION: "Cancel existing reservation, maintenance, or other operation",
+            APIIntent.UNKNOWN: "Intent could not be determined from the input"
         }
         
         return descriptions.get(intent, "Unknown intent type")

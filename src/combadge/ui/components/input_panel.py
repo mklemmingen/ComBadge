@@ -19,7 +19,7 @@ class InputPanel(ctk.CTkFrame):
         
         Args:
             parent: Parent widget
-            theme: Mercedes theme configuration
+            theme: Theme configuration
         """
         super().__init__(parent, **theme.create_frame_style(elevated=False))
         
@@ -82,7 +82,6 @@ class InputPanel(ctk.CTkFrame):
         self.text_area = ctk.CTkTextbox(
             self,
             wrap="word",
-            font=self.theme.get_body_font(),
             **self.theme.create_input_style()
         )
         self.text_area.grid(row=1, column=0, sticky="nsew", padx=0, pady=0)
@@ -135,7 +134,7 @@ class InputPanel(ctk.CTkFrame):
             tearoff=0,
             bg=self.theme.colors.surface,
             fg=self.theme.colors.text_primary,
-            activebackground=self.theme.colors.mercedes_blue,
+            activebackground=self.theme.colors.accent_blue,
             activeforeground=self.theme.colors.text_primary,
             border=0
         )
@@ -163,7 +162,7 @@ class InputPanel(ctk.CTkFrame):
         
     def _set_placeholder(self):
         """Set placeholder text in text area."""
-        placeholder_text = "Paste email or enter your command...\n\nExamples:\n• Reserve vehicle MB-1234 for tomorrow 2-4pm\n• Schedule maintenance for fleet vehicles due this week\n• Generate report for fuel consumption last month"
+        placeholder_text = "Paste email or enter your command...\n\nExamples:\n• Reserve resource RES-1234 for tomorrow 2-4pm\n• Schedule task for project items due this week\n• Generate report for usage data last month"
         
         self.text_area.insert("1.0", placeholder_text)
         self.text_area.configure(text_color=self.theme.colors.text_muted)

@@ -107,7 +107,12 @@ class ComBadgeBuilder:
             'psutil',
             'cryptography',
             'urllib3',
-            'certifi'
+            'certifi',
+            'urllib.request',
+            'urllib.error',
+            'tempfile',
+            'hashlib',
+            'ctypes'
         ]
     
     def get_data_files(self) -> List[tuple]:

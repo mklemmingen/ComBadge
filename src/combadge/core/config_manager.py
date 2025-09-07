@@ -12,8 +12,15 @@ import threading
 from pathlib import Path
 from typing import Any, Dict, Optional, List, Union, Set
 from datetime import datetime
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+# Optional watchdog for file monitoring
+try:
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler
+    HAS_WATCHDOG = True
+except ImportError:
+    Observer = None
+    FileSystemEventHandler = None
+    HAS_WATCHDOG = False
 import logging
 
 import yaml
@@ -56,7 +63,7 @@ class LLMConfig(BaseModel):
 
 class APIAuthConfig(BaseModel):
     """Configuration for API authentication."""
-    method: str = Field(default="cookie", regex="^(cookie|token|oauth|api_key)$")
+    method: str = Field(default="cookie", pattern="^(cookie|token|oauth|api_key)$")
     token_url: Optional[str] = None
     client_id: Optional[SecretStr] = None
     client_secret: Optional[SecretStr] = None
@@ -66,8 +73,8 @@ class APIAuthConfig(BaseModel):
 
 
 class APIConfig(BaseModel):
-    """Configuration for fleet management API."""
-    base_url: str = Field(default="https://fleet-api.company.com")
+    """Configuration for external API integration."""
+    base_url: str = Field(default="https://api.company.com")
     timeout: int = Field(default=30, ge=1, le=300)
     retry_attempts: int = Field(default=3, ge=0, le=10)
     retry_delay: float = Field(default=2.0, ge=0.1, le=30.0)
@@ -78,7 +85,7 @@ class APIConfig(BaseModel):
 
 class UIConfig(BaseModel):
     """Configuration for UI settings."""
-    theme: str = Field(default="dark", regex="^(dark|light|auto)$")
+    theme: str = Field(default="dark", pattern="^(dark|light|auto)$")
     window_size: List[int] = Field(default=[1200, 800])
     font_size: int = Field(default=12, ge=8, le=24)
     font_family: str = Field(default="Segoe UI")
@@ -107,7 +114,7 @@ class ProcessingConfig(BaseModel):
 
 class LoggingConfig(BaseModel):
     """Configuration for logging."""
-    level: str = Field(default="INFO", regex="^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$")
+    level: str = Field(default="INFO", pattern="^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$")
     file_path: str = Field(default="logs/combadge.log")
     max_file_size: str = Field(default="10MB")
     backup_count: int = Field(default=5, ge=1, le=20)
@@ -139,7 +146,7 @@ class AppConfig(BaseModel):
     """Main application configuration."""
     app_name: str = Field(default="ComBadge")
     version: str = Field(default="1.0.0")
-    environment: str = Field(default="development", regex="^(development|staging|production)$")
+    environment: str = Field(default="development", pattern="^(development|staging|production)$")
     debug_mode: bool = Field(default=False)
     
     # Component configurations

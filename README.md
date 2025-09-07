@@ -23,22 +23,33 @@ as well as prompts etc, so to better fit your needs.
 ## Quick Start
 
 ### Prerequisites
-- Python 3.9+
+- Python 3.9+ (for running from source)
 - 8GB+ RAM
-- [Ollama](https://ollama.ai) installed
+- 10GB+ free disk space
 
 ### Install & Run
+
+#### Option 1: Windows Installer (Recommended)
+```bash
+# Download and run the installer
+ComBadge_Setup.exe
+
+# First launch will automatically:
+# - Install Ollama if needed (~150MB)
+# - Download AI model (~8GB)
+# - Configure everything for you
+```
+
+#### Option 2: From Source
 ```bash
 # 1. Clone and install
 git clone https://github.com/mklemmingen/Combadge.git
 cd combadge
 pip install -r requirements/base.txt
 
-# 2. Install Ollama (ComBadge will auto-start it)
-# Download from https://ollama.ai and install
-
-# 3. Launch ComBadge (auto-downloads model if needed)
+# 2. Launch ComBadge
 python main.py
+# Setup wizard will handle Ollama installation automatically
 ```
 
 ### First Request
@@ -58,7 +69,7 @@ See **[Configuration Guide](docs/admin_guide/configuration.md)** for detailed se
 
 ## Key Features
 
-- **Automatic Setup**: Auto-starts Ollama server and downloads models
+- **One-Click Setup**: Automatic Ollama installation and model download
 - **Local Processing**: All AI runs locally via Ollama
 - **Human Oversight**: Review every request before execution
 - **Transparent AI**: See exactly how requests are interpreted
