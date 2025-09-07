@@ -804,3 +804,157 @@ TypeError: ChainOfThoughtEngine.__init__() got an unexpected keyword argument 'l
 2025-09-07 18:28:12 | combadge.core.application | INFO | processing_thread:204 | Ollama processing request 287343ba
 2025-09-07 18:28:13 | combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: 287343ba
 2025-09-07 18:28:13 | combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: 287343ba
+2025-09-07 18:33:57 | combadge.core.application | INFO | run:46 | Starting ComBadge application
+2025-09-07 18:33:57 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 18:33:57 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 18:33:57 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 18:33:57 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 18:33:57 | combadge.core.application | INFO | _initialize_components:57 | Configuration loaded successfully
+2025-09-07 18:33:59 | combadge.core.application | INFO | _initialize_components:67 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 18:33:59 | combadge.core.application | INFO | _initialize_ollama:90 | Initializing Ollama server manager...
+2025-09-07 18:33:59 | combadge.core.application | INFO | _initialize_ollama:99 | Initializing reasoning engine...
+2025-09-07 18:33:59 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 18:33:59 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 18:33:59 | combadge.core.application | INFO | _initialize_components:75 | Reasoning display successfully initialized
+2025-09-07 18:33:59 | combadge.core.application | INFO | _start_main_loop:321 | Starting main event loop
+2025-09-07 19:03:31 | combadge.core.application | INFO | run:54 | Starting ComBadge application
+2025-09-07 19:03:31 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 19:03:31 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 19:03:31 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 19:03:31 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 19:03:31 | combadge.core.application | INFO | _initialize_components:65 | Configuration loaded successfully
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_components:75 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:99 | Initializing NLP processing pipeline...
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | INFO | load_templates:117 | Loading templates from: /home/mklemmingen/PycharmProjects/combadge/knowledge/templates
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: maintenance.schedule_maintenance.1.0
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: parking.assign_parking.1.0
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: reservations.create_reservation.1.0
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: vehicle_operations.create_vehicle.1.0
+2025-09-07 19:03:32 | combadge.processors.templates.template_manager | INFO | load_templates:142 | Template loading complete: 4 loaded, 0 errors
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:103 | Template manager initialized
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:107 | Intent classifier initialized
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:111 | Entity extractor initialized
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:115 | JSON generator initialized
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_processing_pipeline:117 | NLP processing pipeline ready
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_ollama:126 | Initializing Ollama server manager...
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_ollama:135 | Initializing reasoning engine...
+2025-09-07 19:03:32 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 19:03:32 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 19:03:32 | combadge.core.application | INFO | _initialize_components:84 | Reasoning display successfully initialized
+2025-09-07 19:03:32 | combadge.core.application | INFO | _start_main_loop:377 | Starting main event loop
+2025-09-07 20:15:24 | combadge.core.application | INFO | run:65 | Starting ComBadge application
+2025-09-07 20:15:24 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 20:15:24 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 20:15:24 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 20:15:24 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_components:76 | Configuration loaded successfully
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_components:86 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:110 | Initializing NLP processing pipeline...
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | INFO | load_templates:117 | Loading templates from: /home/mklemmingen/PycharmProjects/combadge/knowledge/templates
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: maintenance.schedule_maintenance.1.0
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: parking.assign_parking.1.0
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: reservations.create_reservation.1.0
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: vehicle_operations.create_vehicle.1.0
+2025-09-07 20:15:24 | combadge.processors.templates.template_manager | INFO | load_templates:142 | Template loading complete: 4 loaded, 0 errors
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:114 | Template manager initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:118 | Intent classifier initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:122 | Entity extractor initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:126 | JSON generator initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:128 | NLP processing pipeline ready
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_processing_pipeline:134 | API client components initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_ollama:143 | Initializing Ollama server manager...
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_ollama:152 | Initializing reasoning engine...
+2025-09-07 20:15:24 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 20:15:24 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 20:15:24 | combadge.core.application | INFO | _initialize_components:95 | Reasoning display successfully initialized
+2025-09-07 20:15:24 | combadge.core.application | INFO | _start_main_loop:555 | Starting main event loop
+2025-09-07 20:15:37 | combadge.core.application | INFO | _handle_text_submission:188 | Processing submitted text: Create Contract Task at 4pm
+...
+2025-09-07 20:15:37 | combadge.ui.components.reasoning_display | INFO | start_reasoning:477 | Starting reasoning display for session: direct_step_session
+2025-09-07 20:15:37 | combadge.intelligence.chain_of_thought.reasoning_parser | INFO | start_parsing:187 | Started reasoning parsing session: direct_step_session
+2025-09-07 20:15:37 | combadge.core.application | INFO | processing_thread:214 | Starting structured NLP processing for: Create Contract Task at 4pm
+...
+2025-09-07 20:15:38 | combadge.core.application | ERROR | processing_thread:369 | Error in structured processing pipeline: 'IntentClassifier' object has no attribute 'classify_intent'
+2025-09-07 20:17:17 | combadge.core.application | INFO | _on_closing:560 | Shutting down ComBadge application
+2025-09-07 20:21:46 | combadge.core.application | INFO | run:65 | Starting ComBadge application
+2025-09-07 20:21:46 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 20:21:46 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 20:21:46 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 20:21:46 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_components:76 | Configuration loaded successfully
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_components:86 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:110 | Initializing NLP processing pipeline...
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | INFO | load_templates:117 | Loading templates from: /home/mklemmingen/PycharmProjects/combadge/knowledge/templates
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: maintenance.schedule_maintenance.1.0
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: parking.assign_parking.1.0
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: reservations.create_reservation.1.0
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: vehicle_operations.create_vehicle.1.0
+2025-09-07 20:21:46 | combadge.processors.templates.template_manager | INFO | load_templates:142 | Template loading complete: 4 loaded, 0 errors
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:114 | Template manager initialized
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:118 | Intent classifier initialized
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:122 | Entity extractor initialized
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:126 | JSON generator initialized
+2025-09-07 20:21:46 | combadge.core.application | INFO | _initialize_processing_pipeline:128 | NLP processing pipeline ready
+2025-09-07 20:21:47 | combadge.core.application | INFO | _initialize_processing_pipeline:134 | API client components initialized
+2025-09-07 20:21:47 | combadge.core.application | INFO | _initialize_ollama:143 | Initializing Ollama server manager...
+2025-09-07 20:21:47 | combadge.core.application | INFO | _initialize_ollama:152 | Initializing reasoning engine...
+2025-09-07 20:21:47 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 20:21:47 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 20:21:47 | combadge.core.application | INFO | _initialize_components:95 | Reasoning display successfully initialized
+2025-09-07 20:21:47 | combadge.core.application | INFO | _start_main_loop:562 | Starting main event loop
+2025-09-07 21:10:41 | combadge.core.application | INFO | run:67 | Starting ComBadge application
+2025-09-07 21:10:41 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 21:10:41 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 21:10:41 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 21:10:41 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 21:10:41 | combadge.core.application | INFO | _initialize_components:78 | Configuration loaded successfully
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_components:88 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:112 | Initializing NLP processing pipeline...
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | INFO | load_templates:117 | Loading templates from: /home/mklemmingen/PycharmProjects/combadge/knowledge/templates
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: maintenance.schedule_maintenance.1.0
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: parking.assign_parking.1.0
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: reservations.create_reservation.1.0
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: vehicle_operations.create_vehicle.1.0
+2025-09-07 21:10:42 | combadge.processors.templates.template_manager | INFO | load_templates:142 | Template loading complete: 4 loaded, 0 errors
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:116 | Template manager initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:123 | Intent classifier initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:127 | Entity extractor initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:131 | JSON generator initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:133 | NLP processing pipeline ready
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_processing_pipeline:139 | API client components initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_ollama:148 | Initializing Ollama server manager...
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_ollama:157 | Initializing reasoning engine...
+2025-09-07 21:10:42 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 21:10:42 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 21:10:42 | combadge.intelligence.ai_template_selector | WARNING | _load_example_data:70 | Examples file not found: /home/mklemmingen/PycharmProjects/combadge/src/knowledge/prompts/intent_classification/few_shot_examples.txt
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_ollama:175 | AI template selector initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _initialize_components:97 | Reasoning display successfully initialized
+2025-09-07 21:10:42 | combadge.core.application | INFO | _start_main_loop:584 | Starting main event loop
+2025-09-07 21:12:28 | combadge.core.application | INFO | run:67 | Starting ComBadge application
+2025-09-07 21:12:28 | combadge.core.config_manager | INFO | load_config:362 | Loading default config from config/default_config.yaml
+2025-09-07 21:12:28 | combadge.core.config_manager | INFO | load_config:362 | Loading environment config from config/development.yaml
+2025-09-07 21:12:28 | combadge.core.config_manager | INFO | load_config:362 | Loading user config from config/user_preferences.yaml
+2025-09-07 21:12:28 | combadge.core.config_manager | INFO | _setup_file_watcher:639 | Configuration file watcher started
+2025-09-07 21:12:28 | combadge.core.application | INFO | _initialize_components:78 | Configuration loaded successfully
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_components:88 | Bypassing setup wizard (temporary fix for threading issues)
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:112 | Initializing NLP processing pipeline...
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | INFO | load_templates:117 | Loading templates from: /home/mklemmingen/PycharmProjects/combadge/knowledge/templates
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: maintenance.schedule_maintenance.1.0
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: parking.assign_parking.1.0
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: reservations.create_reservation.1.0
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | DEBUG | _load_single_template:230 | Loaded template: vehicle_operations.create_vehicle.1.0
+2025-09-07 21:12:29 | combadge.processors.templates.template_manager | INFO | load_templates:142 | Template loading complete: 4 loaded, 0 errors
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:116 | Template manager initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:123 | Intent classifier initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:127 | Entity extractor initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:131 | JSON generator initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:133 | NLP processing pipeline ready
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_processing_pipeline:139 | API client components initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_ollama:148 | Initializing Ollama server manager...
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_ollama:157 | Initializing reasoning engine...
+2025-09-07 21:12:29 | urllib3.connectionpool | DEBUG | _new_conn:241 | Starting new HTTP connection (1): localhost:11434
+2025-09-07 21:12:29 | urllib3.connectionpool | DEBUG | _make_request:544 | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 339
+2025-09-07 21:12:29 | combadge.intelligence.ai_template_selector | INFO | _load_example_data:102 | Loaded examples for 0 categories
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_ollama:175 | AI template selector initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _initialize_components:97 | Reasoning display successfully initialized
+2025-09-07 21:12:29 | combadge.core.application | INFO | _start_main_loop:584 | Starting main event loop

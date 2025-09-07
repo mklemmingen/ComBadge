@@ -6,8 +6,8 @@ selection, population, and validation for converting natural language to API req
 
 from .template_manager import TemplateManager, TemplateMetadata, TemplateRegistry
 from .template_selector import TemplateSelector, SelectionResult, TemplateCriteria
-from .json_generator import JsonGenerator, GenerationResult, PopulationOptions
-from .validators import TemplateValidator, ValidationResult, ValidationRules
+from .json_generator import JSONGenerator, GenerationResult, GenerationOptions
+from .validators import TemplateValidator, ValidationResult
 
 __all__ = [
     "TemplateManager",
@@ -16,10 +16,9 @@ __all__ = [
     "TemplateSelector",
     "SelectionResult",
     "TemplateCriteria",
-    "JsonGenerator", 
+    "JSONGenerator", 
     "GenerationResult",
-    "PopulationOptions",
+    "GenerationOptions",
     "TemplateValidator",
-    "ValidationResult", 
-    "ValidationRules"
+    "ValidationResult"
 ]

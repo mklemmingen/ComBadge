@@ -595,6 +595,27 @@ class TemplateManager:
                 (current_time - self._last_reload).seconds >= self.reload_interval):
                 self.load_templates()
     
+    def get_all_templates_metadata(self) -> List[TemplateMetadata]:
+        """Get metadata for all loaded templates.
+        
+        Returns:
+            List of TemplateMetadata objects for all templates
+        """
+        with self._lock:
+            return list(self.registry.metadata.values())
+    
+    def get_templates_by_category(self) -> Dict[str, List[TemplateMetadata]]:
+        """Get templates organized by category.
+        
+        Returns:
+            Dictionary mapping categories to lists of template metadata
+        """
+        with self._lock:
+            result = defaultdict(list)
+            for metadata in self.registry.metadata.values():
+                result[metadata.category].append(metadata)
+            return dict(result)
+    
     def cleanup(self):
         """Cleanup template manager resources."""
         self.logger.info("Cleaning up template manager")

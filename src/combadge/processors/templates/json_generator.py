@@ -14,7 +14,7 @@ import uuid
 
 from ...core.logging_manager import LoggingManager
 from ...intelligence.intent_classifier import ClassificationResult
-from ...intelligence.entity_extractor import ExtractionResult, EntityType, ExtractedEntity
+from ...intelligence.entity_extractor import ExtractionResult, EntityType, EntityMatch
 from .template_manager import TemplateManager, TemplateMetadata
 from .template_selector import TemplateSelector, SelectionResult, TemplateScore
 
@@ -324,7 +324,7 @@ class JSONGenerator:
         
         return result
     
-    def _create_entity_lookup(self, entity_result: ExtractionResult) -> Dict[str, List[ExtractedEntity]]:
+    def _create_entity_lookup(self, entity_result: ExtractionResult) -> Dict[str, List[EntityMatch]]:
         """Create entity lookup dictionary by type and field names.
         
         Args:
@@ -356,7 +356,7 @@ class JSONGenerator:
     def _process_template_content(
         self,
         content: Any,
-        entity_lookup: Dict[str, List[ExtractedEntity]],
+        entity_lookup: Dict[str, List[EntityMatch]],
         metadata: TemplateMetadata,
         options: GenerationOptions,
         result: GenerationResult
@@ -398,7 +398,7 @@ class JSONGenerator:
     def _process_template_string(
         self,
         template_string: str,
-        entity_lookup: Dict[str, List[ExtractedEntity]],
+        entity_lookup: Dict[str, List[EntityMatch]],
         metadata: TemplateMetadata,
         options: GenerationOptions,
         result: GenerationResult
@@ -449,7 +449,7 @@ class JSONGenerator:
     def _get_entity_value(
         self,
         field_name: str,
-        entity_lookup: Dict[str, List[ExtractedEntity]],
+        entity_lookup: Dict[str, List[EntityMatch]],
         result: GenerationResult
     ) -> Optional[str]:
         """Get entity value for a field name.

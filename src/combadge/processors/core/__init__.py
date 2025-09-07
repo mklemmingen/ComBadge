@@ -6,7 +6,7 @@ communications and data validation.
 
 from .email_parser import EmailParser, EmailParseResult
 from .command_processor import CommandProcessor, CommandParseResult
-from .vehicle_validator import VehicleValidator, VehicleValidationResult
+from .resource_validator import VehicleValidator, ValidationResult
 from .temporal_extractor import TemporalExtractor, TemporalExtractionResult
 
 __all__ = [
@@ -15,7 +15,7 @@ __all__ = [
     "CommandProcessor", 
     "CommandParseResult",
     "VehicleValidator",
-    "VehicleValidationResult",
+    "ValidationResult",
     "TemporalExtractor",
     "TemporalExtractionResult"
 ]

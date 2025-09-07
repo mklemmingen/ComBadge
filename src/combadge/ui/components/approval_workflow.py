@@ -331,7 +331,11 @@ class ApprovalWorkflow(ctk.CTkFrame):
             self._create_warnings_section(row)
             row += 1
         
-        # 7. Action Buttons Section
+        # 7. Template Override Section
+        self._create_template_override_section(row)
+        row += 1
+        
+        # 8. Action Buttons Section
         self._create_action_buttons_section(row)
         row += 1
         
@@ -496,6 +500,48 @@ class ApprovalWorkflow(ctk.CTkFrame):
                 wraplength=600
             )
             warning_label.grid(row=i+1, column=0, sticky="w", padx=25, pady=2)
+    
+    def _create_template_override_section(self, row: int):
+        """Create template override section"""
+        section_frame = ctk.CTkFrame(self.scroll_frame)
+        section_frame.grid(row=row, column=0, sticky="ew", padx=5, pady=5)
+        section_frame.grid_columnconfigure(1, weight=1)
+        
+        # Section title
+        title = ctk.CTkLabel(
+            section_frame,
+            text="Template Selection",
+            font=CTkFont(size=16, weight="bold")
+        )
+        title.grid(row=0, column=0, columnspan=2, sticky="w", padx=15, pady=(15, 10))
+        
+        # Current template info
+        current_template_label = ctk.CTkLabel(
+            section_frame,
+            text="Current Template:",
+            font=CTkFont(size=12, weight="bold")
+        )
+        current_template_label.grid(row=1, column=0, sticky="w", padx=15, pady=5)
+        
+        current_template_value = ctk.CTkLabel(
+            section_frame,
+            text=self.current_interpretation.generated_request.get('template_name', 'Unknown'),
+            font=CTkFont(size=12),
+            text_color="#2196F3"
+        )
+        current_template_value.grid(row=1, column=1, sticky="w", padx=5, pady=5)
+        
+        # Override button
+        override_btn = ctk.CTkButton(
+            section_frame,
+            text="📋 Choose Different Template",
+            command=self._handle_template_override,
+            fg_color="#FF9800",
+            hover_color="#F57C00",
+            height=30,
+            font=CTkFont(size=11)
+        )
+        override_btn.grid(row=2, column=0, columnspan=2, padx=15, pady=(5, 15), sticky="w")
     
     def _create_action_buttons_section(self, row: int):
         """Create action buttons section"""
@@ -678,6 +724,35 @@ class ApprovalWorkflow(ctk.CTkFrame):
             
             if self.on_reject:
                 self.on_reject(decision)
+    
+    def _handle_template_override(self):
+        """Handle template override action"""
+        if not self.current_interpretation:
+            return
+        
+        # Show template selection dialog
+        override_dialog = ctk.CTkToplevel(self)
+        override_dialog.title("Choose Template")
+        override_dialog.geometry("400x300")
+        override_dialog.transient(self)
+        override_dialog.grab_set()
+        
+        # Simple template selection for now
+        # In a full implementation, this would show the TemplateLibraryDisplay
+        dialog_label = ctk.CTkLabel(
+            override_dialog,
+            text="Template override functionality coming soon!\\n\\nThis will allow you to:\\n• Browse available templates\\n• Select a different template\\n• Regenerate the API request\\n• Review the new result",
+            font=CTkFont(size=12),
+            justify="left"
+        )
+        dialog_label.pack(pady=50)
+        
+        close_btn = ctk.CTkButton(
+            override_dialog,
+            text="Close",
+            command=override_dialog.destroy
+        )
+        close_btn.pack(pady=20)
     
     def _handle_cancel(self):
         """Handle cancel/escape action"""

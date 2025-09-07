@@ -155,3 +155,4 @@ NameError: name 'ReasoningDisplay' is not defined
 2025-09-07 18:14:54 | combadge.intelligence.reasoning_engine | ERROR | _execute_streaming_request:278 | Streaming request failed: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=120)
 2025-09-07 18:19:48 | combadge.core.application | ERROR | start_reasoning_safe:198 | Reasoning display not available
 2025-09-07 18:21:59 | combadge.core.application | ERROR | _initialize_components:92 | Reasoning display failed to initialize
+2025-09-07 20:15:38 | combadge.core.application | ERROR | processing_thread:369 | Error in structured processing pipeline: 'IntentClassifier' object has no attribute 'classify_intent'

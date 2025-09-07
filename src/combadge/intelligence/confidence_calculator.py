@@ -12,7 +12,7 @@ from enum import Enum
 from statistics import mean, stdev
 
 from ..core.logging_manager import LoggingManager
-from .intent_classifier import ClassificationResult, IntentMatch, FleetIntent
+from .intent_classifier import ClassificationResult, IntentMatch, APIIntent
 from .entity_extractor import ExtractionResult, EntityMatch, EntityType
 
 
@@ -279,7 +279,7 @@ class ConfidenceCalculator:
             evidence.append(f"Pattern bonus: {pattern_bonus:.2f}")
         
         # Penalty for unknown intent
-        if intent_result.primary_intent.intent == FleetIntent.UNKNOWN:
+        if intent_result.primary_intent.intent == APIIntent.UNKNOWN:
             base_score *= 0.3
             notes.append("Unknown intent significantly reduces clarity")
         
@@ -310,14 +310,14 @@ class ConfidenceCalculator:
         
         # Define required entities for each intent
         required_entities = {
-            FleetIntent.CREATE_VEHICLE: [EntityType.VIN, EntityType.VEHICLE_ID],
-            FleetIntent.SCHEDULE_MAINTENANCE: [EntityType.VEHICLE_ID, EntityType.DATE],
-            FleetIntent.MAKE_RESERVATION: [EntityType.VEHICLE_ID, EntityType.DATE, EntityType.PERSON_NAME],
-            FleetIntent.ASSIGN_PARKING: [EntityType.VEHICLE_ID, EntityType.LOCATION],
-            FleetIntent.UPDATE_STATUS: [EntityType.VEHICLE_ID],
-            FleetIntent.QUERY_INFORMATION: [EntityType.VEHICLE_ID],
-            FleetIntent.TRANSFER_VEHICLE: [EntityType.VEHICLE_ID, EntityType.LOCATION],
-            FleetIntent.CANCEL_OPERATION: [EntityType.VEHICLE_ID]
+            APIIntent.CREATE_RESOURCE: [EntityType.VIN, EntityType.VEHICLE_ID],
+            APIIntent.SCHEDULE_TASK: [EntityType.VEHICLE_ID, EntityType.DATE],
+            APIIntent.MAKE_RESERVATION: [EntityType.VEHICLE_ID, EntityType.DATE, EntityType.PERSON_NAME],
+            APIIntent.ASSIGN_RESOURCE: [EntityType.VEHICLE_ID, EntityType.LOCATION],
+            APIIntent.UPDATE_STATUS: [EntityType.VEHICLE_ID],
+            APIIntent.QUERY_INFORMATION: [EntityType.VEHICLE_ID],
+            APIIntent.TRANSFER_RESOURCE: [EntityType.VEHICLE_ID, EntityType.LOCATION],
+            APIIntent.CANCEL_OPERATION: [EntityType.VEHICLE_ID]
         }
         
         intent = intent_result.primary_intent.intent
@@ -443,11 +443,11 @@ class ConfidenceCalculator:
         
         # Define expected entity combinations for each intent
         expected_combinations = {
-            FleetIntent.SCHEDULE_MAINTENANCE: {EntityType.VEHICLE_ID, EntityType.DATE, EntityType.TIME},
-            FleetIntent.MAKE_RESERVATION: {EntityType.VEHICLE_ID, EntityType.DATE, EntityType.PERSON_NAME},
-            FleetIntent.ASSIGN_PARKING: {EntityType.VEHICLE_ID, EntityType.LOCATION, EntityType.PARKING_SPOT},
-            FleetIntent.UPDATE_STATUS: {EntityType.VEHICLE_ID},
-            FleetIntent.TRANSFER_VEHICLE: {EntityType.VEHICLE_ID, EntityType.LOCATION}
+            APIIntent.SCHEDULE_TASK: {EntityType.VEHICLE_ID, EntityType.DATE, EntityType.TIME},
+            APIIntent.MAKE_RESERVATION: {EntityType.VEHICLE_ID, EntityType.DATE, EntityType.PERSON_NAME},
+            APIIntent.ASSIGN_RESOURCE: {EntityType.VEHICLE_ID, EntityType.LOCATION, EntityType.PARKING_SPOT},
+            APIIntent.UPDATE_STATUS: {EntityType.VEHICLE_ID},
+            APIIntent.TRANSFER_RESOURCE: {EntityType.VEHICLE_ID, EntityType.LOCATION}
         }
         
         expected = expected_combinations.get(intent, set())

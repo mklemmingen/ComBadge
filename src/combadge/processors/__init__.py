@@ -6,16 +6,16 @@ command processing, data validation, and temporal extraction.
 
 from .core.email_parser import EmailParser, EmailParseResult
 from .core.command_processor import CommandProcessor, CommandParseResult  
-from .core.resource_validator import ResourceValidator, ValidationResult
-from .core.temporal_extractor import TemporalExtractor, TemporalParseResult
+from .core.resource_validator import VehicleValidator, ValidationResult
+from .core.temporal_extractor import TemporalExtractor, TemporalExtractionResult
 
 __all__ = [
     "EmailParser",
     "EmailParseResult", 
     "CommandProcessor",
     "CommandParseResult",
-    "ResourceValidator", 
+    "VehicleValidator", 
     "ValidationResult",
     "TemporalExtractor",
-    "TemporalParseResult"
+    "TemporalExtractionResult"
 ]

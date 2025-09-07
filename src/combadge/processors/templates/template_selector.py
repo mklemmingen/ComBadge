@@ -11,7 +11,7 @@ import re
 from datetime import datetime
 
 from ...core.logging_manager import LoggingManager
-from ...intelligence.intent_classifier import ClassificationResult, FleetIntent
+from ...intelligence.intent_classifier import ClassificationResult, APIIntent
 from ...intelligence.entity_extractor import ExtractionResult, EntityType
 from .template_manager import TemplateManager, TemplateMetadata
 
@@ -38,8 +38,8 @@ class MatchingCriteria(Enum):
 @dataclass
 class TemplateCriteria:
     """Criteria for template selection."""
-    primary_intent: FleetIntent
-    secondary_intents: List[FleetIntent] = field(default_factory=list)
+    primary_intent: APIIntent
+    secondary_intents: List[APIIntent] = field(default_factory=list)
     available_entities: Dict[EntityType, List[str]] = field(default_factory=dict)
     required_entities: Set[str] = field(default_factory=set)
     preferred_categories: List[str] = field(default_factory=list)
@@ -106,21 +106,21 @@ class TemplateSelector:
         self.multi_step_detection = True
         self.partial_match_penalty = 0.3
         
-    def _build_intent_category_map(self) -> Dict[FleetIntent, List[str]]:
+    def _build_intent_category_map(self) -> Dict[APIIntent, List[str]]:
         """Build mapping from intents to template categories.
         
         Returns:
             Dictionary mapping intents to categories
         """
         return {
-            FleetIntent.CREATE_VEHICLE: ["vehicle_operations"],
-            FleetIntent.SCHEDULE_MAINTENANCE: ["maintenance"],
-            FleetIntent.MAKE_RESERVATION: ["reservations"],
-            FleetIntent.ASSIGN_PARKING: ["parking"],
-            FleetIntent.UPDATE_STATUS: ["vehicle_operations", "maintenance"],
-            FleetIntent.QUERY_INFORMATION: ["vehicle_operations", "reservations", "maintenance"],
-            FleetIntent.TRANSFER_VEHICLE: ["vehicle_operations", "parking"],
-            FleetIntent.CANCEL_OPERATION: ["reservations", "maintenance"]
+            APIIntent.CREATE_RESOURCE: ["vehicle_operations"],
+            APIIntent.SCHEDULE_TASK: ["maintenance"],
+            APIIntent.MAKE_RESERVATION: ["reservations"],
+            APIIntent.ASSIGN_RESOURCE: ["parking"],
+            APIIntent.UPDATE_STATUS: ["vehicle_operations", "maintenance"],
+            APIIntent.QUERY_INFORMATION: ["vehicle_operations", "reservations", "maintenance"],
+            APIIntent.TRANSFER_RESOURCE: ["vehicle_operations", "parking"],
+            APIIntent.CANCEL_OPERATION: ["reservations", "maintenance"]
         }
     
     def select_templates(
@@ -369,8 +369,8 @@ class TemplateSelector:
     def _score_intent_alignment(
         self,
         metadata: TemplateMetadata,
-        primary_intent: FleetIntent,
-        secondary_intents: List[FleetIntent]
+        primary_intent: APIIntent,
+        secondary_intents: List[APIIntent]
     ) -> float:
         """Score how well template aligns with identified intents.
         
@@ -384,14 +384,14 @@ class TemplateSelector:
         """
         # Map intent to expected template names/categories
         intent_mappings = {
-            FleetIntent.CREATE_VEHICLE: ["create", "new", "add"],
-            FleetIntent.SCHEDULE_MAINTENANCE: ["schedule", "maintenance", "service"],
-            FleetIntent.MAKE_RESERVATION: ["reserve", "book", "reservation"],
-            FleetIntent.ASSIGN_PARKING: ["assign", "park", "parking"],
-            FleetIntent.UPDATE_STATUS: ["update", "modify", "change"],
-            FleetIntent.QUERY_INFORMATION: ["query", "search", "find", "get"],
-            FleetIntent.TRANSFER_VEHICLE: ["transfer", "move", "relocate"],
-            FleetIntent.CANCEL_OPERATION: ["cancel", "remove", "delete"]
+            APIIntent.CREATE_RESOURCE: ["create", "new", "add"],
+            APIIntent.SCHEDULE_TASK: ["schedule", "maintenance", "service"],
+            APIIntent.MAKE_RESERVATION: ["reserve", "book", "reservation"],
+            APIIntent.ASSIGN_RESOURCE: ["assign", "park", "parking"],
+            APIIntent.UPDATE_STATUS: ["update", "modify", "change"],
+            APIIntent.QUERY_INFORMATION: ["query", "search", "find", "get"],
+            APIIntent.TRANSFER_RESOURCE: ["transfer", "move", "relocate"],
+            APIIntent.CANCEL_OPERATION: ["cancel", "remove", "delete"]
         }
         
         score = 0.0
