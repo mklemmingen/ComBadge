@@ -7,6 +7,8 @@ For example:
 
 **"Reserve vehicle F-123 for tomorrow 2-4pm"** → **Structured API Request** → **Executed with Approval**
 
+Disclaimer: 
+
 The displayed framework is the bare NLP 2 API solution without any configuration to existing systems. 
 No actual api documentation was used in documentating and planning this repo. 
 It was created outside of work-time and is inspired by the need of real-world systems to have fully-private non-cloud 
