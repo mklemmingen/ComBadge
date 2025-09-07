@@ -1,0 +1,327 @@
+# Vehicle Entity Extraction Patterns
+# UPDATE INSTRUCTIONS: Customize these patterns for your specific fleet identification system
+# 1. Update vehicle ID patterns to match your naming convention (VEH001 vs FLT-2024-001 vs custom format)
+# 2. Replace make/model lists with your actual fleet composition and preferred brands
+# 3. Modify VIN validation patterns if you have specific requirements or exceptions
+# 4. Update license plate patterns to match your region's format requirements
+# 5. Add vehicle type categories specific to your fleet composition (specialty vehicles, equipment, etc.)
+# 6. Include color names and variants commonly used in your organization
+
+## VEHICLE IDENTIFICATION PATTERNS
+
+### Vehicle ID Formats
+# UPDATE: Modify these patterns to match your vehicle ID system
+
+**Primary Vehicle ID Pattern:**
+- Format: VEH + 3-4 digits (VEH001, VEH0001)
+- Regex: `VEH\d{3,4}`
+- Variations: VEH-001, VEH_001, V001
+- Case insensitive: veh001, Veh001, VEH001
+
+**Alternative ID Patterns:**
+# UPDATE: Add your custom ID formats
+- Fleet ID: FLT-YYYY-### (FLT-2024-001)
+- Asset ID: AST-###### (AST-123456)
+- Unit ID: UNIT-### (UNIT-025)
+- Custom: [YOUR_PREFIX]-[YOUR_PATTERN]
+
+**ID Validation Rules:**
+- Minimum length: 3 characters
+- Maximum length: 15 characters  
+- Allowed characters: Letters, numbers, hyphens, underscores
+- Must contain at least one number
+- Cannot be only numbers (to distinguish from phone numbers)
+
+### License Plate Patterns
+# UPDATE: Customize for your region's license plate formats
+
+**Standard US Patterns:**
+- ABC-123: 3 letters + 3 numbers
+- AB-123C: 2 letters + 3 numbers + 1 letter  
+- 123-ABC: 3 numbers + 3 letters
+- AB12CD: 2 letters + 2 numbers + 2 letters
+
+**Special Patterns:**
+- Government: G123456, GOV-123
+- Commercial: COM-123, C123456
+- Temporary: T123456, TEMP123
+- Specialty: FLEET1, EXEC01
+
+**International Patterns (if applicable):**
+# UPDATE: Add patterns for your operating regions
+- European: AB-123-CD
+- Canadian: ABC-1234
+- Custom regional formats: [ADD YOUR PATTERNS]
+
+**Validation Rules:**
+- Length: 2-10 characters
+- Allowed: Letters, numbers, hyphens, spaces
+- Case insensitive processing
+- Remove spaces/hyphens for comparison
+- Validate against known invalid combinations
+
+### VIN (Vehicle Identification Number)
+**Standard VIN Format:**
+- Length: Exactly 17 characters
+- Allowed characters: A-Z, 0-9 (excluding I, O, Q)
+- Pattern: `[A-HJ-NPR-Z0-9]{17}`
+
+**VIN Components:**
+- Positions 1-3: World Manufacturer Identifier (WMI)
+- Positions 4-9: Vehicle Descriptor Section (VDS)
+- Positions 10-17: Vehicle Identifier Section (VIS)
+
+**Common VIN Prefixes by Manufacturer:**
+# UPDATE: Add prefixes relevant to your fleet
+- Honda: 1HG, 2HG, JHM
+- Toyota: 1NT, 2T1, 4T1, JTD
+- Ford: 1FA, 1FB, 1FC, 1FD, 1FT
+- Chevrolet: 1G1, 1GC, 1GB
+- Custom fleet VINs: [ADD YOUR PATTERNS]
+
+**VIN Validation:**
+- Check digit calculation (position 9)
+- Year encoding validation (position 10)
+- Manufacturer code verification
+- Format compliance check
+
+## VEHICLE ATTRIBUTES
+
+### Make and Model Extraction
+# UPDATE: Replace with your actual fleet composition
+
+**Common Fleet Makes:**
+```
+Priority 1 (Most Common):
+- Toyota: Camry, Corolla, Prius, RAV4, Highlander, Sienna
+- Honda: Civic, Accord, CR-V, Pilot, Odyssey, HR-V
+- Ford: Focus, Fusion, Escape, Explorer, F-150, Transit
+- Chevrolet: Malibu, Equinox, Tahoe, Silverado, Suburban
+
+Priority 2 (Common):
+- Nissan: Altima, Sentra, Rogue, Pathfinder, NV200
+- Hyundai: Elantra, Sonata, Tucson, Santa Fe
+- Kia: Optima, Sorento, Sportage, Sedona
+- BMW: 3 Series, 5 Series, X3, X5
+- Mercedes: C-Class, E-Class, GLC, GLE
+- Audi: A4, A6, Q5, Q7
+
+Specialty/Commercial:
+- Ram: 1500, 2500, ProMaster
+- GMC: Sierra, Acadia, Yukon
+- Jeep: Cherokee, Grand Cherokee, Wrangler
+- Tesla: Model S, Model 3, Model X, Model Y
+```
+
+**Make Aliases and Variations:**
+- BMW: Bayerische Motoren Werke, Beemer
+- Mercedes: Mercedes-Benz, Merc, Benz
+- Volkswagen: VW, Volks
+- Chevrolet: Chevy
+- Cadillac: Caddy
+
+### Vehicle Types and Categories
+# UPDATE: Customize for your fleet composition
+
+**Primary Categories:**
+- Sedan: 4-door passenger car
+- SUV: Sport Utility Vehicle, includes crossovers
+- Truck: Pickup trucks, all sizes
+- Van: Cargo vans, passenger vans, minivans
+- Coupe: 2-door passenger car
+- Convertible: Soft-top or hard-top convertible
+- Hatchback: 5-door with rear hatch
+
+**Commercial Categories:**
+- Delivery Van: Package delivery vehicles
+- Box Truck: Medium duty cargo trucks
+- Flatbed: Open bed commercial trucks
+- Refrigerated: Temperature-controlled cargo
+- Service Vehicle: Maintenance and repair trucks
+- Emergency: Police, fire, ambulance, security
+
+**Special Categories:**
+# UPDATE: Add categories specific to your operation
+- Executive: High-end vehicles for executives
+- Pool Car: Shared-use fleet vehicles  
+- Electric: All-electric vehicles (EV)
+- Hybrid: Hybrid electric vehicles (HEV)
+- Wheelchair Accessible: ADA compliant vehicles
+- [YOUR CUSTOM CATEGORIES]
+
+### Color Extraction
+# UPDATE: Add color names commonly used in your organization
+
+**Standard Colors:**
+- White: Pearl white, off-white, cream, ivory
+- Black: Jet black, charcoal, carbon black
+- Silver: Metallic silver, light silver, dark silver
+- Gray/Grey: Light gray, dark gray, gunmetal
+- Blue: Navy blue, royal blue, sky blue, midnight blue
+- Red: Cherry red, burgundy, maroon, crimson
+- Green: Forest green, dark green, hunter green
+- Brown: Tan, beige, bronze, copper
+
+**Metallic Variations:**
+- Add "metallic" prefix: Metallic blue, metallic red
+- Pearl finishes: Pearl white, pearl black
+- Matte finishes: Matte black, matte gray
+
+**Multi-word Colors:**
+- Light Blue, Dark Blue, Navy Blue
+- Light Gray, Dark Gray, Charcoal Gray
+- Forest Green, Hunter Green, Sage Green
+
+### Year Extraction
+**Valid Year Range:**
+- Minimum: 2000 (adjust based on your fleet age policy)
+- Maximum: Current year + 1 (for next model year)
+- Pattern: 4-digit years only (2020, 2023, 2024)
+- Validation: Must be reasonable for vehicle context
+
+**Year Context Patterns:**
+- "2023 Honda Civic"
+- "Honda Civic 2023"
+- "Model year 2023"
+- "MY 2023"
+- "'23 Honda" (convert '23 to 2023)
+
+## EXTRACTION RULES AND CONFIDENCE SCORING
+
+### High Confidence Patterns (0.9-1.0)
+- Exact VIN match with validation
+- Vehicle ID in standard format (VEH001)
+- Complete make/model/year specification
+- License plate in recognized format
+
+### Medium Confidence Patterns (0.7-0.89)
+- Partial VIN (last 8 digits)
+- Make/model without year
+- Vehicle ID in non-standard format
+- License plate with unusual format
+
+### Low Confidence Patterns (0.5-0.69)
+- Make only (no model)
+- Color and make only ("red Honda")
+- Ambiguous references ("the car", "my vehicle")
+- Partial license plate
+
+### Context Dependency Rules
+
+**Vehicle Reference Priority:**
+1. Specific VIN (highest priority)
+2. Vehicle ID 
+3. License plate
+4. Make + Model + Year
+5. Make + Model
+6. Make + Color
+7. Generic references (lowest priority)
+
+**Disambiguation Rules:**
+- If multiple vehicles match description, flag for clarification
+- Prefer exact matches over partial matches
+- Consider context from previous conversation
+- Weight recent assignments higher
+
+### Entity Relationship Validation
+
+**Cross-Entity Validation:**
+- VIN year must match extracted year
+- Make must be consistent with VIN manufacturer
+- Model must be valid for specified make/year
+- License plate format must match jurisdiction
+
+**Business Rule Validation:**
+- Vehicle must exist in fleet database
+- Vehicle status must allow requested operation
+- User permissions for specific vehicles
+- Geographic restrictions for license plates
+
+## EXTRACTION EXAMPLES
+
+### Successful Extractions
+
+**Input:** "Schedule maintenance for VEH001 - the blue 2023 Honda Civic with license plate ABC-123"
+**Extracted:**
+- vehicle_id: VEH001 (confidence: 0.95)
+- color: blue (confidence: 0.90)
+- year: 2023 (confidence: 0.95)
+- make: Honda (confidence: 0.95)
+- model: Civic (confidence: 0.95)
+- license_plate: ABC-123 (confidence: 0.90)
+
+**Input:** "Book the silver Toyota for tomorrow morning"
+**Extracted:**
+- color: silver (confidence: 0.85)
+- make: Toyota (confidence: 0.95)
+- model: [not specified] (confidence: 0.0)
+
+**Input:** "Vehicle with VIN 1HGCM82633A123456 needs service"
+**Extracted:**
+- vin: 1HGCM82633A123456 (confidence: 1.0)
+- make: Honda (derived from VIN, confidence: 0.90)
+
+### Error Handling
+
+**Ambiguous References:**
+- Input: "The car needs fixing"
+- Action: Flag as ambiguous, request clarification
+- Response: "Which vehicle needs service? Please provide vehicle ID, license plate, or make/model."
+
+**Invalid Data:**
+- Input: "Book vehicle VEH999999 tomorrow"
+- Validation: Check if VEH999999 exists in fleet
+- Action: If not found, request valid vehicle identifier
+
+**Conflicting Information:**
+- Input: "Schedule maintenance for the 2020 Honda with VIN 1HGCM82633A123456"
+- Validation: Check if VIN year matches specified year
+- Action: If conflict, flag inconsistency and request clarification
+
+## CONTEXT AND LEARNING
+
+### Contextual Enhancement
+
+**Previous Conversation Context:**
+- Remember previously mentioned vehicles in conversation
+- Use context to resolve ambiguous references
+- Maintain vehicle focus throughout related requests
+
+**User Pattern Learning:**
+- Track user's commonly referenced vehicles
+- Learn user's preferred identification methods
+- Adapt confidence scoring based on user accuracy
+
+**Fleet Knowledge Integration:**
+- Cross-reference with fleet database
+- Validate against known vehicle assignments
+- Check availability and status constraints
+
+### Continuous Improvement
+
+**Pattern Recognition:**
+- Identify new abbreviation patterns
+- Learn organization-specific terminology
+- Adapt to regional language variations
+
+**Error Pattern Analysis:**
+- Track common extraction failures
+- Identify systematic biases or gaps
+- Update patterns based on real usage
+
+**Validation Refinement:**
+- Improve cross-entity validation rules
+- Enhance business rule integration
+- Optimize confidence threshold settings
+
+# CUSTOMIZATION CHECKLIST:
+# □ Update vehicle ID patterns to match your system format
+# □ Replace make/model lists with your actual fleet composition
+# □ Modify license plate patterns for your operating regions
+# □ Add vehicle categories specific to your fleet type
+# □ Include color names and variants used in your organization
+# □ Update year ranges based on your fleet age policies
+# □ Add custom validation rules for your business requirements
+# □ Include region-specific or industry-specific patterns
+# □ Test extraction patterns with your actual vehicle data
+# □ Validate against your existing fleet database structure

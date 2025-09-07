@@ -1,0 +1,572 @@
+{
+  "version": "1.0",
+  "last_updated": "2024-01-15",
+  "description": "Standard request schemas for all fleet management API endpoints",
+  "note": "UPDATE: Modify these schemas to match your actual API specifications and data models",
+  
+  "vehicle_operations": {
+    "create_vehicle_request": {
+      "type": "object",
+      "required": ["make", "model", "year", "vin", "license_plate"],
+      "properties": {
+        "make": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 30,
+          "description": "Vehicle manufacturer",
+          "examples": ["Toyota", "Honda", "Ford", "Chevrolet"]
+        },
+        "model": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50,
+          "description": "Vehicle model name",
+          "examples": ["Camry", "Civic", "F-150", "Silverado"]
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 2025,
+          "description": "Model year"
+        },
+        "vin": {
+          "type": "string",
+          "pattern": "^[A-HJ-NPR-Z0-9]{17}$",
+          "description": "Vehicle Identification Number (17 characters, no I, O, Q)"
+        },
+        "license_plate": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 10,
+          "pattern": "^[A-Z0-9-]{2,10}$",
+          "description": "License plate number"
+        },
+        "color": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Vehicle color",
+          "examples": ["White", "Black", "Silver", "Blue", "Red"]
+        },
+        "fuel_type": {
+          "type": "string",
+          "enum": ["gasoline", "diesel", "hybrid", "electric", "natural_gas"],
+          "description": "Primary fuel type"
+        },
+        "vehicle_type": {
+          "type": "string",
+          "enum": ["sedan", "suv", "truck", "van", "coupe", "hatchback"],
+          "description": "Vehicle category"
+        },
+        "assigned_department": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Department assignment"
+        },
+        "assigned_driver": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Primary driver assignment (user ID or email)"
+        },
+        "purchase_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Vehicle purchase date (YYYY-MM-DD)"
+        },
+        "purchase_price": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Vehicle purchase price"
+        },
+        "initial_mileage": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Initial odometer reading"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Additional notes about the vehicle"
+        }
+      }
+    },
+
+    "update_vehicle_request": {
+      "type": "object",
+      "properties": {
+        "assigned_department": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "assigned_driver": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "current_location": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "inactive", "maintenance", "retired"]
+        },
+        "mileage": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fuel_level": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Fuel level as decimal (0.0 = empty, 1.0 = full)"
+        },
+        "condition_notes": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "last_service_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "next_service_due": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+
+  "maintenance_operations": {
+    "schedule_maintenance_request": {
+      "type": "object",
+      "required": ["vehicle_id", "maintenance_type", "requested_date"],
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{6,12}$",
+          "description": "Unique vehicle identifier"
+        },
+        "maintenance_type": {
+          "type": "string",
+          "enum": ["oil_change", "tire_rotation", "brake_service", "transmission", "engine", "electrical", "ac_service", "inspection", "preventive", "corrective", "emergency"],
+          "description": "Type of maintenance service"
+        },
+        "requested_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Preferred service date (YYYY-MM-DD)"
+        },
+        "requested_time": {
+          "type": "string",
+          "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Preferred service time (HH:MM in 24-hour format)"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "normal", "high", "urgent", "emergency"],
+          "default": "normal",
+          "description": "Service priority level"
+        },
+        "estimated_duration": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 24,
+          "description": "Estimated service duration in hours"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Detailed description of maintenance needs"
+        },
+        "preferred_technician": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Requested technician ID or name"
+        },
+        "service_location": {
+          "type": "string",
+          "enum": ["main_garage", "branch_garage", "mobile_service", "external_shop"],
+          "description": "Preferred service location"
+        },
+        "parts_needed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "part_id": {"type": "string"},
+              "part_name": {"type": "string"},
+              "quantity": {"type": "integer", "minimum": 1},
+              "estimated_cost": {"type": "number", "minimum": 0}
+            }
+          }
+        },
+        "special_instructions": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "contact_person": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Contact person for appointment coordination"
+        }
+      }
+    },
+
+    "update_maintenance_request": {
+      "type": "object",
+      "properties": {
+        "requested_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "requested_time": {
+          "type": "string",
+          "pattern": "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "normal", "high", "urgent", "emergency"]
+        },
+        "assigned_technician": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "service_location": {
+          "type": "string",
+          "enum": ["main_garage", "branch_garage", "mobile_service", "external_shop"]
+        },
+        "estimated_duration": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 24
+        },
+        "special_instructions": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "status": {
+          "type": "string",
+          "enum": ["scheduled", "confirmed", "in_progress", "completed", "cancelled"]
+        }
+      }
+    }
+  },
+
+  "reservation_operations": {
+    "create_reservation_request": {
+      "type": "object",
+      "required": ["vehicle_id", "user_id", "start_datetime"],
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{6,12}$",
+          "description": "Vehicle to reserve"
+        },
+        "user_id": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "User making the reservation (email, employee ID, etc.)"
+        },
+        "start_datetime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Reservation start date and time (ISO 8601)"
+        },
+        "end_datetime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Reservation end date and time (ISO 8601)"
+        },
+        "duration_hours": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 168,
+          "description": "Reservation duration in hours"
+        },
+        "purpose": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Business purpose for the reservation"
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Primary destination address or location"
+        },
+        "passenger_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8,
+          "default": 1,
+          "description": "Number of passengers including driver"
+        },
+        "estimated_mileage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000,
+          "description": "Estimated miles for the trip"
+        },
+        "special_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["fuel_card", "gps", "child_seat", "wheelchair_accessible", "bluetooth"]
+          },
+          "description": "Special equipment or accessibility needs"
+        },
+        "department": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Requesting department"
+        },
+        "cost_center": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Cost center for billing"
+        },
+        "project_code": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Project code for expense tracking"
+        },
+        "requires_approval": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether reservation requires manager approval"
+        },
+        "emergency_contact": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Emergency contact person and phone number"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Additional notes or special instructions"
+        }
+      }
+    },
+
+    "update_reservation_request": {
+      "type": "object",
+      "properties": {
+        "start_datetime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_datetime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "purpose": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "destination": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "passenger_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "estimated_mileage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "special_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["fuel_card", "gps", "child_seat", "wheelchair_accessible", "bluetooth"]
+          }
+        },
+        "emergency_contact": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    }
+  },
+
+  "parking_operations": {
+    "assign_parking_request": {
+      "type": "object",
+      "required": ["vehicle_id", "location"],
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{6,12}$",
+          "description": "Vehicle to assign parking"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Parking facility or location name"
+        },
+        "zone": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,2}$",
+          "description": "Parking zone (A, B, C, etc.)"
+        },
+        "level": {
+          "type": "string",
+          "pattern": "^[0-9A-Z]{1,3}$",
+          "description": "Parking level or floor"
+        },
+        "spot_number": {
+          "type": "string",
+          "pattern": "^[A-Z0-9-]{1,10}$",
+          "description": "Specific parking spot number"
+        },
+        "spot_type": {
+          "type": "string",
+          "enum": ["standard", "compact", "oversized", "electric", "handicap", "visitor"],
+          "default": "standard",
+          "description": "Type of parking space"
+        },
+        "assignment_type": {
+          "type": "string",
+          "enum": ["permanent", "temporary", "visitor", "reserved"],
+          "default": "permanent",
+          "description": "Type of parking assignment"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Assignment start date"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Assignment end date (null for permanent)"
+        },
+        "assigned_to": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "User ID of person responsible for the space"
+        },
+        "department": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Department assignment"
+        },
+        "special_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["covered_parking", "electric_charging", "security_camera", "ground_level", "close_to_entrance"]
+          }
+        },
+        "accessibility_required": {
+          "type": "boolean",
+          "default": false,
+          "description": "Requires handicap-accessible space"
+        },
+        "contact_person": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Contact person for parking assignment"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    }
+  },
+
+  "common_patterns": {
+    "pagination_request": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Page number"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 50,
+          "description": "Number of items per page"
+        },
+        "sort_by": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Field to sort by"
+        },
+        "sort_order": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "default": "asc",
+          "description": "Sort order"
+        }
+      }
+    },
+
+    "date_range_filter": {
+      "type": "object",
+      "properties": {
+        "start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date for filtering (YYYY-MM-DD)"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date",
+          "description": "End date for filtering (YYYY-MM-DD)"
+        }
+      }
+    },
+
+    "status_filter": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by status values"
+        }
+      }
+    }
+  },
+
+  "validation_notes": {
+    "field_validation": "All string fields are trimmed of leading/trailing whitespace",
+    "case_sensitivity": "Email addresses and user IDs are case-insensitive",
+    "date_formats": "All dates must be in ISO 8601 format (YYYY-MM-DD for dates, full ISO for datetimes)",
+    "enum_validation": "Enum values are case-sensitive and must match exactly",
+    "pattern_validation": "Regular expression patterns are applied after trimming whitespace",
+    "cross_field_validation": "Some validations require checking relationships between fields",
+    "business_rule_validation": "Additional business logic validation may be applied beyond schema validation"
+  },
+
+  "update_instructions": {
+    "schema_customization": [
+      "Replace enum values with your actual operational values",
+      "Update string patterns to match your ID formats and naming conventions", 
+      "Modify field lengths based on your database column sizes",
+      "Add or remove fields based on your business requirements",
+      "Update validation patterns for your region-specific formats (phone, postal codes, etc.)",
+      "Include additional fields specific to your industry or compliance requirements"
+    ],
+    "validation_rules": [
+      "Test all patterns with your actual data formats",
+      "Ensure enum values cover all possible operational states",
+      "Validate field length limits against your database schema",
+      "Add custom validation rules for your business logic",
+      "Include error handling for validation failures"
+    ]
+  }
+}

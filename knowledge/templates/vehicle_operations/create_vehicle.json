@@ -1,0 +1,63 @@
+{
+  "template_metadata": {
+    "name": "create_vehicle",
+    "version": "1.0",
+    "category": "vehicle_operations",
+    "description": "Creates a new vehicle in the fleet management system",
+    "required_entities": ["vehicle_id", "vin"],
+    "optional_entities": ["make", "model", "year", "location", "department"],
+    "api_endpoint": "/api/v1/vehicles",
+    "http_method": "POST"
+  },
+  "template": {
+    "vehicle_id": "{vehicle_id}",
+    "vin": "{vin}",
+    "make": "{make|Unknown}",
+    "model": "{model|Unknown}",
+    "year": "{year|2024}",
+    "vehicle_type": "{vehicle_type|passenger}",
+    "assignment": {
+      "location": "{location|headquarters}",
+      "department": "{department|general}",
+      "assigned_to": "{assigned_to|null}"
+    },
+    "status": "active",
+    "registration": {
+      "license_plate": "{license_plate|null}",
+      "registration_date": "{registration_date|{current_date}}",
+      "expiration_date": "{registration_expiration|null}"
+    },
+    "maintenance": {
+      "last_service": null,
+      "next_service_due": "{next_service|null}",
+      "mileage": "{mileage|0}"
+    },
+    "metadata": {
+      "created_by": "{created_by|system}",
+      "created_at": "{current_timestamp}",
+      "notes": "{notes|null}"
+    }
+  },
+  "validation_rules": {
+    "vehicle_id": {
+      "required": true,
+      "type": "string",
+      "pattern": "^[A-Z0-9-]{3,15}$"
+    },
+    "vin": {
+      "required": true,
+      "type": "string",
+      "length": 17,
+      "pattern": "^[A-HJ-NPR-Z0-9]{17}$"
+    },
+    "year": {
+      "type": "integer",
+      "min": 1900,
+      "max": 2030
+    },
+    "mileage": {
+      "type": "integer",
+      "min": 0
+    }
+  }
+}

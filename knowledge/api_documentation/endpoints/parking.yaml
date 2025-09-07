@@ -1,0 +1,990 @@
+# Fleet Management API - Parking Operations
+# UPDATE INSTRUCTIONS: Replace with your actual parking management API documentation
+# 1. Update all endpoint paths to match your parking system API structure
+# 2. Modify parking locations, zones, and spot types to fit your facilities
+# 3. Replace access control and permit systems with your security infrastructure
+# 4. Update pricing models, restrictions, and enforcement policies
+# 5. Modify integration points for access gates, payment systems, etc.
+
+api_version: "1.0"
+base_url: "https://api.your-fleet-system.com/v1"  # UPDATE: Replace with actual API base URL
+description: "Parking space management and assignment operations"
+last_updated: "2024-01-15"
+
+# Parking Operations Endpoints
+endpoints:
+
+  # Assign parking space
+  assign_parking:
+    # UPDATE: Modify path to match your API structure
+    path: "/fleet/parking/assign"
+    method: "POST"
+    description: "Assign parking space to a vehicle"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/parking_assignment_request"
+      required_fields: ["vehicle_id", "location"]  # UPDATE: Modify required fields
+      # UPDATE: Replace with actual parking assignment request format
+      example:
+        vehicle_id: "VEH001"
+        location: "Headquarters Main"
+        spot_preference:
+          zone: "A"
+          level: "1"
+          spot_type: "standard"
+          accessibility_required: false
+        assignment_duration:
+          assignment_type: "permanent"
+          start_date: "2024-01-20"
+          end_date: null
+        assignment_details:
+          assigned_to: "john.doe@company.com"
+          department: "Sales"
+          reason: "Daily commuter vehicle"
+          priority: "normal"
+        special_requirements:
+          - "covered_parking"
+          - "electric_charging"
+        contact_info:
+          contact_person: "john.doe@company.com"
+          phone: "(555) 123-4567"
+          notification_method: "email"
+    
+    responses:
+      "201":
+        description: "Parking space assigned successfully"
+        schema:
+          $ref: "#/schemas/parking_assignment"
+        # UPDATE: Replace with actual assignment response
+        example:
+          assignment_id: "PA001"
+          vehicle_id: "VEH001"
+          parking_space:
+            location_name: "Headquarters Main"
+            building: "Building A"
+            level: "1"
+            zone: "A"
+            spot_number: "A1-025"
+            spot_type: "standard"
+            coordinates:
+              latitude: 40.7128
+              longitude: -74.0060
+          assignment_details:
+            assigned_to: "john.doe@company.com"
+            assignment_type: "permanent"
+            start_date: "2024-01-20"
+            end_date: null
+            status: "active"
+            access_code: "1234"
+            permit_number: "PERM-2024-001"
+          access_instructions: "Use main entrance, swipe badge at gate"
+          created_at: "2024-01-15T14:30:00Z"
+
+  # List parking assignments
+  list_parking_assignments:
+    # UPDATE: Modify path and filter parameters
+    path: "/fleet/parking/assignments"
+    method: "GET"
+    description: "Retrieve list of parking assignments"
+    
+    parameters:
+      query:
+        vehicle_id:
+          type: "string"
+          description: "Filter by vehicle ID"
+        user_id:
+          type: "string"
+          description: "Filter by assigned user"
+        location:
+          type: "string"
+          description: "Filter by parking location"
+        zone:
+          type: "string"
+          description: "Filter by parking zone"
+        level:
+          type: "string"
+          description: "Filter by parking level"
+        status:
+          type: "string"
+          description: "Filter by assignment status"
+          enum: ["active", "inactive", "temporary", "expired", "suspended"]  # UPDATE: Add your statuses
+        assignment_type:
+          type: "string"
+          enum: ["permanent", "temporary", "visitor", "reserved"]
+        spot_type:
+          type: "string"
+          enum: ["standard", "compact", "oversized", "electric", "handicap", "visitor"]
+        page:
+          type: "integer"
+          default: 1
+        limit:
+          type: "integer"
+          default: 50
+    
+    responses:
+      "200":
+        description: "Parking assignments retrieved successfully"
+        schema:
+          type: "object"
+          properties:
+            assignments:
+              type: "array"
+              items:
+                $ref: "#/schemas/parking_assignment"
+            pagination:
+              $ref: "#/schemas/pagination"
+            summary:
+              type: "object"
+              properties:
+                total_assignments:
+                  type: "integer"
+                active_assignments:
+                  type: "integer"
+                available_spots:
+                  type: "integer"
+
+  # Get parking assignment details
+  get_parking_assignment:
+    # UPDATE: Modify path parameter format
+    path: "/fleet/parking/assignments/{assignment_id}"
+    method: "GET"
+    description: "Retrieve detailed parking assignment information"
+    
+    parameters:
+      path:
+        assignment_id:
+          type: "string"
+          description: "Unique assignment identifier"
+          required: true
+    
+    responses:
+      "200":
+        description: "Parking assignment details retrieved successfully"
+        schema:
+          $ref: "#/schemas/parking_assignment_detailed"
+
+  # Update parking assignment
+  update_parking_assignment:
+    # UPDATE: Modify update logic and allowed fields
+    path: "/fleet/parking/assignments/{assignment_id}"
+    method: "PUT"
+    description: "Update parking assignment details"
+    
+    parameters:
+      path:
+        assignment_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/parking_assignment_update_request"
+      example:
+        assigned_to: "jane.smith@company.com"
+        end_date: "2024-06-30"
+        special_requirements: ["electric_charging"]
+        notes: "Transferred to new department head"
+
+  # Release parking space
+  release_parking:
+    # UPDATE: Modify release process
+    path: "/fleet/parking/assignments/{assignment_id}/release"
+    method: "POST"
+    description: "Release assigned parking space"
+    
+    parameters:
+      path:
+        assignment_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          release_reason:
+            type: "string"
+            enum: ["vehicle_retired", "employee_departed", "reassignment", "violation", "other"]
+          release_date:
+            type: "string"
+            format: "date"
+          notes:
+            type: "string"
+          return_permit:
+            type: "boolean"
+            description: "Whether parking permit should be returned"
+        required: ["release_reason"]
+      example:
+        release_reason: "reassignment"
+        release_date: "2024-01-25"
+        notes: "Vehicle reassigned to different department"
+        return_permit: true
+    
+    responses:
+      "200":
+        description: "Parking space released successfully"
+        schema:
+          type: "object"
+          properties:
+            message:
+              type: "string"
+            assignment_id:
+              type: "string"
+            released_at:
+              type: "string"
+              format: "date-time"
+            spot_number:
+              type: "string"
+            available_from:
+              type: "string"
+              format: "date-time"
+
+  # Get available parking spaces
+  get_available_parking:
+    # UPDATE: Add availability checking
+    path: "/fleet/parking/available"
+    method: "GET"
+    description: "Find available parking spaces"
+    
+    parameters:
+      query:
+        location:
+          type: "string"
+          description: "Filter by parking location"
+        zone:
+          type: "string"
+          description: "Filter by parking zone"
+        level:
+          type: "string"
+          description: "Filter by parking level"
+        spot_type:
+          type: "string"
+          enum: ["standard", "compact", "oversized", "electric", "handicap", "visitor"]
+        accessibility_required:
+          type: "boolean"
+          description: "Require handicap-accessible spots"
+        electric_charging:
+          type: "boolean"
+          description: "Require electric vehicle charging"
+        covered:
+          type: "boolean"
+          description: "Require covered parking"
+        date_needed:
+          type: "string"
+          format: "date"
+          description: "Date when parking is needed"
+        duration_days:
+          type: "integer"
+          description: "Number of days parking is needed"
+    
+    responses:
+      "200":
+        description: "Available parking spaces found"
+        schema:
+          type: "object"
+          properties:
+            available_spots:
+              type: "array"
+              items:
+                $ref: "#/schemas/available_parking_spot"
+            total_available:
+              type: "integer"
+            locations:
+              type: "array"
+              items:
+                $ref: "#/schemas/parking_location_summary"
+
+  # Get parking location details
+  get_parking_location:
+    # UPDATE: Add location management
+    path: "/fleet/parking/locations/{location_id}"
+    method: "GET"
+    description: "Get detailed information about a parking location"
+    
+    parameters:
+      path:
+        location_id:
+          type: "string"
+          required: true
+    
+    responses:
+      "200":
+        description: "Parking location details retrieved successfully"
+        schema:
+          $ref: "#/schemas/parking_location_detailed"
+
+  # Check parking violations
+  get_parking_violations:
+    # UPDATE: Add violation tracking if applicable
+    path: "/fleet/parking/violations"
+    method: "GET"
+    description: "Retrieve parking violations and enforcement actions"
+    
+    parameters:
+      query:
+        vehicle_id:
+          type: "string"
+        location:
+          type: "string"
+        date_from:
+          type: "string"
+          format: "date"
+        date_to:
+          type: "string"
+          format: "date"
+        violation_type:
+          type: "string"
+          enum: ["unauthorized_parking", "expired_permit", "wrong_spot", "time_violation", "accessibility_violation"]
+        status:
+          type: "string"
+          enum: ["open", "resolved", "disputed", "waived"]
+        page:
+          type: "integer"
+          default: 1
+        limit:
+          type: "integer"
+          default: 50
+    
+    responses:
+      "200":
+        description: "Parking violations retrieved successfully"
+        schema:
+          type: "object"
+          properties:
+            violations:
+              type: "array"
+              items:
+                $ref: "#/schemas/parking_violation"
+            pagination:
+              $ref: "#/schemas/pagination"
+
+  # Create temporary parking assignment
+  create_temporary_parking:
+    # UPDATE: Add temporary/visitor parking
+    path: "/fleet/parking/temporary"
+    method: "POST"
+    description: "Create temporary parking assignment for visitors or short-term needs"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          vehicle_id:
+            type: "string"
+          license_plate:
+            type: "string"
+          visitor_info:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+              company:
+                type: "string"
+              contact_phone:
+                type: "string"
+              visiting:
+                type: "string"
+                description: "Person/department being visited"
+          location:
+            type: "string"
+          duration:
+            type: "object"
+            properties:
+              start_datetime:
+                type: "string"
+                format: "date-time"
+              end_datetime:
+                type: "string"
+                format: "date-time"
+          purpose:
+            type: "string"
+            enum: ["business_meeting", "delivery", "contractor", "interview", "other"]
+          sponsor:
+            type: "string"
+            description: "Employee sponsoring the visitor"
+        required: ["license_plate", "location", "duration", "sponsor"]
+
+# Data Schemas
+# UPDATE: Modify all schemas to match your parking data model
+schemas:
+  parking_assignment_request:
+    type: "object"
+    required: ["vehicle_id", "location"]
+    properties:
+      vehicle_id:
+        type: "string"
+        pattern: "^[A-Z0-9]{6,12}$"  # UPDATE: Match your vehicle ID format
+      location:
+        type: "string"
+        description: "Parking location identifier"
+      spot_preference:
+        type: "object"
+        properties:
+          zone:
+            type: "string"
+            pattern: "^[A-Z]{1,2}$"
+          level:
+            type: "string"
+            pattern: "^[0-9A-Z]{1,3}$"
+          spot_type:
+            type: "string"
+            enum: ["standard", "compact", "oversized", "electric", "handicap", "visitor"]
+          spot_number:
+            type: "string"
+            description: "Specific spot request (if available)"
+          accessibility_required:
+            type: "boolean"
+            default: false
+      assignment_duration:
+        type: "object"
+        properties:
+          assignment_type:
+            type: "string"
+            enum: ["permanent", "temporary", "visitor", "reserved"]
+          start_date:
+            type: "string"
+            format: "date"
+          end_date:
+            type: "string"
+            format: "date"
+            nullable: true
+      assignment_details:
+        type: "object"
+        properties:
+          assigned_to:
+            type: "string"
+            description: "User ID of person responsible for the space"
+          department:
+            type: "string"
+          reason:
+            type: "string"
+            description: "Reason for assignment"
+          priority:
+            type: "string"
+            enum: ["low", "normal", "high", "executive"]
+            default: "normal"
+      special_requirements:
+        type: "array"
+        items:
+          type: "string"
+          enum: ["covered_parking", "electric_charging", "security_camera", "ground_level", "close_to_entrance"]
+      contact_info:
+        type: "object"
+        properties:
+          contact_person:
+            type: "string"
+          phone:
+            type: "string"
+          notification_method:
+            type: "string"
+            enum: ["email", "sms", "both"]
+
+  parking_assignment:
+    type: "object"
+    properties:
+      assignment_id:
+        type: "string"
+        description: "Unique assignment identifier"
+      vehicle_id:
+        type: "string"
+      vehicle_info:
+        type: "object"
+        properties:
+          make:
+            type: "string"
+          model:
+            type: "string"
+          license_plate:
+            type: "string"
+          color:
+            type: "string"
+      parking_space:
+        type: "object"
+        properties:
+          location_name:
+            type: "string"
+          location_id:
+            type: "string"
+          building:
+            type: "string"
+          level:
+            type: "string"
+          zone:
+            type: "string"
+          spot_number:
+            type: "string"
+          spot_type:
+            type: "string"
+          features:
+            type: "array"
+            items:
+              type: "string"
+          coordinates:
+            type: "object"
+            properties:
+              latitude:
+                type: "number"
+              longitude:
+                type: "number"
+          access_points:
+            type: "array"
+            items:
+              type: "string"
+      assignment_details:
+        type: "object"
+        properties:
+          assigned_to:
+            type: "string"
+          assignment_type:
+            type: "string"
+          start_date:
+            type: "string"
+            format: "date"
+          end_date:
+            type: "string"
+            format: "date"
+            nullable: true
+          status:
+            type: "string"
+            enum: ["active", "inactive", "temporary", "expired", "suspended"]
+          priority:
+            type: "string"
+          department:
+            type: "string"
+          reason:
+            type: "string"
+      access_control:
+        type: "object"
+        properties:
+          access_code:
+            type: "string"
+          permit_number:
+            type: "string"
+          gate_access:
+            type: "boolean"
+          key_card_required:
+            type: "boolean"
+          access_hours:
+            type: "object"
+            properties:
+              start_time:
+                type: "string"
+              end_time:
+                type: "string"
+              days_of_week:
+                type: "array"
+                items:
+                  type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+      last_updated:
+        type: "string"
+        format: "date-time"
+      access_instructions:
+        type: "string"
+      contact_info:
+        type: "object"
+        properties:
+          contact_person:
+            type: "string"
+          phone:
+            type: "string"
+          email:
+            type: "string"
+
+  parking_assignment_detailed:
+    allOf:
+      - $ref: "#/schemas/parking_assignment"
+      - type: "object"
+        properties:
+          usage_history:
+            type: "array"
+            items:
+              $ref: "#/schemas/parking_usage_record"
+          violation_history:
+            type: "array"
+            items:
+              $ref: "#/schemas/parking_violation"
+          cost_information:
+            type: "object"
+            properties:
+              monthly_cost:
+                type: "number"
+              setup_fee:
+                type: "number"
+              total_cost_to_date:
+                type: "number"
+              next_billing_date:
+                type: "string"
+                format: "date"
+          maintenance_schedule:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                maintenance_type:
+                  type: "string"
+                scheduled_date:
+                  type: "string"
+                  format: "date"
+                description:
+                  type: "string"
+
+  available_parking_spot:
+    type: "object"
+    properties:
+      location_name:
+        type: "string"
+      location_id:
+        type: "string"
+      building:
+        type: "string"
+      level:
+        type: "string"
+      zone:
+        type: "string"
+      spot_number:
+        type: "string"
+      spot_type:
+        type: "string"
+      features:
+        type: "array"
+        items:
+          type: "string"
+      distance_to_entrance:
+        type: "integer"
+        description: "Distance in meters"
+      pricing:
+        type: "object"
+        properties:
+          daily_rate:
+            type: "number"
+          monthly_rate:
+            type: "number"
+          currency:
+            type: "string"
+            default: "USD"
+      availability:
+        type: "object"
+        properties:
+          available_from:
+            type: "string"
+            format: "date-time"
+          available_until:
+            type: "string"
+            format: "date-time"
+          long_term_available:
+            type: "boolean"
+      restrictions:
+        type: "array"
+        items:
+          type: "string"
+        description: "Any restrictions on the spot usage"
+
+  parking_location_summary:
+    type: "object"
+    properties:
+      location_id:
+        type: "string"
+      location_name:
+        type: "string"
+      building:
+        type: "string"
+      total_spots:
+        type: "integer"
+      available_spots:
+        type: "integer"
+      spot_types:
+        type: "object"
+        properties:
+          standard:
+            type: "integer"
+          compact:
+            type: "integer"
+          oversized:
+            type: "integer"
+          electric:
+            type: "integer"
+          handicap:
+            type: "integer"
+      features:
+        type: "array"
+        items:
+          type: "string"
+      distance_from_main_building:
+        type: "integer"
+        description: "Distance in meters"
+
+  parking_location_detailed:
+    type: "object"
+    properties:
+      location_id:
+        type: "string"
+      location_name:
+        type: "string"
+      building:
+        type: "string"
+      address:
+        type: "string"
+      coordinates:
+        type: "object"
+        properties:
+          latitude:
+            type: "number"
+          longitude:
+            type: "number"
+      layout:
+        type: "object"
+        properties:
+          total_levels:
+            type: "integer"
+          zones_per_level:
+            type: "array"
+            items:
+              type: "string"
+          total_spots:
+            type: "integer"
+          spots_by_type:
+            type: "object"
+            properties:
+              standard:
+                type: "integer"
+              compact:
+                type: "integer"
+              oversized:
+                type: "integer"
+              electric:
+                type: "integer"
+              handicap:
+                type: "integer"
+              visitor:
+                type: "integer"
+      features:
+        type: "array"
+        items:
+          type: "string"
+      access_control:
+        type: "object"
+        properties:
+          gate_controlled:
+            type: "boolean"
+          access_hours:
+            type: "object"
+            properties:
+              weekday_start:
+                type: "string"
+              weekday_end:
+                type: "string"
+              weekend_start:
+                type: "string"
+              weekend_end:
+                type: "string"
+          security_features:
+            type: "array"
+            items:
+              type: "string"
+      pricing:
+        type: "object"
+        properties:
+          daily_rates:
+            type: "object"
+          monthly_rates:
+            type: "object"
+          visitor_rates:
+            type: "object"
+      contact_info:
+        type: "object"
+        properties:
+          facility_manager:
+            type: "string"
+          security_desk:
+            type: "string"
+          emergency_contact:
+            type: "string"
+      services:
+        type: "array"
+        items:
+          type: "string"
+        description: "Available services (valet, car wash, maintenance, etc.)"
+
+  parking_usage_record:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        format: "date"
+      entry_time:
+        type: "string"
+        format: "time"
+      exit_time:
+        type: "string"
+        format: "time"
+      duration_hours:
+        type: "number"
+      access_method:
+        type: "string"
+        enum: ["key_card", "mobile_app", "permit", "guest_pass"]
+      violations:
+        type: "array"
+        items:
+          type: "string"
+
+  parking_violation:
+    type: "object"
+    properties:
+      violation_id:
+        type: "string"
+      vehicle_id:
+        type: "string"
+      license_plate:
+        type: "string"
+      location:
+        type: "string"
+      spot_number:
+        type: "string"
+      violation_type:
+        type: "string"
+        enum: ["unauthorized_parking", "expired_permit", "wrong_spot", "time_violation", "accessibility_violation", "blocking", "other"]
+      violation_date:
+        type: "string"
+        format: "date-time"
+      description:
+        type: "string"
+      reported_by:
+        type: "string"
+      status:
+        type: "string"
+        enum: ["open", "resolved", "disputed", "waived"]
+      fine_amount:
+        type: "number"
+      evidence:
+        type: "array"
+        items:
+          type: "string"
+          description: "Photo URLs or document references"
+      resolution:
+        type: "object"
+        properties:
+          resolution_date:
+            type: "string"
+            format: "date-time"
+          resolved_by:
+            type: "string"
+          resolution_notes:
+            type: "string"
+          fine_waived:
+            type: "boolean"
+
+  parking_assignment_update_request:
+    type: "object"
+    properties:
+      assigned_to:
+        type: "string"
+      end_date:
+        type: "string"
+        format: "date"
+      priority:
+        type: "string"
+        enum: ["low", "normal", "high", "executive"]
+      special_requirements:
+        type: "array"
+        items:
+          type: "string"
+      contact_info:
+        type: "object"
+        properties:
+          contact_person:
+            type: "string"
+          phone:
+            type: "string"
+          notification_method:
+            type: "string"
+      notes:
+        type: "string"
+
+  pagination:
+    type: "object"
+    properties:
+      current_page:
+        type: "integer"
+      total_pages:
+        type: "integer"
+      per_page:
+        type: "integer"
+      total_count:
+        type: "integer"
+
+# Business Rules
+# UPDATE: Customize parking business rules for your organization
+business_rules:
+  assignment_rules:
+    - "One vehicle can have only one permanent parking assignment"
+    - "Executive-level employees get priority for covered parking"
+    - "Electric vehicles get priority for charging station spots"
+    - "Handicap spots require valid accessibility permit"
+  
+  access_control:
+    - "All parking assignments require valid employee badge"
+    - "Visitor parking requires sponsor approval"
+    - "After-hours access requires security approval"
+    - "Lost permits must be reported within 24 hours"
+  
+  enforcement:
+    - "Unauthorized parking results in towing after 2 hours"
+    - "Expired permits have 5-day grace period"
+    - "Three violations may result in parking privilege suspension"
+    - "Executive parking violations require management review"
+  
+  maintenance:
+    - "Parking spots are unavailable during scheduled maintenance"
+    - "Monthly cleaning requires 24-hour advance notice"
+    - "Emergency maintenance may result in temporary relocations"
+
+# Natural Language Patterns
+# These help the NLP system understand parking requests
+natural_language_patterns:
+  assign_parking:
+    - "Assign parking space to vehicle {vehicle_id}"
+    - "Park {vehicle} in building {building}"
+    - "Find parking spot for {license_plate}"
+    - "Reserve parking for {user} in {location}"
+  
+  check_parking:
+    - "Where is vehicle {vehicle_id} parked"
+    - "Show parking assignment for {user}"
+    - "Is there parking available in {location}"
+    - "What spots are free in zone {zone}"
+  
+  release_parking:
+    - "Release parking space for vehicle {vehicle_id}"
+    - "Remove parking assignment {assignment_id}"
+    - "Free up spot {spot_number}"
+
+# Integration Points
+# UPDATE: Add your system integrations
+integrations:
+  access_control_system:
+    description: "Integration with building access control"
+    purpose: "Manage gate access and badge permissions"
+  
+  security_system:
+    description: "Integration with security monitoring"
+    purpose: "Monitor parking violations and incidents"
+  
+  payment_system:
+    description: "Integration with billing/payment system"
+    purpose: "Process parking fees and fines"
+  
+  facility_management:
+    description: "Integration with facility management system"
+    purpose: "Coordinate maintenance and space planning"
+  
+  mobile_app:
+    description: "Integration with mobile parking app"
+    purpose: "Allow users to find and access assigned parking"

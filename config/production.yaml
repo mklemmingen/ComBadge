@@ -1,0 +1,66 @@
+# Production Environment Configuration
+# Production-specific settings with security and performance optimizations
+
+environment: production
+debug_mode: false
+
+# Production LLM settings
+llm:
+  model: "qwen2.5:14b"               # Full model for production
+  temperature: 0.1                   # Conservative temperature
+  timeout: 30                        # Standard timeout
+  streaming: true                    # Enable streaming for responsiveness
+
+# Production API settings
+api:
+  base_url: "https://fleet-api.company.com"
+  timeout: 30
+  retry_attempts: 5                  # More retries in production
+  retry_delay: 3.0                   # Longer delay between retries
+  verify_ssl: true                   # Always verify SSL in production
+  authentication:
+    method: oauth                    # Secure OAuth authentication
+
+# Production UI settings
+ui:
+  theme: dark                        # Professional dark theme
+  auto_approve_high_confidence: true # Enable auto-approval for efficiency
+  confidence_threshold: 0.95         # High confidence threshold
+  show_reasoning_steps: false        # Hide reasoning for cleaner UI
+  enable_sound_notifications: false  # Disable sounds in production
+
+# Production processing settings
+processing:
+  confidence_threshold: 0.85         # Higher threshold for production
+  max_processing_time: 45            # Stricter time limits
+  enable_caching: true               # Enable caching for performance
+  cache_ttl: 7200                    # Longer cache TTL (2 hours)
+  max_cache_size_mb: 500             # Larger cache for production
+
+# Production logging
+logging:
+  level: INFO                        # Standard logging level
+  file_path: "/var/log/combadge/app.log"
+  max_file_size: "50MB"             # Larger log files
+  backup_count: 10                   # More backups
+  audit_enabled: true                # Always enable audit
+  audit_file_path: "/var/log/combadge/audit.log"
+  log_to_console: false              # Don't clutter console in production
+
+# Production features
+enable_hot_reload: false             # Disable hot reload in production
+enable_auto_backup: true             # Enable automatic backups
+enable_telemetry: true               # Collect telemetry for monitoring
+
+# Production security considerations
+# - Use environment variables for all sensitive configuration
+# - Store credentials in secure vault (Azure Key Vault, AWS Secrets Manager, etc.)
+# - Enable audit logging and monitoring
+# - Use HTTPS for all API communications
+# - Regular security updates and dependency scanning
+
+# Required environment variables for production:
+# COMBADGE_API_AUTHENTICATION_CLIENT_ID=<oauth_client_id>
+# COMBADGE_API_AUTHENTICATION_CLIENT_SECRET=<oauth_client_secret>
+# COMBADGE_API_AUTHENTICATION_TOKEN_URL=https://auth.company.com/oauth/token
+# COMBADGE_LOGGING_LEVEL=INFO

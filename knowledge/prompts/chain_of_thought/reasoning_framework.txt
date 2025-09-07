@@ -1,0 +1,426 @@
+# Chain of Thought Reasoning Framework for Fleet Management
+# UPDATE INSTRUCTIONS: Customize this framework for your specific fleet operations and decision-making processes
+# 1. Update reasoning steps to match your business workflow and approval processes
+# 2. Modify validation criteria based on your organization's policies and constraints
+# 3. Add domain-specific reasoning patterns for your industry and fleet type
+# 4. Include escalation procedures and exception handling specific to your operations
+# 5. Update confidence assessment criteria to match your accuracy requirements
+# 6. Add regulatory compliance and safety considerations relevant to your business
+
+## REASONING FRAMEWORK STRUCTURE
+
+The Chain of Thought reasoning process follows a systematic approach to analyze fleet management requests, validate business constraints, and generate appropriate API calls. This framework ensures consistent, transparent, and auditable decision-making.
+
+### PHASE 1: REQUEST UNDERSTANDING AND DECOMPOSITION
+
+**Step 1: Initial Request Analysis**
+```
+REASONING: First, I need to understand what the user is asking for.
+INPUT ANALYSIS: [Analyze the natural language request]
+- What is the primary action requested?
+- What entities are involved (vehicles, users, locations, times)?
+- What is the business context or purpose?
+- Are there any constraints or special requirements mentioned?
+
+EXAMPLE:
+User Input: "Schedule oil change for VEH001 next Tuesday at 10 AM"
+REASONING: The user wants to schedule maintenance (oil change) for a specific vehicle (VEH001) at a specific time (next Tuesday, 10 AM). This is a straightforward maintenance scheduling request.
+```
+
+**Step 2: Intent Classification Analysis**
+```
+REASONING: Now I need to classify this request into the appropriate operational category.
+CLASSIFICATION LOGIC: [Apply intent classification rules]
+- Primary intent identification
+- Secondary intent detection (if multi-step operation)
+- Confidence assessment based on clarity and completeness
+- Ambiguity flags for unclear requests
+
+EXAMPLE:
+REASONING: This is clearly a SCHEDULE_MAINTENANCE request because:
+- The action word "schedule" indicates a booking operation
+- "Oil change" is a specific maintenance service type
+- Vehicle and timing are specified
+- No ambiguity in the request
+CONFIDENCE: 0.95 - Very clear maintenance scheduling request
+```
+
+**Step 3: Entity Extraction and Validation**
+```
+REASONING: I need to identify and validate all relevant entities in the request.
+ENTITY ANALYSIS: [Extract and validate entities]
+- Vehicle identification (ID, make/model, license plate, etc.)
+- Temporal information (dates, times, durations)
+- Location references (facilities, parking, service areas)
+- People involved (users, drivers, technicians)
+- Service specifications (maintenance types, parts, etc.)
+
+EXAMPLE:
+REASONING: Let me extract the entities:
+- VEHICLE_ID: "VEH001" - appears to be a standard vehicle identifier
+- MAINTENANCE_TYPE: "oil change" - common maintenance service
+- DATE: "next Tuesday" - relative date, need to convert to absolute
+- TIME: "10 AM" - specific time in 12-hour format
+All entities are clearly specified and valid.
+```
+
+### PHASE 2: BUSINESS CONTEXT AND CONSTRAINT ANALYSIS
+
+**Step 4: Business Rule Validation**
+```
+REASONING: I need to check if this request complies with business rules and policies.
+BUSINESS RULES CHECK: [Apply organizational policies]
+- Authorization: Does the user have permission for this operation?
+- Resource availability: Is the vehicle available for maintenance?
+- Scheduling constraints: Are there conflicts with other operations?
+- Policy compliance: Does this follow organizational procedures?
+
+EXAMPLE:
+REASONING: Checking business constraints:
+- Vehicle VEH001: Need to verify it exists and is available for maintenance
+- Tuesday 10 AM: Need to check if this conflicts with existing reservations
+- Oil change: Standard maintenance, no special authorization needed
+- User permissions: Need to verify user can schedule maintenance
+```
+
+**Step 5: Resource and Availability Analysis**
+```
+REASONING: I need to verify that all required resources are available.
+RESOURCE VALIDATION: [Check availability and constraints]
+- Vehicle availability during requested timeframe
+- Maintenance facility and technician availability  
+- Parts and equipment requirements
+- Scheduling conflicts with other operations
+
+EXAMPLE:
+REASONING: Resource requirements for this request:
+- Vehicle VEH001 must be available Tuesday 10 AM - 12 PM (estimated duration)
+- Need available service bay and qualified technician
+- Oil change requires: 5 quarts oil, oil filter, basic tools
+- Check for conflicts with existing reservations or other maintenance
+```
+
+### PHASE 3: SOLUTION FORMULATION AND PLANNING
+
+**Step 6: API Endpoint Selection**
+```
+REASONING: Based on my analysis, I need to determine which API endpoint(s) to call.
+ENDPOINT MAPPING: [Map intent to API operations]
+- Primary API call required
+- Secondary API calls (if multi-step operation)
+- Parameter mapping from entities to API fields
+- Error handling and fallback options
+
+EXAMPLE:
+REASONING: For this maintenance scheduling request:
+- PRIMARY ENDPOINT: POST /fleet/maintenance/schedule
+- REQUIRED PARAMETERS: vehicle_id, maintenance_type, requested_date, requested_time
+- OPTIONAL PARAMETERS: priority, description, estimated_duration
+- No secondary API calls needed for this simple request
+```
+
+**Step 7: Data Transformation and Mapping**
+```
+REASONING: I need to transform the extracted entities into proper API request format.
+DATA MAPPING: [Convert entities to API parameters]
+- Entity value transformation (dates, formats, validation)
+- Default value assignment for missing optional fields
+- Data type conversion and validation
+- Business logic application (calculations, derivations)
+
+EXAMPLE:
+REASONING: Transforming entities to API format:
+- vehicle_id: "VEH001" → direct mapping
+- maintenance_type: "oil change" → "oil_change" (standardized format)
+- requested_date: "next Tuesday" → "2024-01-23" (absolute date)
+- requested_time: "10 AM" → "10:00" (24-hour format)
+- priority: not specified → "normal" (default value)
+- estimated_duration: not specified → 2 (default for oil change)
+```
+
+### PHASE 4: VALIDATION AND RISK ASSESSMENT
+
+**Step 8: Request Completeness Check**
+```
+REASONING: I need to verify that I have all required information for the API call.
+COMPLETENESS VALIDATION: [Check for missing required fields]
+- All mandatory API parameters available
+- Data quality and format validation
+- Missing information that needs user clarification
+- Alternative approaches if information is incomplete
+
+EXAMPLE:
+REASONING: Checking completeness for maintenance scheduling:
+- ✓ vehicle_id: VEH001 (present)
+- ✓ maintenance_type: oil_change (present) 
+- ✓ requested_date: 2024-01-23 (derived)
+- ✓ requested_time: 10:00 (present)
+- All required fields are available. Request is complete.
+```
+
+**Step 9: Risk and Impact Assessment**
+```
+REASONING: I need to assess potential risks and impacts of this operation.
+RISK ANALYSIS: [Evaluate potential issues and impacts]
+- Operational risks (vehicle downtime, service disruption)
+- Business risks (cost implications, resource conflicts)
+- Safety considerations (urgent maintenance needs)
+- Compliance requirements (regulatory, policy adherence)
+
+EXAMPLE:
+REASONING: Risk assessment for oil change scheduling:
+- OPERATIONAL IMPACT: Low - routine maintenance, short duration
+- COST IMPACT: Low - standard maintenance expense
+- SAFETY RISK: Low - preventive maintenance, not urgent
+- SCHEDULING RISK: Need to verify no conflicts with vehicle reservations
+- Overall risk level: LOW - routine operation with standard procedures
+```
+
+### PHASE 5: EXECUTION PLANNING AND CONFIRMATION
+
+**Step 10: Execution Plan Formulation**
+```
+REASONING: Now I'll create a specific execution plan for this request.
+EXECUTION STRATEGY: [Define step-by-step execution approach]
+- API call sequence and parameters
+- Error handling and retry logic  
+- Success criteria and validation
+- Rollback procedures if needed
+
+EXAMPLE:
+REASONING: Execution plan for maintenance scheduling:
+1. Call POST /fleet/maintenance/schedule with parameters:
+   - vehicle_id: "VEH001"
+   - maintenance_type: "oil_change" 
+   - requested_date: "2024-01-23"
+   - requested_time: "10:00"
+   - priority: "normal"
+   - estimated_duration: 2
+2. Handle potential responses:
+   - 201 Created: Appointment scheduled successfully
+   - 409 Conflict: Vehicle not available, suggest alternatives
+   - 400 Bad Request: Invalid parameters, clarify with user
+3. Confirm appointment details with user
+```
+
+**Step 11: Confidence Assessment and Final Validation**
+```
+REASONING: Before execution, I need to assess my confidence in this approach.
+CONFIDENCE CALCULATION: [Evaluate overall confidence in solution]
+- Intent classification confidence
+- Entity extraction confidence  
+- Business rule compliance confidence
+- API mapping accuracy confidence
+- Overall solution confidence
+
+EXAMPLE:
+REASONING: Final confidence assessment:
+- Intent classification: 0.95 (very clear maintenance request)
+- Entity extraction: 0.90 (all entities clearly identified)
+- Business compliance: 0.85 (need to verify availability)
+- API mapping: 0.95 (straightforward maintenance endpoint)
+- OVERALL CONFIDENCE: 0.91 - High confidence in solution approach
+```
+
+## REASONING PATTERNS FOR COMPLEX SCENARIOS
+
+### Multi-Step Operations
+```
+REASONING PATTERN: When a request involves multiple related operations
+EXAMPLE: "Schedule maintenance for VEH001 and then assign it to John after service"
+
+Step 1: Decompose into sub-operations
+- Primary: Schedule maintenance
+- Secondary: Assign vehicle to user (conditional on maintenance completion)
+
+Step 2: Analyze dependencies
+- Vehicle assignment depends on maintenance completion
+- Need to coordinate timing between operations
+- May require workflow or approval process
+
+Step 3: Plan execution sequence
+- Execute maintenance scheduling first
+- Create follow-up task for vehicle assignment
+- Establish trigger conditions for second operation
+```
+
+### Conditional Logic Handling
+```
+REASONING PATTERN: When requests contain conditional statements
+EXAMPLE: "If the Honda Civic is available tomorrow, book it for the client meeting, otherwise show me alternatives"
+
+Step 1: Identify conditions and alternatives
+- Primary condition: Honda Civic availability tomorrow
+- Primary action: Book for client meeting
+- Fallback action: Show alternative vehicles
+
+Step 2: Plan conditional execution
+- Check availability first (API call)
+- If available: Execute reservation
+- If not available: Query alternative vehicles
+- Present results to user for decision
+```
+
+### Ambiguity Resolution
+```
+REASONING PATTERN: When requests contain ambiguous or incomplete information
+EXAMPLE: "Need maintenance on the car"
+
+Step 1: Identify missing information
+- Which vehicle? (missing vehicle identifier)
+- What type of maintenance? (missing service type)
+- When? (missing timing)
+
+Step 2: Prioritize clarifications needed
+- Most critical: Vehicle identification
+- Important: Maintenance type and timing
+- Optional: Specific technician, location preferences
+
+Step 3: Request clarification strategy
+- Ask for most critical information first
+- Provide examples and options
+- Use context from previous conversations if available
+```
+
+### Emergency and Urgent Requests
+```
+REASONING PATTERN: When requests indicate urgency or emergency situations
+EXAMPLE: "VEH001 broke down and needs immediate towing and repair"
+
+Step 1: Assess urgency level
+- Emergency: Immediate safety concern
+- Urgent: Critical business impact  
+- High priority: Important but not critical
+- Normal: Standard processing
+
+Step 2: Apply emergency procedures
+- Override normal scheduling constraints
+- Escalate to appropriate personnel
+- Bypass standard approval workflows if needed
+- Notify relevant stakeholders
+
+Step 3: Execute with emergency protocols
+- Use emergency service endpoints
+- Set highest priority flags
+- Ensure immediate resource allocation
+```
+
+## DOMAIN-SPECIFIC REASONING PATTERNS
+
+### Fleet Safety Considerations
+# UPDATE: Customize safety rules for your fleet type and industry
+
+```
+SAFETY REASONING: Always prioritize safety in decision-making
+- Vehicle condition affecting safety requires immediate attention
+- Driver safety concerns override convenience considerations
+- Regulatory compliance for safety inspections and certifications
+- Emergency response procedures for accidents or breakdowns
+
+EXAMPLE REASONING:
+"VEH001 has brake issues" → URGENT maintenance required
+- Safety risk assessment: HIGH (braking system critical)
+- Priority override: Bypass normal scheduling for immediate service
+- Operational impact: Take vehicle out of service immediately
+- Regulatory compliance: May require inspection before return to service
+```
+
+### Resource Optimization
+```
+EFFICIENCY REASONING: Optimize resource utilization while meeting requirements
+- Consolidate related operations to minimize downtime
+- Balance urgent requests with scheduled maintenance
+- Consider geographic proximity for service scheduling
+- Optimize technician skill matching with service requirements
+
+EXAMPLE REASONING:
+Multiple maintenance requests for same location:
+- Group VEH001 oil change and VEH002 brake service at same facility
+- Schedule consecutively to optimize technician time
+- Reduce vehicle transport costs and time
+- Improve overall fleet availability
+```
+
+### Compliance and Regulatory Considerations
+# UPDATE: Add specific regulatory requirements for your industry
+
+```
+COMPLIANCE REASONING: Ensure all operations meet regulatory requirements
+- DOT compliance for commercial vehicles
+- Environmental regulations for emissions and waste
+- Safety inspections and certifications
+- Insurance requirements and coverage validation
+
+EXAMPLE REASONING:
+Commercial vehicle inspection due:
+- Regulatory requirement: Must complete before expiration
+- Business impact: Cannot operate legally without valid inspection
+- Scheduling constraint: Must use certified inspection facility
+- Documentation: Requires proper record keeping for compliance
+```
+
+## ERROR HANDLING AND RECOVERY
+
+### Common Error Scenarios
+
+**Insufficient Information**
+```
+REASONING: When critical information is missing
+APPROACH: Request clarification with helpful context
+- Identify what information is needed
+- Explain why it's required  
+- Provide examples or options
+- Offer to help gather missing information
+```
+
+**Business Rule Conflicts**  
+```
+REASONING: When request conflicts with policies or constraints
+APPROACH: Explain conflict and suggest alternatives
+- Clearly explain the specific conflict
+- Reference relevant policy or constraint
+- Suggest alternative approaches
+- Offer to help find acceptable solution
+```
+
+**System Limitations**
+```
+REASONING: When requested operation exceeds system capabilities
+APPROACH: Acknowledge limitation and provide alternatives
+- Explain what cannot be done and why
+- Suggest partial solutions or workarounds
+- Recommend manual processes if appropriate
+- Escalate to human intervention if needed
+```
+
+### Learning and Improvement
+
+**Feedback Integration**
+```
+REASONING: How to learn from interactions and improve
+- Track successful reasoning patterns
+- Identify common failure modes
+- Learn from user corrections and clarifications
+- Adapt confidence scoring based on outcomes
+```
+
+**Pattern Recognition Enhancement**
+```
+REASONING: How to improve pattern recognition over time
+- Build knowledge of organizational preferences
+- Learn user-specific patterns and language
+- Identify domain-specific terminology and abbreviations
+- Improve context understanding across conversations
+```
+
+# CUSTOMIZATION CHECKLIST:
+# □ Update reasoning steps to match your business workflows
+# □ Modify validation criteria for your organizational policies
+# □ Add domain-specific reasoning patterns for your industry
+# □ Include escalation procedures specific to your operations
+# □ Update confidence assessment criteria for your requirements
+# □ Add regulatory compliance considerations for your business
+# □ Include safety protocols and emergency procedures
+# □ Customize resource optimization strategies
+# □ Add error handling patterns for your common scenarios
+# □ Update learning and improvement mechanisms

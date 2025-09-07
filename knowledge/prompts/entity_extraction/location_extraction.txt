@@ -1,0 +1,362 @@
+# Location Entity Extraction Patterns
+# UPDATE INSTRUCTIONS: Customize these patterns for your specific facilities and operational geography
+# 1. Replace facility names with your actual buildings, branches, and service locations
+# 2. Update parking zones, levels, and numbering systems to match your layout
+# 3. Modify address patterns and geographic references for your operating regions
+# 4. Add location hierarchies specific to your organization structure (campus, building, floor, room)
+# 5. Include service area boundaries and territory definitions for your fleet operations
+# 6. Update GPS coordinate patterns and mapping systems used in your organization
+
+## FACILITY AND BUILDING PATTERNS
+
+### Primary Facility Names
+# UPDATE: Replace with your actual facility names and addresses
+
+**Headquarters and Main Facilities:**
+- Primary: "Headquarters", "HQ", "Main Office", "Corporate Office"
+- Secondary: "Main Building", "Building A", "Central Campus"
+- Alternative names: "Downtown Office", "Executive Building"
+- Address patterns: "123 Main Street", "Corporate Plaza", "Business Center"
+
+**Branch Locations:**
+# UPDATE: Add your actual branch/satellite locations
+- Geographic: "Downtown Branch", "Westside Office", "North Campus"
+- Numeric: "Branch 001", "Location 2", "Site B"
+- Named: "Riverside Office", "Tech Center", "Service Hub"
+- City-based: "Dallas Office", "Houston Branch", "Austin Location"
+
+**Service Facilities:**
+- Maintenance: "Main Garage", "Service Center", "Repair Shop"
+- Parking: "Parking Garage", "Surface Lot", "Employee Parking"
+- Storage: "Fleet Storage", "Vehicle Depot", "Storage Facility"
+- Specialized: "Fuel Station", "Wash Bay", "Inspection Station"
+
+### Building Identification Patterns
+
+**Alphanumeric Building Codes:**
+- Single letter: Building A, Building B, Building C
+- Letter combinations: AA Building, AB Complex
+- Number systems: Building 1, Building 2, Bldg 10
+- Mixed formats: A1 Building, B-2 Complex
+
+**Descriptive Building Names:**
+- Functional: "Administration Building", "Operations Center"
+- Directional: "North Building", "East Wing", "South Tower"
+- Historical: "Founders Hall", "Legacy Building"
+- Descriptive: "Glass Building", "Red Brick Building"
+
+**Address-based References:**
+- Street numbers: "100 Main Street Building"
+- Complex names: "Business Park North", "Industrial Complex B"
+- Landmark references: "Building next to the cafeteria"
+
+## INTERNAL LOCATION HIERARCHY
+
+### Floor and Level Identification
+# UPDATE: Customize numbering systems to match your buildings
+
+**Floor Numbering Systems:**
+- Standard: 1st Floor, 2nd Floor, 3rd Floor (Ground = 1st)
+- European: Ground Floor, 1st Floor, 2nd Floor (Ground ≠ 1st)
+- Basement levels: Basement, B1, B2, Lower Level, Sub-Level
+- Mezzanine levels: Mezzanine, M1, M2
+
+**Level Designations:**
+- Parking levels: P1, P2, Parking Level 1, Upper Deck
+- Service levels: Service Level, Loading Dock Level
+- Rooftop: Roof, Rooftop, Top Level, Penthouse
+
+### Zone and Area Classifications
+# UPDATE: Map to your actual facility zones
+
+**Parking Zones:**
+- Alphabetic: Zone A, Zone B, Zone C
+- Numeric: Zone 1, Zone 2, Zone 3  
+- Descriptive: Executive Zone, Visitor Zone, Employee Zone
+- Directional: North Zone, South Zone, East Wing
+
+**Functional Areas:**
+- Administrative: "Admin Area", "Executive Suite", "Reception"
+- Operational: "Operations Floor", "Dispatch Center", "Control Room"
+- Service: "Maintenance Bay", "Service Area", "Workshop"
+- Storage: "Storage Area", "Archive Room", "Supply Closet"
+
+**Access-Level Areas:**
+- Public: "Lobby", "Visitor Area", "Public Parking"
+- Restricted: "Secure Area", "Badge Access Required", "Staff Only"
+- Executive: "Executive Floor", "C-Suite", "VIP Area"
+- Service: "Employee Area", "Back Office", "Utility Area"
+
+## PARKING LOCATION PATTERNS
+
+### Parking Space Identification
+# UPDATE: Match your parking numbering and layout systems
+
+**Standard Numbering:**
+- Sequential: 001, 002, 003... or 1, 2, 3...
+- Zone-based: A001, A002, B001, B002
+- Level-zone: 1A-001, 1A-002, 2B-050
+- Grid system: A1, A2, B1, B2
+
+**Parking Types:**
+- Standard: "Standard Space", "Regular Parking", "Employee Space"
+- Compact: "Compact Space", "Small Car Only"
+- Handicap: "Handicap Space", "Accessible Parking", "ADA Space"
+- Reserved: "Reserved Space", "Executive Parking", "VIP Space"
+- Visitor: "Visitor Space", "Guest Parking", "Temporary"
+- Electric: "EV Charging", "Electric Vehicle Space", "Tesla Charger"
+
+**Location Descriptors:**
+- Proximity: "Close to entrance", "Near elevator", "Back row"
+- Coverage: "Covered parking", "Garage space", "Indoor parking"
+- Ground type: "Surface lot", "Parking garage", "Underground"
+- Features: "Charging station", "Security camera", "Well-lit"
+
+### Parking Area Names
+# UPDATE: Use your actual parking area names
+
+**Named Parking Areas:**
+- Descriptive: "Main Parking Garage", "Surface Lot A", "Underground Garage"
+- Functional: "Employee Parking", "Visitor Parking", "Executive Garage"
+- Geographic: "North Lot", "East Parking", "Westside Garage"
+- Building-related: "Building A Garage", "HQ Parking", "Admin Parking"
+
+## GEOGRAPHIC AND EXTERNAL LOCATIONS
+
+### Address Patterns
+# UPDATE: Customize for your operating regions
+
+**US Address Formats:**
+- Standard: "123 Main Street, City, State ZIP"
+- Abbreviated: "123 Main St", "456 Oak Ave"
+- With suite: "789 Business Blvd, Suite 200"
+- PO Box: "PO Box 1234", "P.O. Box 567"
+
+**International Address Formats:**
+# UPDATE: Add patterns for your international operations
+- Canadian: "123 Main Street, City, Province, Postal Code"
+- UK: "123 High Street, City, County, Post Code"
+- European: Various country-specific patterns
+
+**Partial Address References:**
+- Street only: "Main Street location", "Oak Avenue facility"
+- Intersection: "Corner of Main and Oak", "Main & 5th intersection"
+- Landmark-based: "Next to the mall", "Across from the hospital"
+
+### Service Territory Definitions
+# UPDATE: Define your actual service areas and territories
+
+**Geographic Boundaries:**
+- City-based: "Downtown area", "Suburban zone", "Metro region"
+- Directional: "North side", "East territory", "Westside coverage"
+- Postal: "ZIP codes 12345-12349", "Postal area M4V"
+- Custom: "Service Area A", "Territory 1", "Region North"
+
+**Distance-based Areas:**
+- Radius-based: "Within 25 miles of HQ", "50-mile service radius"
+- Travel time: "30-minute drive time", "1-hour service area"
+- Highway-based: "I-95 corridor", "Route 66 territory"
+
+### GPS and Coordinate Patterns
+
+**Coordinate Formats:**
+- Decimal degrees: 40.7128, -74.0060
+- Degrees/minutes/seconds: 40°42'46"N 74°00'22"W
+- Military grid: Various MGRS patterns
+- UTM coordinates: Zone + Easting + Northing
+
+**Location Services:**
+- What3Words: ///word.word.word
+- Plus codes: Plus code format
+- GPS waypoints: Waypoint names and numbers
+
+## LOCATION RELATIONSHIP PATTERNS
+
+### Spatial Relationships
+# UPDATE: Adapt to your facility layouts
+
+**Relative Positioning:**
+- Proximity: "Near", "Close to", "Adjacent to", "Next to"
+- Direction: "North of", "South of", "Across from", "Behind"
+- Vertical: "Above", "Below", "Upstairs from", "Downstairs from"
+- Inside/Outside: "Inside Building A", "Outside the main entrance"
+
+**Navigation References:**
+- From perspective: "As you enter", "On your left", "Straight ahead"
+- Landmark-based: "By the elevator", "Near the cafeteria", "At reception"
+- Sequential: "First building", "Second floor", "Third bay"
+
+### Hierarchical Location Structure
+# UPDATE: Match your organizational structure
+
+**Campus Level:**
+- Multi-building: "North Campus", "South Campus", "Main Campus"
+- Complex: "Industrial Complex", "Office Complex", "Service Complex"
+
+**Building Level:**
+- Primary building identifier
+- Wing or section designation
+- Access point specification
+
+**Floor Level:**
+- Floor number or name
+- Zone within floor
+- Specific area designation
+
+**Room/Space Level:**
+- Room number or name
+- Specific location within room
+- Equipment or station identifier
+
+## VALIDATION AND CONFIDENCE SCORING
+
+### High Confidence Patterns (0.9-1.0)
+- Exact facility match: "Headquarters", "Building A"
+- Specific address: "123 Main Street, Anytown, ST 12345"
+- Standard parking format: "A1-025", "Zone B Space 15"
+- GPS coordinates: Precise latitude/longitude
+
+### Medium Confidence Patterns (0.7-0.89)
+- Partial address: "123 Main Street"
+- Generic facility: "Main office", "Service center"
+- Descriptive parking: "Executive parking area"
+- Relative location: "Near the main entrance"
+
+### Low Confidence Patterns (0.5-0.69)
+- Vague references: "Downtown", "That location"
+- Ambiguous terms: "The building", "Over there"
+- Incomplete information: Missing critical identifiers
+- Conflicting information: Inconsistent location details
+
+### Validation Rules
+
+**Facility Validation:**
+- Must exist in organization's facility database
+- Must be accessible for requested operation
+- Must have appropriate services available
+- Must match user's access permissions
+
+**Address Validation:**
+- Valid street address format
+- Recognizable city/state/country
+- Reasonable postal code
+- Geocodable location
+
+**Parking Validation:**
+- Valid parking space identifier
+- Space must exist in facility
+- Must match space type requirements
+- Must be available for assignment
+
+## CONTEXT AND BUSINESS RULES
+
+### Operation-Specific Locations
+# UPDATE: Customize for your business operations
+
+**Maintenance Locations:**
+- Service bays: "Bay 1", "Service Bay A", "Lift 3"
+- Tool areas: "Tool Room", "Parts Storage", "Work Station 5"
+- Inspection points: "Inspection Lane", "Emissions Bay"
+- Outdoor areas: "Service Yard", "Equipment Storage"
+
+**Reservation Locations:**
+- Pickup points: "Vehicle Pickup", "Key Box Location", "Valet Stand"
+- Drop-off points: "Return Area", "Check-in Zone"
+- Meeting points: "Lobby pickup", "Curb service", "Parking spot"
+
+**Administrative Locations:**
+- Offices: "Fleet Manager Office", "Dispatch Center", "Admin Desk"
+- Meeting rooms: "Conference Room A", "Board Room", "Training Room"
+- Storage: "File Room", "Archive Storage", "Records Department"
+
+### Access and Security Considerations
+
+**Security Levels:**
+- Public access: Areas accessible to visitors and general public
+- Employee access: Badge-required areas for staff
+- Restricted access: Special permission or escort required
+- Secure areas: High-security zones with limited access
+
+**Time-based Access:**
+- Business hours: Standard facility operating hours
+- Extended hours: After-hours access with special arrangements
+- 24/7 access: Always-accessible areas (emergency services)
+- Scheduled access: Time-limited access for specific operations
+
+## EXTRACTION EXAMPLES
+
+### Successful Extractions
+
+**Input:** "Park VEH001 in Building A, Zone B, Space 25"
+**Extracted:**
+- building: Building A (confidence: 0.95)
+- parking_zone: Zone B (confidence: 0.90)
+- parking_spot: Space 25 (confidence: 0.90)
+- full_location: Building A Zone B Space 25
+
+**Input:** "Schedule maintenance at the downtown service center"
+**Extracted:**
+- facility_type: service center (confidence: 0.85)
+- location_modifier: downtown (confidence: 0.80)
+- service_location: downtown service center
+
+**Input:** "Meet at headquarters lobby for vehicle pickup"
+**Extracted:**
+- facility: headquarters (confidence: 0.95)
+- area: lobby (confidence: 0.90)
+- purpose: vehicle pickup (confidence: 0.85)
+
+### Ambiguous Cases
+
+**Input:** "At the main location"
+**Issues:** Too generic, no specific facility identified
+**Response:** Request clarification for specific location
+**Confidence:** 0.40
+
+**Input:** "Building A or B, whichever is closer"
+**Issues:** Multiple options with conditional selection
+**Response:** Determine proximity based on user location/context
+**Confidence:** 0.60
+
+**Input:** "The parking garage"
+**Issues:** Could refer to multiple parking facilities
+**Response:** Request clarification or use context from previous requests
+**Confidence:** 0.50
+
+### Error Handling
+
+**Invalid Locations:**
+- Unknown facility names → Request valid location from list
+- Non-existent addresses → Suggest similar/nearby locations
+- Inaccessible areas → Inform about access restrictions
+
+**Conflicting Information:**
+- Multiple buildings mentioned → Clarify primary location
+- Inconsistent address components → Verify and correct
+- Access level conflicts → Check permissions and suggest alternatives
+
+## LEARNING AND ADAPTATION
+
+### Pattern Recognition:**
+- User location preferences: Learn commonly referenced locations
+- Organizational shortcuts: Adapt to internal location nicknames
+- New facility integration: Add locations as facilities expand
+- Usage pattern analysis: Identify most frequently referenced locations
+
+### Context Integration:**
+- Previous location context: Remember recent location discussions
+- User role context: Match locations to user access levels
+- Operation context: Suggest appropriate locations by request type
+- Geographic context: Understand user's typical operating area
+
+# CUSTOMIZATION CHECKLIST:
+# □ Replace facility names with your actual buildings and branches
+# □ Update parking zones, levels, and numbering systems
+# □ Modify address patterns for your operating regions
+# □ Add location hierarchies specific to your organization
+# □ Include service territories and coverage areas
+# □ Update access control and security level definitions
+# □ Add GPS and coordinate systems used in your operations
+# □ Include landmark references and navigation aids
+# □ Test extraction with your actual location data
+# □ Validate against your facility management systems

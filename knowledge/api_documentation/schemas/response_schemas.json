@@ -1,0 +1,741 @@
+{
+  "version": "1.0",
+  "last_updated": "2024-01-15",
+  "description": "Standard response schemas for all fleet management API endpoints",
+  "note": "UPDATE: Modify these schemas to match your actual API response formats and data structures",
+
+  "vehicle_operations": {
+    "vehicle_details_response": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "description": "Unique vehicle identifier"
+        },
+        "basic_info": {
+          "type": "object",
+          "properties": {
+            "make": {"type": "string"},
+            "model": {"type": "string"},
+            "year": {"type": "integer"},
+            "vin": {"type": "string"},
+            "license_plate": {"type": "string"},
+            "color": {"type": "string"},
+            "fuel_type": {"type": "string", "enum": ["gasoline", "diesel", "hybrid", "electric", "natural_gas"]},
+            "vehicle_type": {"type": "string", "enum": ["sedan", "suv", "truck", "van", "coupe", "hatchback"]}
+          }
+        },
+        "assignment_info": {
+          "type": "object", 
+          "properties": {
+            "assigned_department": {"type": "string"},
+            "assigned_driver": {"type": "string"},
+            "assignment_date": {"type": "string", "format": "date"},
+            "assignment_type": {"type": "string", "enum": ["permanent", "temporary", "pool"]}
+          }
+        },
+        "current_status": {
+          "type": "object",
+          "properties": {
+            "status": {"type": "string", "enum": ["active", "inactive", "maintenance", "retired"]},
+            "location": {"type": "string"},
+            "mileage": {"type": "integer"},
+            "fuel_level": {"type": "number", "minimum": 0, "maximum": 1},
+            "last_service_date": {"type": "string", "format": "date"},
+            "next_service_due": {"type": "string", "format": "date"},
+            "condition_notes": {"type": "string"}
+          }
+        },
+        "financial_info": {
+          "type": "object",
+          "properties": {
+            "purchase_date": {"type": "string", "format": "date"},
+            "purchase_price": {"type": "number"},
+            "current_value": {"type": "number"},
+            "total_maintenance_cost": {"type": "number"},
+            "monthly_cost": {"type": "number"}
+          }
+        },
+        "usage_statistics": {
+          "type": "object",
+          "properties": {
+            "total_miles": {"type": "integer"},
+            "monthly_mileage": {"type": "integer"},
+            "fuel_efficiency": {"type": "number"},
+            "utilization_rate": {"type": "number"},
+            "last_used_date": {"type": "string", "format": "date-time"}
+          }
+        }
+      }
+    },
+
+    "vehicle_list_response": {
+      "type": "object",
+      "properties": {
+        "total_count": {"type": "integer"},
+        "page": {"type": "integer"},
+        "limit": {"type": "integer"},
+        "vehicles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "vehicle_id": {"type": "string"},
+              "make": {"type": "string"},
+              "model": {"type": "string"},
+              "year": {"type": "integer"},
+              "license_plate": {"type": "string"},
+              "status": {"type": "string"},
+              "assigned_driver": {"type": "string"},
+              "location": {"type": "string"},
+              "availability": {"type": "string", "enum": ["available", "reserved", "in_use", "maintenance"]}
+            }
+          }
+        },
+        "filters_applied": {
+          "type": "object",
+          "properties": {
+            "status": {"type": "array", "items": {"type": "string"}},
+            "make": {"type": "array", "items": {"type": "string"}},
+            "assigned_department": {"type": "string"},
+            "date_range": {
+              "type": "object",
+              "properties": {
+                "start_date": {"type": "string", "format": "date"},
+                "end_date": {"type": "string", "format": "date"}
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "vehicle_availability_response": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {"type": "string"},
+        "is_available": {"type": "boolean"},
+        "availability_window": {
+          "type": "object",
+          "properties": {
+            "start_datetime": {"type": "string", "format": "date-time"},
+            "end_datetime": {"type": "string", "format": "date-time"}
+          }
+        },
+        "conflicting_reservations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reservation_id": {"type": "string"},
+              "start_datetime": {"type": "string", "format": "date-time"},
+              "end_datetime": {"type": "string", "format": "date-time"},
+              "reserved_by": {"type": "string"},
+              "purpose": {"type": "string"}
+            }
+          }
+        },
+        "maintenance_schedule": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "appointment_id": {"type": "string"},
+              "scheduled_datetime": {"type": "string", "format": "date-time"},
+              "estimated_duration": {"type": "number"},
+              "service_type": {"type": "string"}
+            }
+          }
+        },
+        "next_available": {"type": "string", "format": "date-time"},
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "vehicle_id": {"type": "string"},
+              "make_model": {"type": "string"},
+              "availability_score": {"type": "number"},
+              "reason": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "maintenance_operations": {
+    "maintenance_appointment_response": {
+      "type": "object",
+      "properties": {
+        "appointment_id": {"type": "string"},
+        "vehicle_info": {
+          "type": "object",
+          "properties": {
+            "vehicle_id": {"type": "string"},
+            "make_model_year": {"type": "string"},
+            "license_plate": {"type": "string"},
+            "current_mileage": {"type": "integer"}
+          }
+        },
+        "service_details": {
+          "type": "object",
+          "properties": {
+            "maintenance_type": {"type": "string"},
+            "description": {"type": "string"},
+            "priority": {"type": "string", "enum": ["low", "normal", "high", "urgent", "emergency"]},
+            "estimated_duration": {"type": "number"},
+            "estimated_cost": {"type": "number"}
+          }
+        },
+        "scheduling": {
+          "type": "object",
+          "properties": {
+            "requested_date": {"type": "string", "format": "date"},
+            "requested_time": {"type": "string"},
+            "scheduled_datetime": {"type": "string", "format": "date-time"},
+            "service_location": {"type": "string"},
+            "assigned_technician": {"type": "string"}
+          }
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "current_status": {"type": "string", "enum": ["scheduled", "confirmed", "in_progress", "completed", "cancelled"]},
+            "created_datetime": {"type": "string", "format": "date-time"},
+            "last_updated": {"type": "string", "format": "date-time"},
+            "status_history": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "status": {"type": "string"},
+                  "datetime": {"type": "string", "format": "date-time"},
+                  "updated_by": {"type": "string"},
+                  "notes": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "parts_and_labor": {
+          "type": "object",
+          "properties": {
+            "parts_needed": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "part_id": {"type": "string"},
+                  "part_name": {"type": "string"},
+                  "quantity": {"type": "integer"},
+                  "unit_cost": {"type": "number"},
+                  "availability_status": {"type": "string", "enum": ["in_stock", "order_required", "backordered"]}
+                }
+              }
+            },
+            "labor_hours": {"type": "number"},
+            "labor_rate": {"type": "number"},
+            "total_estimated_cost": {"type": "number"}
+          }
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "contact_person": {"type": "string"},
+            "notification_preferences": {"type": "array", "items": {"type": "string"}},
+            "scheduled_reminders": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "reminder_type": {"type": "string"},
+                  "send_datetime": {"type": "string", "format": "date-time"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "maintenance_history_response": {
+      "type": "object", 
+      "properties": {
+        "vehicle_id": {"type": "string"},
+        "total_records": {"type": "integer"},
+        "date_range": {
+          "type": "object",
+          "properties": {
+            "start_date": {"type": "string", "format": "date"},
+            "end_date": {"type": "string", "format": "date"}
+          }
+        },
+        "maintenance_records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "record_id": {"type": "string"},
+              "service_date": {"type": "string", "format": "date"},
+              "mileage_at_service": {"type": "integer"},
+              "maintenance_type": {"type": "string"},
+              "description": {"type": "string"},
+              "technician": {"type": "string"},
+              "service_location": {"type": "string"},
+              "parts_replaced": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "total_cost": {"type": "number"},
+              "warranty_info": {
+                "type": "object",
+                "properties": {
+                  "warranty_expires": {"type": "string", "format": "date"},
+                  "warranty_mileage": {"type": "integer"}
+                }
+              }
+            }
+          }
+        },
+        "summary_statistics": {
+          "type": "object",
+          "properties": {
+            "total_maintenance_cost": {"type": "number"},
+            "average_cost_per_service": {"type": "number"},
+            "most_frequent_service": {"type": "string"},
+            "days_since_last_service": {"type": "integer"},
+            "next_recommended_service": {
+              "type": "object",
+              "properties": {
+                "service_type": {"type": "string"},
+                "due_date": {"type": "string", "format": "date"},
+                "due_mileage": {"type": "integer"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "reservation_operations": {
+    "reservation_response": {
+      "type": "object",
+      "properties": {
+        "reservation_id": {"type": "string"},
+        "vehicle_info": {
+          "type": "object",
+          "properties": {
+            "vehicle_id": {"type": "string"},
+            "make": {"type": "string"},
+            "model": {"type": "string"},
+            "year": {"type": "integer"},
+            "license_plate": {"type": "string"},
+            "fuel_type": {"type": "string"},
+            "features": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "reservation_details": {
+          "type": "object",
+          "properties": {
+            "user_id": {"type": "string"},
+            "start_datetime": {"type": "string", "format": "date-time"},
+            "end_datetime": {"type": "string", "format": "date-time"},
+            "duration_hours": {"type": "number"},
+            "purpose": {"type": "string"},
+            "destination": {"type": "string"},
+            "passenger_count": {"type": "integer"},
+            "estimated_mileage": {"type": "integer"}
+          }
+        },
+        "status_info": {
+          "type": "object",
+          "properties": {
+            "current_status": {"type": "string", "enum": ["pending", "confirmed", "active", "completed", "cancelled"]},
+            "created_datetime": {"type": "string", "format": "date-time"},
+            "confirmed_datetime": {"type": "string", "format": "date-time"},
+            "requires_approval": {"type": "boolean"},
+            "approval_status": {"type": "string", "enum": ["pending", "approved", "denied"]},
+            "approver": {"type": "string"}
+          }
+        },
+        "pickup_return": {
+          "type": "object",
+          "properties": {
+            "pickup_location": {"type": "string"},
+            "return_location": {"type": "string"},
+            "pickup_instructions": {"type": "string"},
+            "return_instructions": {"type": "string"},
+            "key_pickup_method": {"type": "string", "enum": ["key_box", "attendant", "mobile_app"]},
+            "fuel_policy": {"type": "string"}
+          }
+        },
+        "billing_info": {
+          "type": "object",
+          "properties": {
+            "department": {"type": "string"},
+            "cost_center": {"type": "string"},
+            "project_code": {"type": "string"},
+            "estimated_cost": {"type": "number"},
+            "cost_breakdown": {
+              "type": "object",
+              "properties": {
+                "base_rate": {"type": "number"},
+                "mileage_charges": {"type": "number"},
+                "additional_fees": {"type": "number"}
+              }
+            }
+          }
+        },
+        "special_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "requirement_type": {"type": "string"},
+              "description": {"type": "string"},
+              "fulfilled": {"type": "boolean"}
+            }
+          }
+        },
+        "contact_info": {
+          "type": "object",
+          "properties": {
+            "primary_contact": {"type": "string"},
+            "emergency_contact": {"type": "string"},
+            "notification_preferences": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+
+    "reservation_availability_response": {
+      "type": "object",
+      "properties": {
+        "request_details": {
+          "type": "object",
+          "properties": {
+            "requested_datetime": {"type": "string", "format": "date-time"},
+            "duration_hours": {"type": "number"},
+            "vehicle_preferences": {"type": "array", "items": {"type": "string"}},
+            "special_requirements": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "available_vehicles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "vehicle_id": {"type": "string"},
+              "vehicle_details": {
+                "type": "object",
+                "properties": {
+                  "make_model_year": {"type": "string"},
+                  "license_plate": {"type": "string"},
+                  "vehicle_type": {"type": "string"},
+                  "fuel_type": {"type": "string"},
+                  "features": {"type": "array", "items": {"type": "string"}}
+                }
+              },
+              "availability_score": {"type": "number", "minimum": 0, "maximum": 100},
+              "match_reasons": {"type": "array", "items": {"type": "string"}},
+              "pickup_location": {"type": "string"},
+              "estimated_cost": {"type": "number"},
+              "special_notes": {"type": "string"}
+            }
+          }
+        },
+        "alternative_suggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "suggestion_type": {"type": "string", "enum": ["different_time", "different_duration", "different_vehicle_type"]},
+              "alternative_datetime": {"type": "string", "format": "date-time"},
+              "alternative_duration": {"type": "number"},
+              "available_vehicles": {"type": "integer"},
+              "cost_difference": {"type": "number"},
+              "benefits": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "booking_policies": {
+          "type": "object",
+          "properties": {
+            "advance_notice_required": {"type": "string"},
+            "maximum_duration": {"type": "string"},
+            "cancellation_policy": {"type": "string"},
+            "approval_required": {"type": "boolean"},
+            "deposit_required": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  },
+
+  "parking_operations": {
+    "parking_assignment_response": {
+      "type": "object",
+      "properties": {
+        "assignment_id": {"type": "string"},
+        "vehicle_info": {
+          "type": "object",
+          "properties": {
+            "vehicle_id": {"type": "string"},
+            "license_plate": {"type": "string"},
+            "make_model": {"type": "string"}
+          }
+        },
+        "parking_details": {
+          "type": "object",
+          "properties": {
+            "location": {"type": "string"},
+            "zone": {"type": "string"},
+            "level": {"type": "string"},
+            "spot_number": {"type": "string"},
+            "spot_type": {"type": "string", "enum": ["standard", "compact", "oversized", "electric", "handicap", "visitor"]},
+            "full_address": {"type": "string"}
+          }
+        },
+        "assignment_info": {
+          "type": "object",
+          "properties": {
+            "assignment_type": {"type": "string", "enum": ["permanent", "temporary", "visitor", "reserved"]},
+            "assigned_to": {"type": "string"},
+            "department": {"type": "string"},
+            "start_date": {"type": "string", "format": "date"},
+            "end_date": {"type": "string", "format": "date"},
+            "assignment_status": {"type": "string", "enum": ["active", "pending", "expired"]}
+          }
+        },
+        "access_info": {
+          "type": "object",
+          "properties": {
+            "access_method": {"type": "string", "enum": ["gate_card", "mobile_app", "license_plate_recognition", "attendant"]},
+            "access_code": {"type": "string"},
+            "operating_hours": {"type": "string"},
+            "restrictions": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "features": {
+          "type": "object",
+          "properties": {
+            "covered_parking": {"type": "boolean"},
+            "electric_charging": {"type": "boolean"},
+            "security_camera": {"type": "boolean"},
+            "ground_level": {"type": "boolean"},
+            "close_to_entrance": {"type": "boolean"},
+            "additional_features": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "contact_info": {
+          "type": "object",
+          "properties": {
+            "facility_contact": {"type": "string"},
+            "security_number": {"type": "string"},
+            "maintenance_contact": {"type": "string"}
+          }
+        },
+        "directions": {
+          "type": "object",
+          "properties": {
+            "from_main_entrance": {"type": "string"},
+            "from_elevator": {"type": "string"},
+            "landmarks": {"type": "array", "items": {"type": "string"}},
+            "map_url": {"type": "string"}
+          }
+        }
+      }
+    },
+
+    "parking_availability_response": {
+      "type": "object",
+      "properties": {
+        "location": {"type": "string"},
+        "total_capacity": {"type": "integer"},
+        "available_spaces": {"type": "integer"},
+        "occupancy_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "space_breakdown": {
+          "type": "object",
+          "properties": {
+            "standard": {
+              "type": "object",
+              "properties": {
+                "total": {"type": "integer"},
+                "available": {"type": "integer"},
+                "reserved": {"type": "integer"}
+              }
+            },
+            "compact": {
+              "type": "object",
+              "properties": {
+                "total": {"type": "integer"},
+                "available": {"type": "integer"},
+                "reserved": {"type": "integer"}
+              }
+            },
+            "electric": {
+              "type": "object",
+              "properties": {
+                "total": {"type": "integer"},
+                "available": {"type": "integer"},
+                "reserved": {"type": "integer"}
+              }
+            },
+            "handicap": {
+              "type": "object",
+              "properties": {
+                "total": {"type": "integer"},
+                "available": {"type": "integer"},
+                "reserved": {"type": "integer"}
+              }
+            },
+            "visitor": {
+              "type": "object",
+              "properties": {
+                "total": {"type": "integer"},
+                "available": {"type": "integer"},
+                "reserved": {"type": "integer"}
+              }
+            }
+          }
+        },
+        "real_time_data": {
+          "type": "object",
+          "properties": {
+            "last_updated": {"type": "string", "format": "date-time"},
+            "update_frequency": {"type": "string"},
+            "data_source": {"type": "string"}
+          }
+        },
+        "available_spots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "spot_id": {"type": "string"},
+              "zone": {"type": "string"},
+              "level": {"type": "string"},
+              "spot_type": {"type": "string"},
+              "features": {"type": "array", "items": {"type": "string"}},
+              "accessibility_rating": {"type": "integer", "minimum": 1, "maximum": 5}
+            }
+          }
+        },
+        "predicted_availability": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "time": {"type": "string", "format": "time"},
+              "predicted_available": {"type": "integer"},
+              "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+            }
+          }
+        },
+        "waiting_list": {
+          "type": "object",
+          "properties": {
+            "available": {"type": "boolean"},
+            "current_wait_time": {"type": "string"},
+            "estimated_next_available": {"type": "string", "format": "date-time"}
+          }
+        }
+      }
+    }
+  },
+
+  "common_response_patterns": {
+    "success_response": {
+      "type": "object",
+      "properties": {
+        "success": {"type": "boolean", "const": true},
+        "message": {"type": "string"},
+        "data": {"type": "object"},
+        "timestamp": {"type": "string", "format": "date-time"},
+        "request_id": {"type": "string"}
+      }
+    },
+
+    "error_response": {
+      "type": "object", 
+      "properties": {
+        "success": {"type": "boolean", "const": false},
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {"type": "string"},
+            "message": {"type": "string"},
+            "details": {"type": "string"},
+            "field_errors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {"type": "string"},
+                  "error": {"type": "string"},
+                  "value": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "timestamp": {"type": "string", "format": "date-time"},
+        "request_id": {"type": "string"}
+      }
+    },
+
+    "paginated_response": {
+      "type": "object",
+      "properties": {
+        "data": {"type": "array"},
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "page": {"type": "integer"},
+            "limit": {"type": "integer"},
+            "total_pages": {"type": "integer"},
+            "total_count": {"type": "integer"},
+            "has_next": {"type": "boolean"},
+            "has_previous": {"type": "boolean"}
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "first": {"type": "string"},
+            "last": {"type": "string"},
+            "next": {"type": "string"},
+            "previous": {"type": "string"}
+          }
+        }
+      }
+    }
+  },
+
+  "update_instructions": {
+    "response_customization": [
+      "Update field names to match your actual API response structure",
+      "Add or remove fields based on the data your API returns",
+      "Modify enum values to reflect your system's actual status values",
+      "Update data types and formats to match your backend implementation",
+      "Include additional metadata fields specific to your business requirements",
+      "Add nested objects or arrays for complex data relationships"
+    ],
+    "data_structure_updates": [
+      "Ensure response schemas match your database entity relationships",
+      "Update field validation rules to match your business logic",
+      "Include computed fields that your API calculates dynamically",
+      "Add audit fields (created_by, updated_by, etc.) if your system tracks them",
+      "Update foreign key references to match your data model"
+    ],
+    "business_logic_updates": [
+      "Include business-specific calculated fields and metrics", 
+      "Add status tracking fields relevant to your workflow",
+      "Update availability logic to match your operational rules",
+      "Include pricing and billing fields specific to your cost model",
+      "Add compliance and regulatory fields required for your industry"
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+name: Documentation Issue
+description: Report an issue with documentation
+title: "[DOCS] "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve ComBadge documentation! Please provide details about the documentation issue or improvement.
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation is this about?
+      options:
+        - User Guide
+        - Administrator Guide
+        - Developer Guide
+        - API Reference
+        - Tutorials
+        - Installation Guide
+        - Configuration Guide
+        - README
+        - Code Comments
+        - Help System
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What kind of documentation issue is this?
+      options:
+        - Missing Information
+        - Incorrect Information
+        - Unclear/Confusing Content
+        - Outdated Content
+        - Broken Links
+        - Formatting Issues
+        - Translation Issues
+        - New Documentation Needed
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Where is this documentation located?
+      placeholder: e.g., docs/user_guide/getting_started.md, line 42
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content
+      description: What does the documentation currently say? (copy/paste or quote)
+      placeholder: Quote the current content that needs to be fixed
+
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: Issue Description
+      description: Describe the problem with the current documentation
+      placeholder: What's wrong, missing, or confusing about the current content?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-content
+    attributes:
+      label: Suggested Content
+      description: What should the documentation say instead?
+      placeholder: Provide your suggested improvement or correction
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any additional context about this documentation issue
+      placeholder: Screenshots, related issues, user feedback, etc.
+
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Target Audience
+      description: Who is the primary audience for this documentation?
+      options:
+        - End Users
+        - System Administrators
+        - Developers
+        - API Consumers
+        - New Users
+        - Advanced Users
+        - All Users
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is fixing this documentation?
+      options:
+        - Low - Minor improvement
+        - Medium - Affects user experience
+        - High - Blocks user tasks
+        - Critical - Prevents system usage
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: I have provided specific location information
+          required: true
+        - label: I have clearly described the issue
+          required: true

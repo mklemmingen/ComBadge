@@ -1,0 +1,443 @@
+# Step-by-Step Chain of Thought Templates for Fleet Management
+# UPDATE INSTRUCTIONS: Customize these templates for your specific operations and reasoning patterns
+# 1. Modify step templates to match your decision-making processes and approval workflows
+# 2. Update validation checkpoints based on your business rules and constraints  
+# 3. Add operation-specific reasoning templates for your fleet management scenarios
+# 4. Include error handling and exception templates specific to your business requirements
+# 5. Update confidence assessment criteria and scoring methods for your accuracy needs
+# 6. Add templates for multi-step operations common in your organization
+
+## TEMPLATE STRUCTURE OVERVIEW
+
+Each reasoning template follows a consistent structure with clear steps, validation points, and decision criteria. Templates are organized by operation type and complexity level.
+
+### BASIC OPERATION TEMPLATES
+
+## TEMPLATE 1: SIMPLE VEHICLE QUERY
+**Use Case:** Single vehicle information requests
+**Pattern:** "Show me details for vehicle [ID]"
+
+```
+STEP 1: REQUEST UNDERSTANDING
+🤔 REASONING: The user is asking for vehicle information.
+INPUT ANALYSIS:
+- Action: Query/Display vehicle information  
+- Target: Specific vehicle [extract vehicle ID]
+- Type: Information retrieval request
+- Complexity: Simple, single-entity query
+
+STEP 2: ENTITY VALIDATION  
+🤔 REASONING: I need to validate the vehicle identifier.
+VEHICLE_ID VALIDATION:
+- Format check: [vehicle ID pattern validation]
+- Existence check: Does this vehicle exist in our fleet?
+- Access check: Does user have permission to view this vehicle?
+- Status check: Is vehicle record accessible?
+
+STEP 3: API MAPPING
+🤔 REASONING: This maps to a straightforward GET request.
+API SELECTION:
+- Endpoint: GET /fleet/vehicles/{vehicle_id}
+- Method: Simple read operation
+- Parameters: vehicle_id from user input
+- Expected response: Vehicle details object
+
+STEP 4: EXECUTION CONFIDENCE
+🤔 REASONING: Assessing confidence in this solution.
+CONFIDENCE FACTORS:
+- Intent clarity: [score] (clear information request)
+- Entity extraction: [score] (vehicle ID identified)
+- API mapping: [score] (direct endpoint match)
+- OVERALL CONFIDENCE: [calculated score]
+
+FINAL ACTION: Execute GET request for vehicle details
+```
+
+## TEMPLATE 2: SIMPLE MAINTENANCE SCHEDULING  
+**Use Case:** Straightforward maintenance appointment booking
+**Pattern:** "Schedule [service type] for [vehicle] on [date/time]"
+
+```
+STEP 1: REQUEST DECOMPOSITION
+🤔 REASONING: Breaking down this maintenance scheduling request.
+COMPONENTS IDENTIFIED:
+- Action: Schedule maintenance appointment
+- Vehicle: [extract vehicle identifier] 
+- Service: [extract maintenance type]
+- Timing: [extract date and time]
+- Additional requirements: [extract any special needs]
+
+STEP 2: ENTITY EXTRACTION AND VALIDATION
+🤔 REASONING: Validating all required information is present and valid.
+VEHICLE VALIDATION:
+- Vehicle ID: [validation result]
+- Vehicle availability: [check conflicts with reservations]
+- Maintenance eligibility: [check if vehicle can receive this service]
+
+SERVICE VALIDATION:
+- Service type: [validate against available services]
+- Service requirements: [check parts, tools, technician needs]
+- Service duration: [estimate time needed]
+
+TIMING VALIDATION:
+- Date format: [validate and convert to standard format]
+- Time format: [validate and convert to 24-hour format]
+- Business hours: [check if time falls within service hours]
+- Facility availability: [check service bay availability]
+
+STEP 3: BUSINESS RULE COMPLIANCE
+🤔 REASONING: Checking this request against business policies.
+POLICY CHECKS:
+- Advance booking requirement: [check minimum notice period]
+- Authorization needed: [check if approval required for this service]
+- Cost threshold: [check if cost requires special approval]
+- Recurring maintenance: [check if this interferes with scheduled maintenance]
+
+STEP 4: RESOURCE AVAILABILITY  
+🤔 REASONING: Verifying all required resources are available.
+RESOURCE CHECKS:
+- Technician availability: [qualified technician available at requested time]
+- Service bay: [appropriate bay available]
+- Parts inventory: [required parts in stock]
+- Equipment: [specialized tools available if needed]
+
+STEP 5: API REQUEST FORMULATION
+🤔 REASONING: Constructing the API request with validated parameters.
+API CALL PREPARATION:
+- Endpoint: POST /fleet/maintenance/schedule
+- Required parameters: vehicle_id, maintenance_type, requested_date, requested_time
+- Optional parameters: priority, notes, estimated_duration, preferred_technician
+- Parameter values: [list transformed values]
+
+STEP 6: CONFIDENCE AND VALIDATION
+🤔 REASONING: Final validation before execution.
+CONFIDENCE ASSESSMENT:
+- Entity completeness: [score] (all required entities extracted)
+- Business compliance: [score] (passes policy checks)
+- Resource availability: [score] (resources confirmed available)
+- API mapping accuracy: [score] (correct endpoint and parameters)
+- OVERALL CONFIDENCE: [calculated weighted score]
+
+FINAL ACTION: Execute maintenance scheduling API call
+```
+
+## TEMPLATE 3: VEHICLE RESERVATION WITH AVAILABILITY CHECK
+**Use Case:** Booking vehicle with conditional availability verification  
+**Pattern:** "Book [vehicle] for [date/time] if available"
+
+```
+STEP 1: CONDITIONAL REQUEST ANALYSIS
+🤔 REASONING: This is a conditional request - booking depends on availability.
+REQUEST STRUCTURE:
+- Primary action: Vehicle reservation  
+- Condition: Vehicle availability during requested time
+- Fallback: Need to handle unavailability scenario
+- Complexity: Multi-step with conditional logic
+
+STEP 2: AVAILABILITY VERIFICATION STRATEGY
+🤔 REASONING: I need to check availability before attempting booking.
+AVAILABILITY CHECK APPROACH:
+- Pre-check: Query vehicle availability for requested timeframe
+- Conflict detection: Check for existing reservations
+- Maintenance conflicts: Check for scheduled maintenance
+- Status verification: Ensure vehicle is operational
+
+STEP 3: ENTITY EXTRACTION AND TEMPORAL PROCESSING
+🤔 REASONING: Processing vehicle and timing information.
+VEHICLE IDENTIFICATION:
+- Vehicle reference: [extract and validate vehicle identifier]
+- Vehicle verification: [confirm vehicle exists and is bookable]
+
+TEMPORAL PROCESSING:
+- Start time: [extract and validate start date/time]
+- End time: [extract or estimate end date/time]  
+- Duration: [calculate or use provided duration]
+- Buffer time: [add buffer for pickup/return]
+
+STEP 4: AVAILABILITY QUERY EXECUTION
+🤔 REASONING: First, I'll check if the vehicle is available.
+AVAILABILITY API CALL:
+- Endpoint: GET /fleet/vehicles/{vehicle_id}/availability
+- Parameters: start_datetime, end_datetime
+- Expected responses:
+  * Available: Proceed with reservation
+  * Conflict: Explain conflict and suggest alternatives
+  * Error: Handle error and request clarification
+
+STEP 5: CONDITIONAL EXECUTION PATH
+🤔 REASONING: Based on availability check, I'll take appropriate action.
+IF AVAILABLE:
+- Proceed with reservation booking
+- Use POST /fleet/reservations endpoint
+- Include all validated parameters
+- Confirm successful booking with user
+
+IF NOT AVAILABLE:
+- Explain specific availability conflict
+- Query alternative time slots or vehicles  
+- Present options to user for selection
+- Wait for user decision before proceeding
+
+STEP 6: CONFIDENCE ASSESSMENT FOR CONDITIONAL LOGIC
+🤔 REASONING: Confidence assessment for multi-step conditional operation.
+CONFIDENCE FACTORS:
+- Availability query confidence: [score]
+- Conditional logic accuracy: [score] 
+- Reservation parameters: [score]
+- User communication clarity: [score]
+- OVERALL CONFIDENCE: [calculated score]
+
+FINAL ACTION: Execute availability check, then conditional reservation
+```
+
+### COMPLEX OPERATION TEMPLATES
+
+## TEMPLATE 4: MULTI-VEHICLE MAINTENANCE COORDINATION
+**Use Case:** Scheduling maintenance for multiple vehicles with coordination
+**Pattern:** "Schedule maintenance for VEH001, VEH002, and VEH003 this week"
+
+```
+STEP 1: MULTI-ENTITY REQUEST DECOMPOSITION
+🤔 REASONING: This involves multiple vehicles requiring coordinated scheduling.
+COMPLEXITY ANALYSIS:
+- Multiple vehicles: [extract all vehicle identifiers]
+- Coordination requirement: Schedule efficiently to minimize disruption
+- Resource optimization: Balance technician time and facility usage
+- Business continuity: Ensure adequate vehicle availability
+
+STEP 2: INDIVIDUAL VEHICLE VALIDATION
+🤔 REASONING: Validating each vehicle separately for maintenance eligibility.
+FOR EACH VEHICLE:
+- Vehicle existence: [validate each vehicle ID]
+- Maintenance needs: [check what type of maintenance required]
+- Current status: [verify vehicle is available for maintenance]
+- Service history: [check recent maintenance to avoid conflicts]
+- Priority level: [determine urgency for each vehicle]
+
+STEP 3: RESOURCE REQUIREMENT ANALYSIS  
+🤔 REASONING: Calculating total resource needs for all vehicles.
+RESOURCE CALCULATIONS:
+- Total technician hours needed: [sum of all service times]
+- Service bay requirements: [simultaneous vs sequential scheduling]
+- Parts inventory: [aggregate parts needed for all vehicles]
+- Timeline constraints: [week duration, business days available]
+
+STEP 4: OPTIMIZATION STRATEGY
+🤔 REASONING: Determining optimal scheduling approach for efficiency.
+SCHEDULING OPTIMIZATION:
+- Parallel processing: Which vehicles can be serviced simultaneously?
+- Sequential optimization: What's the best order for sequential services?
+- Resource balancing: How to balance technician workload?
+- Minimize disruption: How to maintain operational vehicle availability?
+
+STEP 5: COORDINATED API EXECUTION PLAN
+🤔 REASONING: Planning multiple API calls with coordination logic.
+EXECUTION STRATEGY:
+- API calls needed: Multiple POST /fleet/maintenance/schedule calls
+- Sequencing: Order of API calls (based on priority, availability)
+- Error handling: How to handle partial failures
+- Rollback plan: What to do if coordination fails
+
+STEP 6: MULTI-OPERATION CONFIDENCE ASSESSMENT
+🤔 REASONING: Assessing confidence across multiple coordinated operations.
+CONFIDENCE FACTORS:
+- Individual vehicle scheduling: [average confidence across all vehicles]
+- Resource availability: [confidence in resource allocation]
+- Coordination complexity: [confidence in optimization strategy]
+- Error recovery: [confidence in handling partial failures]
+- OVERALL CONFIDENCE: [calculated weighted score with complexity penalty]
+
+FINAL ACTION: Execute coordinated maintenance scheduling with optimization
+```
+
+## TEMPLATE 5: EMERGENCY RESPONSE WITH ESCALATION
+**Use Case:** Urgent situations requiring immediate action and escalation
+**Pattern:** "VEH001 broke down on highway, need immediate assistance"
+
+```
+STEP 1: EMERGENCY SITUATION ASSESSMENT
+🤔 REASONING: This is an emergency requiring immediate response protocols.
+EMERGENCY INDICATORS:
+- Situation type: Vehicle breakdown
+- Location: Highway (potentially unsafe)
+- Urgency level: Immediate assistance required
+- Safety concerns: Driver/passenger safety, traffic hazard
+- Business impact: Vehicle out of service, potential delays
+
+STEP 2: SAFETY PRIORITY EVALUATION
+🤔 REASONING: Safety takes absolute priority in emergency situations.
+SAFETY ASSESSMENT:
+- Immediate danger: Is anyone in immediate physical danger?
+- Location safety: Is the vehicle in a safe location?
+- Emergency services: Are police/fire/medical needed?
+- Traffic hazard: Does situation pose risk to other drivers?
+- Driver status: Is driver safe and able to communicate?
+
+STEP 3: IMMEDIATE ACTION DETERMINATION
+🤔 REASONING: Determining what immediate actions are required.
+IMMEDIATE ACTIONS NEEDED:
+- Emergency dispatch: Contact roadside assistance/towing
+- Driver safety: Ensure driver is safe and informed
+- Traffic management: Contact authorities if traffic hazard
+- Fleet notification: Alert fleet management of situation
+- Alternative transportation: Arrange backup if needed
+
+STEP 4: ESCALATION PROTOCOL ACTIVATION
+🤔 REASONING: Emergency situations require appropriate escalation.
+ESCALATION DECISIONS:
+- Management notification: Who needs to be informed immediately?
+- Emergency services: What official emergency services are needed?
+- Insurance notification: Does this require immediate insurance claim?
+- Customer impact: Are there customer commitments affected?
+- Media considerations: Any public relations implications?
+
+STEP 5: MULTI-CHANNEL RESPONSE COORDINATION
+🤔 REASONING: Emergency response requires multiple coordinated actions.
+RESPONSE COORDINATION:
+- Primary response: Emergency roadside assistance API call
+- Secondary actions: Status updates, notifications, alternatives
+- Documentation: Incident logging and tracking
+- Follow-up planning: Recovery and analysis procedures
+- Communication: Stakeholder notifications and updates
+
+STEP 6: EMERGENCY RESPONSE CONFIDENCE
+🤔 REASONING: Confidence assessment adapted for emergency response.
+EMERGENCY CONFIDENCE FACTORS:
+- Situation assessment accuracy: [confidence in understanding emergency]
+- Response appropriateness: [confidence in chosen response actions]
+- Escalation decisions: [confidence in escalation protocol]
+- Resource mobilization: [confidence in ability to deploy resources]
+- EMERGENCY RESPONSE CONFIDENCE: [calculated with speed priority]
+
+FINAL ACTION: Execute emergency response protocol with immediate escalation
+```
+
+### SPECIALIZED TEMPLATES
+
+## TEMPLATE 6: COMPLIANCE AND REGULATORY PROCESSING
+**Use Case:** Operations involving regulatory compliance requirements
+**Pattern:** "Schedule DOT inspection for commercial vehicle VEH001"
+
+```
+STEP 1: REGULATORY REQUIREMENT IDENTIFICATION
+🤔 REASONING: This involves regulatory compliance that requires special handling.
+COMPLIANCE ANALYSIS:
+- Regulation type: DOT (Department of Transportation) inspection
+- Vehicle category: Commercial vehicle (different rules apply)
+- Compliance deadline: When is inspection due/overdue?
+- Operational impact: Vehicle cannot operate without valid inspection
+- Documentation: What records and certifications are required?
+
+STEP 2: REGULATORY CONSTRAINT VALIDATION
+🤔 REASONING: Ensuring all regulatory requirements can be met.
+COMPLIANCE CHECKS:
+- Inspection facility: Must use DOT-certified inspection station
+- Inspector qualifications: Must use qualified DOT inspector
+- Documentation readiness: All required vehicle documents available
+- Pre-inspection requirements: Any preparation work needed
+- Compliance history: Previous inspection results and issues
+
+STEP 3: REGULATORY SCHEDULING REQUIREMENTS
+🤔 REASONING: Regulatory inspections have special scheduling constraints.
+SCHEDULING CONSIDERATIONS:
+- Certified facility availability: Limited locations available
+- Inspector scheduling: Qualified inspectors may have limited availability  
+- Preparation time: Vehicle may need prep work before inspection
+- Results processing: Time needed for certification processing
+- Backup planning: What if vehicle fails initial inspection?
+
+STEP 4: COMPLIANCE API INTEGRATION
+🤔 REASONING: Regulatory operations may require specialized API endpoints.
+API REQUIREMENTS:
+- Standard scheduling: POST /fleet/maintenance/schedule
+- Special parameters: inspection_type=DOT, certified_facility_required=true
+- Documentation: compliance_deadline, certification_requirements
+- Tracking: regulatory_compliance=true flag for special handling
+- Reporting: Compliance reporting and documentation requirements
+
+STEP 5: REGULATORY CONFIDENCE ASSESSMENT
+🤔 REASONING: Compliance operations require high confidence due to legal requirements.
+COMPLIANCE CONFIDENCE:
+- Regulatory understanding: [confidence in regulation interpretation]
+- Facility qualification: [confidence in inspection facility capabilities]
+- Scheduling accuracy: [confidence in meeting compliance deadlines]
+- Documentation completeness: [confidence in paperwork preparation]
+- REGULATORY COMPLIANCE CONFIDENCE: [high threshold required for execution]
+
+FINAL ACTION: Execute regulatory compliance scheduling with documentation
+```
+
+## CONFIDENCE SCORING TEMPLATES
+
+### CONFIDENCE CALCULATION FRAMEWORK
+```
+CONFIDENCE SCORING METHODOLOGY:
+Each reasoning step receives a confidence score (0.0-1.0), weighted by importance:
+
+STEP WEIGHTS (UPDATE BASED ON YOUR PRIORITIES):
+- Intent Classification: 0.25 (25% of total confidence)
+- Entity Extraction: 0.20 (20% of total confidence)  
+- Business Rule Compliance: 0.20 (20% of total confidence)
+- Resource Availability: 0.15 (15% of total confidence)
+- API Mapping: 0.15 (15% of total confidence)
+- Error Handling: 0.05 (5% of total confidence)
+
+CONFIDENCE RANGES:
+- 0.90-1.00: Very High - Execute with minimal review
+- 0.80-0.89: High - Execute with standard validation
+- 0.70-0.79: Medium - Execute with additional verification
+- 0.60-0.69: Low - Require user confirmation before execution
+- Below 0.60: Very Low - Request clarification or escalate to human
+```
+
+### ERROR HANDLING TEMPLATES
+
+## TEMPLATE 7: INSUFFICIENT INFORMATION HANDLING
+```
+STEP 1: INFORMATION GAP IDENTIFICATION
+🤔 REASONING: The request is missing critical information needed to proceed.
+GAP ANALYSIS:
+- Missing entities: [list specific missing information]
+- Impact assessment: [how missing info affects operation]
+- Priority ranking: [which missing info is most critical]
+- Inference possibilities: [what can be reasonably assumed]
+
+STEP 2: CLARIFICATION STRATEGY
+🤔 REASONING: I need to request missing information in a helpful way.
+CLARIFICATION APPROACH:
+- Most critical first: Ask for essential information before optional details
+- Provide context: Explain why information is needed
+- Offer examples: Give user examples of expected formats
+- Suggest defaults: Offer reasonable default values where appropriate
+
+STEP 3: PARTIAL EXECUTION CONSIDERATION
+🤔 REASONING: Can I do anything useful with the information I have?
+PARTIAL PROCESSING:
+- What can be validated: Process available information
+- What can be prepared: Set up as much as possible
+- What requires clarification: Clearly identify gaps
+- Progressive disclosure: Guide user through missing information step-by-step
+
+FINAL ACTION: Request clarification with helpful context and examples
+```
+
+# TEMPLATE CUSTOMIZATION GUIDELINES
+
+## FOR YOUR ORGANIZATION:
+1. **Update Step Weights**: Adjust confidence scoring weights based on your operational priorities
+2. **Modify Business Rules**: Include your specific policies and approval requirements
+3. **Add Domain Steps**: Include reasoning steps specific to your industry or fleet type
+4. **Update Error Handling**: Customize error scenarios based on common issues in your system
+5. **Include Escalation Paths**: Add your specific escalation procedures and approval workflows
+6. **Regulatory Compliance**: Include reasoning for regulations specific to your business
+7. **Safety Protocols**: Add safety reasoning patterns for your operational environment
+8. **Resource Optimization**: Customize efficiency reasoning for your resource constraints
+
+## TEMPLATE TESTING CHECKLIST:
+□ Test each template with realistic scenarios from your operations
+□ Validate confidence scoring against your accuracy requirements
+□ Ensure error handling covers your common failure modes
+□ Verify escalation procedures match your organizational structure
+□ Test multi-step coordination logic with your business processes
+□ Validate regulatory compliance reasoning for your industry
+□ Confirm resource optimization aligns with your operational constraints

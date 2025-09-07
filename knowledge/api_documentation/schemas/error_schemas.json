@@ -1,0 +1,453 @@
+{
+  "version": "1.0",
+  "last_updated": "2024-01-15",
+  "description": "Standardized error response schemas and error code definitions",
+  "note": "UPDATE: Customize error codes, messages, and handling to match your API's error management system",
+
+  "standard_error_response": {
+    "type": "object",
+    "required": ["success", "error", "timestamp", "request_id"],
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "const": false,
+        "description": "Always false for error responses"
+      },
+      "error": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Standardized error code for programmatic handling",
+            "pattern": "^[A-Z]{3}[0-9]{3}$"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message",
+            "maxLength": 200
+          },
+          "details": {
+            "type": "string",
+            "description": "Additional technical details about the error",
+            "maxLength": 500
+          },
+          "field_errors": {
+            "type": "array",
+            "description": "Field-specific validation errors",
+            "items": {
+              "type": "object",
+              "required": ["field", "error"],
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Name of the field that caused the error"
+                },
+                "error": {
+                  "type": "string", 
+                  "description": "Error message for this specific field"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The invalid value that was provided"
+                },
+                "expected_format": {
+                  "type": "string",
+                  "description": "Expected format or valid values"
+                }
+              }
+            }
+          },
+          "help_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to documentation or help resources"
+          }
+        }
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the error occurred"
+      },
+      "request_id": {
+        "type": "string",
+        "description": "Unique identifier for this request for debugging"
+      },
+      "correlation_id": {
+        "type": "string",
+        "description": "Correlation ID for distributed tracing"
+      }
+    }
+  },
+
+  "error_categories": {
+    "validation_errors": {
+      "description": "Errors related to invalid input data or business rule violations",
+      "code_prefix": "VAL",
+      "http_status": 400,
+      "examples": {
+        "VAL001": {
+          "message": "Invalid vehicle ID format",
+          "details": "Vehicle ID must be 3 letters followed by 3-4 numbers (e.g., VEH001)",
+          "field_errors": [
+            {
+              "field": "vehicle_id",
+              "error": "Invalid format",
+              "value": "12345",
+              "expected_format": "ABC123 or ABC1234"
+            }
+          ]
+        },
+        "VAL002": {
+          "message": "Date range validation failed",
+          "details": "End date must be after start date",
+          "field_errors": [
+            {
+              "field": "end_date",
+              "error": "Must be after start_date",
+              "value": "2024-01-10",
+              "expected_format": "Date after 2024-01-15"
+            }
+          ]
+        },
+        "VAL003": {
+          "message": "Required field missing",
+          "details": "One or more required fields are missing from the request",
+          "field_errors": [
+            {
+              "field": "vehicle_id",
+              "error": "This field is required",
+              "value": null,
+              "expected_format": "Non-empty string"
+            }
+          ]
+        }
+      }
+    },
+
+    "business_rule_violations": {
+      "description": "Errors when operations violate business policies or constraints",
+      "code_prefix": "BRV",
+      "http_status": 422,
+      "examples": {
+        "BRV001": {
+          "message": "Vehicle not available for reservation",
+          "details": "Vehicle is already reserved during the requested time period",
+          "help_url": "https://docs.example.com/reservations/conflicts"
+        },
+        "BRV002": {
+          "message": "Insufficient approval authority",
+          "details": "Maintenance cost of $3,000 exceeds your approval limit of $1,000",
+          "help_url": "https://docs.example.com/approvals/limits"
+        },
+        "BRV003": {
+          "message": "Driver qualification requirements not met",
+          "details": "Driver does not have required CDL certification for commercial vehicle",
+          "help_url": "https://docs.example.com/drivers/requirements"
+        },
+        "BRV004": {
+          "message": "Geographic restriction violation",
+          "details": "Vehicle assignment violates territorial restrictions for this driver",
+          "help_url": "https://docs.example.com/policies/geographic"
+        },
+        "BRV005": {
+          "message": "Budget constraint violation",
+          "details": "Department has exceeded allocated fleet budget for this fiscal year",
+          "help_url": "https://docs.example.com/budgets/limits"
+        }
+      }
+    },
+
+    "authentication_errors": {
+      "description": "Errors related to authentication and authorization",
+      "code_prefix": "AUTH",
+      "http_status": 401,
+      "examples": {
+        "AUTH001": {
+          "message": "Authentication required",
+          "details": "Valid authentication credentials are required to access this resource",
+          "help_url": "https://docs.example.com/auth/login"
+        },
+        "AUTH002": {
+          "message": "Invalid credentials",
+          "details": "The provided authentication credentials are invalid",
+          "help_url": "https://docs.example.com/auth/troubleshooting"
+        },
+        "AUTH003": {
+          "message": "Token expired",
+          "details": "Authentication token has expired and must be refreshed",
+          "help_url": "https://docs.example.com/auth/refresh"
+        }
+      }
+    },
+
+    "authorization_errors": {
+      "description": "Errors when user lacks sufficient permissions for the requested operation",
+      "code_prefix": "PERM",
+      "http_status": 403,
+      "examples": {
+        "PERM001": {
+          "message": "Insufficient permissions",
+          "details": "User does not have permission to perform this operation",
+          "help_url": "https://docs.example.com/permissions/roles"
+        },
+        "PERM002": {
+          "message": "Resource access denied",
+          "details": "User does not have access to the requested vehicle or resource",
+          "help_url": "https://docs.example.com/permissions/resources"
+        },
+        "PERM003": {
+          "message": "Administrative privileges required",
+          "details": "This operation requires fleet administrator privileges",
+          "help_url": "https://docs.example.com/permissions/admin"
+        }
+      }
+    },
+
+    "resource_errors": {
+      "description": "Errors when requested resources are not found or unavailable",
+      "code_prefix": "RES",
+      "http_status": 404,
+      "examples": {
+        "RES001": {
+          "message": "Vehicle not found",
+          "details": "Vehicle with the specified ID does not exist",
+          "help_url": "https://docs.example.com/vehicles/lookup"
+        },
+        "RES002": {
+          "message": "Reservation not found",
+          "details": "Reservation with the specified ID does not exist or has been cancelled",
+          "help_url": "https://docs.example.com/reservations/status"
+        },
+        "RES003": {
+          "message": "User not found",
+          "details": "User with the specified ID does not exist in the system",
+          "help_url": "https://docs.example.com/users/lookup"
+        },
+        "RES004": {
+          "message": "Maintenance appointment not found",
+          "details": "Maintenance appointment with the specified ID does not exist",
+          "help_url": "https://docs.example.com/maintenance/lookup"
+        }
+      }
+    },
+
+    "system_errors": {
+      "description": "Internal system errors and service unavailability",
+      "code_prefix": "SYS", 
+      "http_status": 500,
+      "examples": {
+        "SYS001": {
+          "message": "Internal server error",
+          "details": "An unexpected error occurred while processing the request",
+          "help_url": "https://docs.example.com/support/contact"
+        },
+        "SYS002": {
+          "message": "Database connection error",
+          "details": "Unable to connect to the database service",
+          "help_url": "https://status.example.com"
+        },
+        "SYS003": {
+          "message": "External service unavailable",
+          "details": "Required external service (GPS tracking, payment processor) is currently unavailable",
+          "help_url": "https://status.example.com"
+        }
+      }
+    },
+
+    "rate_limit_errors": {
+      "description": "Errors when API rate limits are exceeded",
+      "code_prefix": "RATE",
+      "http_status": 429,
+      "examples": {
+        "RATE001": {
+          "message": "Rate limit exceeded",
+          "details": "Too many requests. Please wait before making additional requests",
+          "help_url": "https://docs.example.com/api/rate-limits"
+        },
+        "RATE002": {
+          "message": "Daily quota exceeded",
+          "details": "Daily API quota has been exceeded for this account",
+          "help_url": "https://docs.example.com/api/quotas"
+        }
+      }
+    },
+
+    "maintenance_errors": {
+      "description": "Service temporarily unavailable due to maintenance",
+      "code_prefix": "MAINT",
+      "http_status": 503,
+      "examples": {
+        "MAINT001": {
+          "message": "Service temporarily unavailable",
+          "details": "System is undergoing scheduled maintenance and will be available shortly",
+          "help_url": "https://status.example.com"
+        },
+        "MAINT002": {
+          "message": "Feature temporarily disabled",
+          "details": "This feature is temporarily disabled for maintenance",
+          "help_url": "https://docs.example.com/maintenance/schedule"
+        }
+      }
+    }
+  },
+
+  "error_handling_patterns": {
+    "field_validation_error": {
+      "description": "Standard pattern for field validation errors",
+      "example": {
+        "success": false,
+        "error": {
+          "code": "VAL001",
+          "message": "Validation failed",
+          "details": "One or more fields failed validation",
+          "field_errors": [
+            {
+              "field": "email",
+              "error": "Invalid email format",
+              "value": "invalid-email",
+              "expected_format": "user@example.com"
+            },
+            {
+              "field": "phone",
+              "error": "Invalid phone number format",
+              "value": "123",
+              "expected_format": "(555) 123-4567"
+            }
+          ],
+          "help_url": "https://docs.example.com/validation/formats"
+        },
+        "timestamp": "2024-01-15T10:30:00Z",
+        "request_id": "req_abc123def456"
+      }
+    },
+
+    "business_rule_error": {
+      "description": "Pattern for business rule violation errors",
+      "example": {
+        "success": false,
+        "error": {
+          "code": "BRV001",
+          "message": "Vehicle reservation conflict",
+          "details": "Vehicle VEH001 is already reserved from 2024-01-15 14:00 to 2024-01-15 18:00",
+          "help_url": "https://docs.example.com/reservations/conflicts"
+        },
+        "timestamp": "2024-01-15T10:30:00Z",
+        "request_id": "req_abc123def456",
+        "correlation_id": "corr_xyz789"
+      }
+    },
+
+    "resource_not_found_error": {
+      "description": "Pattern for resource not found errors",
+      "example": {
+        "success": false,
+        "error": {
+          "code": "RES001",
+          "message": "Vehicle not found",
+          "details": "Vehicle with ID 'VEH999' does not exist or has been removed",
+          "help_url": "https://docs.example.com/vehicles/lookup"
+        },
+        "timestamp": "2024-01-15T10:30:00Z",
+        "request_id": "req_abc123def456"
+      }
+    },
+
+    "system_error": {
+      "description": "Pattern for internal system errors",
+      "example": {
+        "success": false,
+        "error": {
+          "code": "SYS001",
+          "message": "Internal server error",
+          "details": "An unexpected error occurred. Please contact support if the problem persists.",
+          "help_url": "https://docs.example.com/support/contact"
+        },
+        "timestamp": "2024-01-15T10:30:00Z",
+        "request_id": "req_abc123def456",
+        "correlation_id": "corr_xyz789"
+      }
+    }
+  },
+
+  "localization": {
+    "description": "Error message localization support",
+    "supported_languages": ["en", "es", "fr"],
+    "default_language": "en",
+    "localized_messages": {
+      "VAL001": {
+        "en": "Invalid vehicle ID format",
+        "es": "Formato de ID de vehículo inválido", 
+        "fr": "Format d'ID de véhicule invalide"
+      },
+      "BRV001": {
+        "en": "Vehicle not available for reservation",
+        "es": "Vehículo no disponible para reserva",
+        "fr": "Véhicule non disponible pour la réservation"
+      },
+      "AUTH001": {
+        "en": "Authentication required",
+        "es": "Autenticación requerida",
+        "fr": "Authentification requise"
+      },
+      "RES001": {
+        "en": "Vehicle not found",
+        "es": "Vehículo no encontrado",
+        "fr": "Véhicule non trouvé"
+      }
+    }
+  },
+
+  "error_handling_guidelines": {
+    "client_side_handling": [
+      "Parse error codes programmatically for consistent handling",
+      "Display user-friendly messages from the 'message' field",
+      "Show field-specific errors next to relevant form fields",
+      "Use help_url links to provide additional guidance",
+      "Implement retry logic for rate limit errors with exponential backoff",
+      "Log request_id and correlation_id for support requests"
+    ],
+    "server_side_best_practices": [
+      "Always include consistent error structure in responses",
+      "Generate unique request_id for every API call",
+      "Log errors with sufficient context for debugging",
+      "Use appropriate HTTP status codes matching error categories",
+      "Sanitize error details to avoid exposing sensitive information",
+      "Provide helpful error messages that guide users toward resolution"
+    ],
+    "monitoring_and_alerting": [
+      "Monitor error rates by category and error code",
+      "Set up alerts for high error rates or critical system errors",
+      "Track error patterns to identify systemic issues",
+      "Use correlation IDs for distributed tracing",
+      "Monitor API response times and error resolution times",
+      "Create dashboards for error analytics and trends"
+    ]
+  },
+
+  "update_instructions": {
+    "error_code_customization": [
+      "Update error codes to match your application's naming conventions",
+      "Add new error categories specific to your business domain",
+      "Modify HTTP status codes based on your API design standards",
+      "Include additional error metadata fields relevant to your system",
+      "Update help URLs to point to your actual documentation",
+      "Add localized error messages for your supported languages"
+    ],
+    "field_validation_updates": [
+      "Update field validation patterns to match your data requirements",
+      "Add business-specific validation rules and error messages",
+      "Include expected format examples for your data formats",
+      "Update field names to match your API request/response schemas",
+      "Add context-specific error handling for different operations"
+    ],
+    "integration_updates": [
+      "Configure error logging integration with your monitoring systems",
+      "Update request ID generation to match your request tracking system",
+      "Add correlation ID support for distributed tracing systems",
+      "Integrate with your user notification systems for error alerts",
+      "Update error analytics integration for your business intelligence tools"
+    ]
+  }
+}

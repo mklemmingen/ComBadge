@@ -1,0 +1,461 @@
+# Fleet Management Business Policies and Rules
+# UPDATE INSTRUCTIONS: Customize these policies for your organization's specific requirements
+# 1. Replace vehicle usage policies with your actual company policies and procedures  
+# 2. Update user roles and permissions to match your organizational structure
+# 3. Modify approval workflows based on your management hierarchy and budget authority
+# 4. Add industry-specific regulations and compliance requirements for your business
+# 5. Update cost thresholds and financial approval limits for your organization
+# 6. Include safety protocols and emergency procedures specific to your operations
+
+version: "1.0"
+last_updated: "2024-01-15"
+organization: "Your Organization Name"  # UPDATE: Replace with your organization name
+applicable_scope: "All fleet management operations"
+
+# VEHICLE USAGE POLICIES
+vehicle_usage:
+  
+  business_use:
+    description: "Guidelines for business use of fleet vehicles"
+    rules:
+      - policy_id: "VU001"
+        rule: "Fleet vehicles are primarily for business use only"
+        enforcement: "automatic"
+        exceptions: "Emergency situations with manager approval"
+        violation_consequences: "Warning for first offense, disciplinary action for repeated violations"
+      
+      - policy_id: "VU002" 
+        rule: "Personal use requires explicit written approval"
+        enforcement: "manual_review"
+        approval_required: true
+        approving_authority: "Fleet Manager or above"
+        documentation_required: "Personal use request form"
+      
+      - policy_id: "VU003"
+        rule: "Commercial use (rideshare, delivery services) is prohibited"
+        enforcement: "automatic"
+        violations: "Immediate vehicle access suspension"
+        exceptions: "None - absolute prohibition"
+    
+    restrictions:
+      geographic:
+        # UPDATE: Modify based on your operational area
+        - restriction_type: "out_of_state"
+          requires_approval: true
+          approving_authority: "Regional Manager"
+          advance_notice: "48 hours"
+          documentation: "Travel authorization form"
+        
+        - restriction_type: "international"  
+          requires_approval: true
+          approving_authority: "Fleet Director" 
+          advance_notice: "7 days"
+          additional_requirements: ["Insurance verification", "Customs documentation"]
+      
+      temporal:
+        - restriction_type: "weekend_use"
+          requires_approval: true
+          approving_authority: "Department Manager"
+          business_justification: "Required for weekend work or emergency"
+        
+        - restriction_type: "holiday_use"
+          requires_approval: true
+          approving_authority: "Fleet Manager"
+          advance_notice: "72 hours"
+          
+      vehicle_specific:
+        # UPDATE: Customize vehicle categories for your fleet
+        - vehicle_category: "executive"
+          restricted_users: ["C-level executives", "VP level and above"]
+          requires_approval: true
+          approving_authority: "Executive Assistant or Fleet Manager"
+        
+        - vehicle_category: "specialized"
+          usage_restrictions: "Trained operators only"
+          certification_required: true
+          training_documentation: "Required before access granted"
+
+  driver_requirements:
+    description: "Requirements for fleet vehicle drivers"
+    
+    licensing:
+      - requirement_id: "DR001"
+        rule: "Valid driver's license required for all drivers"
+        verification: "Annual license verification"
+        documentation: "Copy of current license on file"
+        renewal_notification: "30 days before expiration"
+      
+      - requirement_id: "DR002" 
+        rule: "Commercial vehicles require appropriate CDL classification"
+        applies_to: ["vehicles_over_26000_lbs", "passenger_vehicles_over_15_seats", "hazmat_vehicles"]
+        verification: "CDL verification at hire and annually"
+        training_required: "Company-specific CDL training program"
+    
+    age_requirements:
+      # UPDATE: Adjust based on your insurance and policy requirements
+      minimum_age: 21
+      executive_vehicle_minimum_age: 25
+      commercial_vehicle_minimum_age: 25
+      exceptions: "None - insurance requirement"
+    
+    driving_record:
+      - requirement_id: "DR003"
+        rule: "Clean driving record required"
+        definition: "No more than 2 minor violations in past 3 years"
+        disqualifying_violations: 
+          - "DUI/DWI (any timeframe)"
+          - "Reckless driving (past 5 years)"  
+          - "License suspension (past 3 years)"
+          - "At-fault accidents exceeding $5000 damage (past 3 years)"
+        review_frequency: "Annual MVR check"
+        immediate_disqualification: "Any new DUI, reckless driving, or license suspension"
+
+# USER ROLES AND PERMISSIONS
+user_roles:
+  description: "Role-based access control for fleet management system"
+  
+  roles:
+    fleet_administrator:
+      description: "Full fleet management system access"
+      permissions:
+        vehicles: ["create", "read", "update", "delete", "assign"]
+        maintenance: ["schedule", "approve", "cancel", "view_all"]
+        reservations: ["create", "modify", "cancel_any", "view_all"]
+        parking: ["assign", "reassign", "release", "view_all"]
+        users: ["manage", "assign_roles", "view_permissions"]
+        reports: ["generate_all", "financial", "compliance"]
+      approval_authority: "Unlimited within fleet operations"
+      cost_approval_limit: 50000  # UPDATE: Set based on your authority limits
+      
+    fleet_manager:
+      description: "Fleet operations management with approval authority"
+      permissions:
+        vehicles: ["read", "update", "assign", "transfer"]
+        maintenance: ["schedule", "approve_under_5000", "view_department"]
+        reservations: ["create", "modify_department", "approve_extended"]
+        parking: ["assign", "reassign", "view_department"]
+        users: ["view_department", "assign_vehicles"]
+        reports: ["generate_department", "maintenance", "utilization"]
+      approval_authority: "Department operations and budget under $5000"
+      cost_approval_limit: 5000
+      subordinate_roles: ["fleet_coordinator", "maintenance_scheduler"]
+    
+    fleet_coordinator:
+      description: "Daily fleet operations coordination"
+      permissions:
+        vehicles: ["read", "update_status", "assign_temporary"]
+        maintenance: ["schedule_routine", "view_department"]
+        reservations: ["create", "modify_own", "view_department"]
+        parking: ["assign_standard", "view_department"]
+        users: ["view_department"]
+        reports: ["generate_utilization", "maintenance_due"]
+      approval_authority: "Routine operations under $1000"
+      cost_approval_limit: 1000
+      restrictions: "Cannot approve major maintenance or policy exceptions"
+    
+    maintenance_scheduler:
+      description: "Specialized role for maintenance operations"
+      permissions:
+        vehicles: ["read", "update_maintenance_status"]
+        maintenance: ["schedule_all", "reschedule", "assign_technicians", "approve_parts"]
+        reservations: ["view_conflicts", "request_schedule_changes"]
+        parking: ["assign_service_parking"]
+        reports: ["maintenance_reports", "parts_inventory", "technician_schedules"]
+      approval_authority: "Maintenance operations under $2500"
+      cost_approval_limit: 2500
+      specialization: "Maintenance and repair operations"
+    
+    department_user:
+      description: "Standard user with department vehicle access"
+      permissions:
+        vehicles: ["read_assigned", "view_available"]
+        maintenance: ["view_assigned", "request_service"]
+        reservations: ["create_own", "modify_own", "cancel_own"]
+        parking: ["view_assigned"]
+        reports: ["view_own_usage"]
+      approval_authority: "Own reservations and basic requests"
+      cost_approval_limit: 0
+      restrictions: "Limited to assigned vehicles and own operations"
+    
+    guest_user:
+      description: "Limited access for visitors or temporary users"
+      permissions:
+        vehicles: ["view_available_visitor"]
+        reservations: ["create_visitor", "view_own"]
+        parking: ["view_visitor_parking"]
+      approval_authority: "Visitor operations only with sponsor"
+      cost_approval_limit: 0
+      restrictions: "Requires sponsor authorization for all operations"
+      sponsor_required: true
+
+# APPROVAL WORKFLOWS
+approval_workflows:
+  description: "Automated and manual approval processes"
+  
+  maintenance_approvals:
+    routine_maintenance:
+      # UPDATE: Adjust cost thresholds based on your budget structure
+      auto_approve_threshold: 500
+      manager_approval_threshold: 2500
+      director_approval_threshold: 10000
+      
+      workflow_steps:
+        - cost_range: "0-500"
+          approval_required: false
+          automatic_scheduling: true
+          notification: "Technician and fleet coordinator"
+        
+        - cost_range: "501-2500"  
+          approval_required: true
+          approving_authority: "Department Manager"
+          response_time: "24 hours"
+          escalation: "Fleet Manager if no response in 48 hours"
+        
+        - cost_range: "2501-10000"
+          approval_required: true
+          approving_authority: "Fleet Manager"
+          additional_approval: "Department Manager"
+          response_time: "48 hours"
+          documentation_required: "Cost justification and vendor quotes"
+        
+        - cost_range: "10000+"
+          approval_required: true
+          approving_authority: "Fleet Director"
+          additional_approvals: ["Fleet Manager", "Finance Manager"]  
+          response_time: "72 hours"
+          documentation_required: "Detailed justification, multiple quotes, ROI analysis"
+    
+    emergency_maintenance:
+      description: "Expedited approval for urgent repairs"
+      auto_approve_threshold: 1000  # Higher threshold for safety
+      notification_required: true
+      immediate_notifications: ["Fleet Manager", "Department Manager", "Safety Officer"]
+      post_approval_review: "Required within 24 hours for cost over $1000"
+      documentation: "Emergency justification and safety impact assessment"
+  
+  vehicle_assignments:
+    permanent_assignment:
+      approval_required: true
+      approving_authority: "Fleet Manager"
+      factors_considered: 
+        - "Employee role and responsibilities"
+        - "Vehicle utilization projections"  
+        - "Geographic/territory requirements"
+        - "Insurance and driving record review"
+      documentation: "Assignment justification and usage projections"
+    
+    temporary_assignment:
+      duration_threshold: "30 days"
+      short_term_approval: "Fleet Coordinator"  # Under 30 days
+      long_term_approval: "Fleet Manager"      # 30+ days
+      extension_approval: "Original approving authority"
+  
+  reservation_approvals:
+    extended_reservations:
+      # UPDATE: Define what constitutes "extended" for your operations
+      duration_threshold: "7 days"
+      approval_required: true
+      approving_authority: "Fleet Manager"
+      justification_required: "Business necessity and alternative analysis"
+    
+    premium_vehicle_reservations:
+      vehicle_categories: ["executive", "luxury", "specialized"]
+      approval_required: true
+      approving_authority: "Department Manager or Executive Assistant"
+      advance_booking_required: "48 hours"
+      usage_justification: "Client meetings, executive transport, specialized needs"
+
+# FINANCIAL POLICIES
+financial_policies:
+  description: "Cost management and budgetary controls"
+  
+  budget_controls:
+    department_budgets:
+      # UPDATE: Customize budget structure for your organization
+      tracking_level: "department"
+      budget_period: "fiscal_year"
+      overspend_alerts: 
+        - threshold: "80%"
+          notification: ["Department Manager", "Fleet Coordinator"]
+        - threshold: "95%"  
+          notification: ["Department Manager", "Fleet Manager", "Finance"]
+        - threshold: "100%"
+          action: "Require approval for additional expenses"
+          approving_authority: "Fleet Director and Finance Manager"
+    
+    cost_centers:
+      maintenance_costs: "Allocated by vehicle assignment and usage"
+      fuel_costs: "Direct allocation to using department"
+      insurance_costs: "Allocated proportionally by vehicle value and usage"
+      depreciation: "Allocated by vehicle assignment"
+      administrative_costs: "Allocated proportionally by fleet size"
+  
+  expense_policies:
+    fuel_cards:
+      issuance_policy: "Automatic for assigned vehicles, request-based for pool vehicles"
+      usage_restrictions: "Business use only, authorized drivers only"
+      monitoring: "Monthly review of fuel expenses and mileage correlation"
+      violations: "Misuse results in fuel card revocation and disciplinary action"
+    
+    maintenance_expenses:
+      vendor_approval: "Pre-approved vendor list for routine maintenance"
+      competitive_quotes: "Required for repairs over $1000"
+      warranty_work: "Must use authorized warranty providers when applicable"
+      aftermarket_parts: "Allowed for vehicles over 5 years old with approval"
+
+# SAFETY AND COMPLIANCE POLICIES
+safety_compliance:
+  description: "Safety protocols and regulatory compliance requirements"
+  
+  vehicle_safety:
+    inspection_requirements:
+      # UPDATE: Customize based on your regulatory environment
+      frequency: "Annual safety inspection"
+      commercial_vehicles: "DOT inspection every 12 months"
+      specialized_vehicles: "Manufacturer recommended intervals"
+      documentation: "Inspection certificates maintained in vehicle file"
+      failure_protocol: "Immediate removal from service until repairs completed"
+    
+    maintenance_safety:
+      safety_critical_systems: 
+        - "Brakes and brake systems"
+        - "Steering and suspension" 
+        - "Tires and wheels"
+        - "Lights and electrical systems"
+        - "Safety restraint systems"
+      priority_handling: "Safety issues receive immediate attention regardless of cost"
+      technician_requirements: "Certified technicians for safety-critical repairs"
+  
+  driver_safety:
+    training_requirements:
+      new_driver_training: "Mandatory safety training before vehicle access"
+      annual_refresher: "Annual safety training for all drivers"
+      specialized_training: "Additional training for specialized vehicles"
+      defensive_driving: "Required after any at-fault accident"
+    
+    incident_reporting:
+      immediate_reporting: "All accidents must be reported within 24 hours"
+      incident_investigation: "Required for all accidents involving injury or damage over $1000"
+      corrective_action: "Required based on investigation findings"
+      record_keeping: "Incident records maintained for 7 years"
+  
+  regulatory_compliance:
+    dot_compliance:
+      # UPDATE: Add specific regulations for your industry/location
+      applicable_vehicles: "Commercial vehicles over 10,000 lbs GVWR"
+      driver_qualification: "DOT medical certification required"
+      hours_of_service: "Electronic logging device (ELD) compliance"
+      drug_alcohol_testing: "DOT-compliant testing program"
+    
+    environmental_compliance:
+      emissions_standards: "All vehicles must meet current EPA standards"
+      disposal_procedures: "Proper disposal of automotive fluids and parts"
+      fuel_efficiency: "Fleet fuel efficiency targets and reporting"
+      alternative_fuels: "Evaluation of electric and hybrid options"
+
+# OPERATIONAL CONSTRAINTS
+operational_constraints:
+  description: "System limitations and operational boundaries"
+  
+  scheduling_constraints:
+    advance_booking:
+      minimum_notice: "2 hours for standard reservations"
+      maintenance_booking: "24 hours for routine maintenance"  
+      emergency_exception: "Immediate booking allowed for emergencies"
+      holiday_periods: "72 hours advance notice during holidays"
+    
+    availability_windows:
+      # UPDATE: Customize based on your operational hours
+      standard_operations: "Monday-Friday 6:00 AM - 8:00 PM"
+      weekend_operations: "Saturday 8:00 AM - 5:00 PM"  
+      emergency_operations: "24/7 for safety-critical issues"
+      maintenance_windows: "Monday-Friday 7:00 AM - 6:00 PM"
+  
+  resource_limitations:
+    vehicle_allocation:
+      pool_vehicle_ratio: "1 pool vehicle per 5 assigned vehicles"
+      executive_vehicle_limit: "Limited to C-level and VP positions"
+      specialized_vehicle_access: "Training and certification required"
+      geographic_constraints: "Vehicles primarily assigned to home territory"
+    
+    facility_constraints:
+      parking_capacity: "Assigned parking for permanent assignments only"
+      service_bay_capacity: "Maximum 8 concurrent maintenance operations"
+      fuel_station_hours: "Weekdays 6:00 AM - 8:00 PM, Weekends 8:00 AM - 5:00 PM"
+      vehicle_washing: "Available by appointment only"
+
+# POLICY ENFORCEMENT
+enforcement:
+  description: "Policy monitoring and violation handling"
+  
+  monitoring_systems:
+    automated_monitoring:
+      gps_tracking: "Location and usage monitoring for all vehicles"
+      fuel_card_monitoring: "Real-time fuel purchase tracking"
+      maintenance_scheduling: "Automated reminders and overdue alerts"
+      driver_license_monitoring: "Quarterly license status verification"
+    
+    violation_detection:
+      usage_violations: "Automated detection of policy-violating usage patterns"
+      geographic_violations: "Alerts for unauthorized geographic use"
+      temporal_violations: "Detection of after-hours or weekend policy violations"
+      financial_violations: "Expense threshold and approval bypassing"
+  
+  disciplinary_procedures:
+    violation_categories:
+      minor_violations:
+        examples: ["Late return", "Improper parking", "Missing documentation"]
+        consequences: "Verbal warning and policy review"
+        escalation: "Written warning after 3 minor violations"
+      
+      major_violations:
+        examples: ["Unauthorized personal use", "Policy circumvention", "Safety violations"]
+        consequences: "Written warning and mandatory retraining"
+        escalation: "Vehicle access suspension for repeat violations"
+      
+      severe_violations:
+        examples: ["DUI while using fleet vehicle", "Reckless driving", "Commercial use"]
+        consequences: "Immediate vehicle access revocation and disciplinary action"
+        review_process: "HR involvement and potential termination consideration"
+
+# EXCEPTION HANDLING
+exceptions:
+  description: "Procedures for handling policy exceptions and emergencies"
+  
+  emergency_exceptions:
+    safety_emergencies:
+      override_authority: "Any fleet administrator or manager"
+      documentation_required: "Post-incident report within 24 hours"
+      review_process: "Incident review board evaluation"
+      scope: "Any policy exception necessary to ensure safety"
+    
+    business_emergencies:
+      override_authority: "Fleet Manager or above"
+      justification_required: "Business impact and necessity documentation"
+      approval_process: "Post-exception approval within 48 hours"
+      scope: "Limited to specific business-critical situations"
+  
+  policy_variances:
+    temporary_variances:
+      duration_limit: "90 days maximum"
+      approval_authority: "Fleet Manager"
+      review_schedule: "Monthly review of active variances"
+      documentation: "Variance request form and justification"
+    
+    permanent_exceptions:
+      approval_authority: "Fleet Director"
+      review_process: "Policy committee review and approval"
+      documentation: "Comprehensive justification and impact analysis"
+      periodic_review: "Annual review of all permanent exceptions"
+
+# UPDATE CHECKLIST:
+# □ Replace organization name and contact information
+# □ Update vehicle usage policies to match your company guidelines
+# □ Modify user roles and permissions for your organizational structure  
+# □ Adjust cost thresholds and approval limits for your budget authority
+# □ Add industry-specific regulatory requirements and compliance rules
+# □ Update operational hours and geographic constraints for your business
+# □ Customize safety protocols for your vehicle types and operations
+# □ Include emergency procedures specific to your organization
+# □ Add disciplinary procedures that align with your HR policies
+# □ Update exception handling procedures for your management structure

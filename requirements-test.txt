@@ -1,0 +1,97 @@
+# Testing framework dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-xdist>=3.3.0  # Parallel test execution
+pytest-timeout>=2.1.0
+pytest-benchmark>=4.0.0
+
+# Test utilities
+factory-boy>=3.3.0  # Test data factories
+faker>=19.0.0  # Fake data generation
+responses>=0.23.0  # HTTP request mocking
+aioresponses>=0.7.0  # Async HTTP mocking
+freezegun>=1.2.0  # Time mocking
+testcontainers>=3.7.0  # Integration test containers
+
+# Performance testing
+psutil>=5.9.0  # System monitoring
+memory-profiler>=0.60.0
+py-spy>=0.3.14  # Python profiler
+
+# Load testing
+locust>=2.15.0  # Load testing framework
+httpx>=0.24.0  # HTTP client for testing
+
+# Code quality and linting
+ruff>=0.0.280  # Fast Python linter
+mypy>=1.5.0  # Static type checker
+bandit>=1.7.5  # Security linter
+safety>=2.3.0  # Security vulnerability scanner
+semgrep>=1.35.0  # Static analysis security scanner
+
+# Coverage reporting
+coverage[toml]>=7.2.0
+codecov>=2.1.13
+
+# Mock and test data
+responses>=0.23.0
+httpretty>=1.1.4
+betamax>=0.8.1  # HTTP interaction recording
+
+# Async testing utilities
+asynctest>=0.13.0
+aiofiles>=23.0.0
+
+# Database testing
+sqlalchemy-utils>=0.41.0  # For database test utilities
+alembic>=1.11.0  # Database migrations for testing
+
+# UI testing (if needed)
+selenium>=4.11.0
+playwright>=1.37.0
+
+# API testing
+requests>=2.31.0
+jsonschema>=4.19.0  # JSON schema validation
+
+# Configuration testing
+pydantic>=2.1.0
+dynaconf>=3.2.0
+
+# Logging testing
+loguru>=0.7.0
+
+# Email testing
+email-validator>=2.0.0
+
+# File handling testing
+openpyxl>=3.1.0  # Excel files
+python-docx>=0.8.11  # Word documents
+PyPDF2>=3.0.0  # PDF files
+
+# Network testing
+aiohttp>=3.8.0
+
+# Time and date testing
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# Documentation testing
+sphinx>=7.1.0  # If documentation tests are needed
+
+# Parallel testing
+pytest-parallel>=0.1.0
+
+# Test reporting
+pytest-html>=3.2.0  # HTML test reports
+pytest-json-report>=1.5.0  # JSON test reports
+allure-pytest>=2.13.0  # Allure test reporting
+
+# Development utilities
+pre-commit>=3.3.0  # Git hooks
+tox>=4.6.0  # Testing across environments

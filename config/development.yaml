@@ -1,0 +1,47 @@
+# Development Environment Configuration
+# Overrides for development environment settings
+
+environment: development
+debug_mode: true
+
+# Development-specific LLM settings
+llm:
+  model: "qwen2.5:7b"  # Smaller model for faster development
+  temperature: 0.2     # Slightly higher for experimentation
+  timeout: 60          # Longer timeout for debugging
+
+# Development API settings
+api:
+  base_url: "http://localhost:8000"  # Local development server
+  timeout: 60                        # Longer timeout for debugging
+  verify_ssl: false                  # Skip SSL for local development
+  authentication:
+    method: api_key                  # Simple auth for development
+
+# Development UI settings
+ui:
+  theme: light                       # Light theme for development
+  show_reasoning_steps: true         # Show all reasoning for debugging
+  auto_approve_high_confidence: false # Require manual approval in dev
+
+# Development processing settings
+processing:
+  confidence_threshold: 0.7          # Lower threshold for testing
+  max_processing_time: 120           # Longer processing time
+  enable_caching: false              # Disable caching for fresh results
+
+# Development logging
+logging:
+  level: DEBUG                       # Verbose logging
+  log_to_console: true               # Always log to console
+  audit_enabled: true                # Full audit trail
+
+# Development features
+enable_hot_reload: true              # Enable for quick development
+enable_auto_backup: false           # Disable auto backup in dev
+enable_telemetry: false              # No telemetry in development
+
+# Development-specific environment variables
+# COMBADGE_LLM_BASE_URL=http://localhost:11434
+# COMBADGE_API_BASE_URL=http://localhost:8000
+# COMBADGE_LOGGING_LEVEL=DEBUG

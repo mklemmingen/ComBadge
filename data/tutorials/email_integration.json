@@ -1,0 +1,264 @@
+{
+  "id": "email_integration",
+  "title": "Email Integration Mastery",
+  "description": "Learn how to process fleet requests via email, set up email forwarding, and handle email-based workflows effectively.",
+  "category": "advanced_features",
+  "difficulty": "intermediate",
+  "estimated_duration": 25,
+  "prerequisites": ["basic_workflow", "confidence_mastery"],
+  "steps": [
+    {
+      "id": "email_intro",
+      "title": "Introduction to Email Processing",
+      "description": "ComBadge can process fleet requests sent via email, making it easy to handle requests from managers, dispatchers, or automated systems.",
+      "action_type": "info",
+      "tips": [
+        "Email processing works 24/7 automatically",
+        "Supports forwarded emails and direct requests",
+        "Maintains security through sender verification",
+        "Provides email confirmation for all actions"
+      ]
+    },
+    {
+      "id": "email_setup_overview",
+      "title": "Email Setup Overview",
+      "description": "Let's review the email integration setup. Your ComBadge email address is configured, and the system monitors for incoming requests.",
+      "action_type": "info",
+      "target_element": "email_config_panel",
+      "tips": [
+        "Your ComBadge email: combadge@yourcompany.com",
+        "Check your email client for forwarding rules",
+        "Ensure your address is in the approved senders list",
+        "Test emails are processed within 1-2 minutes"
+      ]
+    },
+    {
+      "id": "view_sample_email",
+      "title": "Sample Email Request",
+      "description": "Here's a sample email request that ComBadge recently processed. Notice how natural language in emails works just like typed requests.",
+      "action_type": "info",
+      "target_element": "sample_email_display",
+      "tips": [
+        "Email subject lines are analyzed for intent",
+        "Body text is processed like typed requests",
+        "Sender information is preserved for approval",
+        "Original email is attached to the request"
+      ]
+    },
+    {
+      "id": "email_analysis",
+      "title": "Email Analysis Process",
+      "description": "Click 'View Email Analysis' to see how ComBadge processed the sample email request.",
+      "action_type": "click",
+      "target_element": "email_analysis_button",
+      "validation_func": "check_email_analysis_shown",
+      "tips": [
+        "Email processing follows the same analysis steps",
+        "Sender authentication is verified first",
+        "Content is extracted and processed for intent",
+        "Confidence scores work the same as typed requests"
+      ]
+    },
+    {
+      "id": "email_approval_workflow",
+      "title": "Email Approval Workflow",
+      "description": "Email requests require approval just like typed requests, but with additional sender information and email context.",
+      "action_type": "info",
+      "target_element": "email_approval_panel",
+      "tips": [
+        "Sender's name and email are displayed",
+        "Original email timestamp is preserved",
+        "Reply-to address is configured automatically",
+        "Approval sends confirmation back to sender"
+      ]
+    },
+    {
+      "id": "forward_test_email",
+      "title": "Forward a Test Email",
+      "description": "Open your email client and forward this sample request to your ComBadge address: 'Please reserve vehicle F-789 for delivery run tomorrow 9am-1pm. Thanks, John'",
+      "action_type": "wait",
+      "expected_value": "email_forwarded",
+      "validation_func": "check_test_email_sent",
+      "tips": [
+        "Use your regular email client (Outlook, Gmail, etc.)",
+        "Forward to: combadge@yourcompany.com",
+        "Include your name in the message",
+        "Subject line can be descriptive"
+      ]
+    },
+    {
+      "id": "wait_for_processing",
+      "title": "Wait for Email Processing",
+      "description": "ComBadge checks for new emails every 1-2 minutes. Your test email should appear in the processing queue shortly.",
+      "action_type": "wait",
+      "target_element": "email_queue_status",
+      "validation_func": "check_email_received",
+      "tips": [
+        "Processing time: 1-2 minutes typical",
+        "Check the email queue status indicator",
+        "Larger emails may take slightly longer",
+        "You'll see a notification when it arrives"
+      ]
+    },
+    {
+      "id": "review_email_request",
+      "title": "Review Your Email Request",
+      "description": "Your test email has arrived! Click on it in the email queue to review how ComBadge processed your forwarded request.",
+      "action_type": "click",
+      "target_element": "email_queue_item",
+      "validation_func": "check_email_opened",
+      "tips": [
+        "Email requests appear with envelope icon",
+        "Sender information is displayed",
+        "Processing timestamp is shown",
+        "Click to open for detailed review"
+      ]
+    },
+    {
+      "id": "email_vs_typed",
+      "title": "Email vs Typed Requests",
+      "description": "Compare this email request analysis with a typed request. Notice the similarities and differences in how ComBadge processes them.",
+      "action_type": "info",
+      "target_element": "comparison_panel",
+      "tips": [
+        "Same confidence scoring system",
+        "Same entity extraction process",
+        "Additional sender verification step",
+        "Email context provides extra metadata"
+      ]
+    },
+    {
+      "id": "handle_low_confidence_email",
+      "title": "Handling Low Confidence Email",
+      "description": "Let's see what happens with a vague email. Send another test email: 'Need a car for tomorrow - urgent!'",
+      "action_type": "wait",
+      "target_element": "email_compose_hint",
+      "validation_func": "check_vague_email_sent",
+      "tips": [
+        "This email lacks specific details",
+        "ComBadge will flag it as low confidence",
+        "You'll need to clarify before approval",
+        "ComBadge can reply asking for clarification"
+      ]
+    },
+    {
+      "id": "process_vague_email",
+      "title": "Process Vague Email",
+      "description": "When the vague email arrives, click on it to see the low confidence analysis and available options.",
+      "action_type": "click",
+      "target_element": "vague_email_item",
+      "validation_func": "check_vague_email_opened",
+      "tips": [
+        "Low confidence score will be displayed",
+        "Missing information is highlighted",
+        "You can request clarification from sender",
+        "Or edit the request based on your knowledge"
+      ]
+    },
+    {
+      "id": "request_clarification",
+      "title": "Request Clarification",
+      "description": "Click 'Request Clarification' to automatically send an email to the original sender asking for more details.",
+      "action_type": "click",
+      "target_element": "clarification_button",
+      "validation_func": "check_clarification_sent",
+      "tips": [
+        "ComBadge generates a clarification email",
+        "Specific missing information is requested",
+        "Professional tone is maintained",
+        "Response will be processed automatically"
+      ]
+    },
+    {
+      "id": "email_templates",
+      "title": "Email Response Templates",
+      "description": "ComBadge uses smart templates for email responses. Review the clarification template that was just sent.",
+      "action_type": "info",
+      "target_element": "email_template_viewer",
+      "tips": [
+        "Templates are context-aware",
+        "Professional language is used",
+        "Missing details are specifically requested",
+        "Your organization's email signature is included"
+      ]
+    },
+    {
+      "id": "bulk_email_processing",
+      "title": "Bulk Email Processing",
+      "description": "ComBadge can handle multiple emails simultaneously. Let's simulate processing several requests at once.",
+      "action_type": "info",
+      "target_element": "bulk_processing_demo",
+      "tips": [
+        "Multiple emails are processed in parallel",
+        "Each maintains individual approval workflow",
+        "Batch approval options are available",
+        "Processing priority can be set by sender"
+      ]
+    },
+    {
+      "id": "email_security",
+      "title": "Email Security Features",
+      "description": "ComBadge includes security features to prevent email abuse and ensure only authorized requests are processed.",
+      "action_type": "info",
+      "target_element": "security_overview",
+      "tips": [
+        "Approved sender list prevents spam",
+        "Digital signatures can be verified",
+        "Suspicious patterns are flagged",
+        "All email activity is logged for audit"
+      ]
+    },
+    {
+      "id": "email_reporting",
+      "title": "Email Processing Reports",
+      "description": "View the email processing report to see statistics about email requests, response times, and success rates.",
+      "action_type": "click",
+      "target_element": "email_reports_button",
+      "validation_func": "check_reports_opened",
+      "tips": [
+        "Track email processing volume",
+        "Monitor response times",
+        "Identify frequent senders",
+        "Analyze success rates by request type"
+      ]
+    },
+    {
+      "id": "best_practices_email",
+      "title": "Email Best Practices",
+      "description": "Here are the best practices for email-based fleet requests to ensure high success rates and quick processing.",
+      "action_type": "info",
+      "tips": [
+        "Use descriptive subject lines",
+        "Include all details in the body",
+        "Be specific about vehicles and times",
+        "Include your contact information",
+        "Use clear, professional language"
+      ]
+    },
+    {
+      "id": "email_integration_complete",
+      "title": "Email Integration Mastery Complete!",
+      "description": "Congratulations! You now understand how to effectively use ComBadge's email integration features for seamless fleet request processing.",
+      "action_type": "info",
+      "tips": [
+        "Set up email forwarding rules in your client",
+        "Train colleagues on email request formats",
+        "Monitor the email queue regularly",
+        "Use clarification requests for vague emails"
+      ]
+    }
+  ],
+  "completion_criteria": {
+    "min_steps_completed": 16,
+    "required_actions": [
+      "forward_test_email",
+      "review_email_request",
+      "request_clarification"
+    ],
+    "validation_checks": [
+      "successfully_processed_email",
+      "demonstrated_email_workflow_understanding",
+      "used_clarification_feature"
+    ]
+  }
+}

@@ -1,0 +1,892 @@
+# Fleet Management API - Reservation Operations
+# UPDATE INSTRUCTIONS: Replace with your actual reservation system API documentation
+# 1. Update all endpoint paths to match your booking system API structure
+# 2. Modify reservation types, policies, and approval workflows to fit your business
+# 3. Replace user management fields with your organization structure
+# 4. Update booking rules, restrictions, and cancellation policies
+# 5. Modify integration points for calendar systems, approval workflows, etc.
+
+api_version: "1.0"
+base_url: "https://api.your-fleet-system.com/v1"  # UPDATE: Replace with actual API base URL
+description: "Vehicle reservation and booking management operations"
+last_updated: "2024-01-15"
+
+# Reservation Operations Endpoints
+endpoints:
+
+  # Create reservation
+  create_reservation:
+    # UPDATE: Modify path to match your API structure
+    path: "/fleet/reservations"
+    method: "POST"
+    description: "Create a new vehicle reservation"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/reservation_create_request"
+      required_fields: ["vehicle_id", "user_id", "start_date", "start_time"]  # UPDATE: Modify required fields
+      # UPDATE: Replace with actual reservation request format
+      example:
+        vehicle_id: "VEH001"
+        user_id: "john.doe@company.com"
+        start_date: "2024-01-20"
+        start_time: "09:00"
+        end_date: "2024-01-20"
+        end_time: "17:00"
+        purpose: "Client meeting in downtown"
+        destination: "123 Business Ave, Downtown"
+        passenger_count: 2
+        special_requirements: ["fuel_card", "gps"]
+        estimated_mileage: 50
+        department: "Sales"
+        cost_center: "CC-SALES-001"
+        project_code: "PROJ-2024-001"
+        requires_approval: false
+        emergency_contact: "jane.smith@company.com"
+        notes: "Client pickup required at 8:30 AM"
+        notification_preferences: ["email", "calendar_invite"]
+    
+    responses:
+      "201":
+        description: "Reservation created successfully"
+        schema:
+          $ref: "#/schemas/reservation"
+        # UPDATE: Replace with actual reservation response
+        example:
+          reservation_id: "RSV001"
+          confirmation_number: "CNF-2024-001"
+          status: "confirmed"
+          vehicle_info:
+            vehicle_id: "VEH001"
+            make: "Toyota"
+            model: "Camry"
+            year: 2023
+            license_plate: "ABC123"
+            location: "Headquarters Parking"
+          user_info:
+            user_id: "john.doe@company.com"
+            name: "John Doe"
+            department: "Sales"
+            phone: "(555) 123-4567"
+          reservation_details:
+            start_datetime: "2024-01-20T09:00:00Z"
+            end_datetime: "2024-01-20T17:00:00Z"
+            duration_hours: 8
+            purpose: "Client meeting in downtown"
+            destination: "123 Business Ave, Downtown"
+          created_at: "2024-01-15T14:30:00Z"
+          pickup_instructions: "Vehicle keys available at security desk"
+
+  # List reservations
+  list_reservations:
+    # UPDATE: Modify path and filter parameters
+    path: "/fleet/reservations"
+    method: "GET"
+    description: "Retrieve list of vehicle reservations"
+    
+    parameters:
+      query:
+        user_id:
+          type: "string"
+          description: "Filter by user ID"
+        vehicle_id:
+          type: "string"
+          description: "Filter by vehicle ID"
+        status:
+          type: "string"
+          description: "Filter by reservation status"
+          enum: ["pending", "confirmed", "in_progress", "completed", "cancelled", "no_show"]  # UPDATE: Add your statuses
+        start_date:
+          type: "string"
+          format: "date"
+          description: "Filter reservations from this date"
+        end_date:
+          type: "string"
+          format: "date"
+          description: "Filter reservations until this date"
+        department:
+          type: "string"
+          description: "Filter by department"
+        requires_approval:
+          type: "boolean"
+          description: "Filter by approval requirement"
+        page:
+          type: "integer"
+          default: 1
+        limit:
+          type: "integer"
+          default: 50
+          maximum: 100
+    
+    responses:
+      "200":
+        description: "Reservations retrieved successfully"
+        schema:
+          type: "object"
+          properties:
+            reservations:
+              type: "array"
+              items:
+                $ref: "#/schemas/reservation"
+            pagination:
+              $ref: "#/schemas/pagination"
+            summary:
+              type: "object"
+              properties:
+                total_reservations:
+                  type: "integer"
+                active_reservations:
+                  type: "integer"
+                pending_approvals:
+                  type: "integer"
+
+  # Get reservation details
+  get_reservation:
+    # UPDATE: Modify path parameter format
+    path: "/fleet/reservations/{reservation_id}"
+    method: "GET"
+    description: "Retrieve detailed reservation information"
+    
+    parameters:
+      path:
+        reservation_id:
+          type: "string"
+          description: "Unique reservation identifier"
+          required: true
+    
+    responses:
+      "200":
+        description: "Reservation details retrieved successfully"
+        schema:
+          $ref: "#/schemas/reservation_detailed"
+
+  # Update reservation
+  update_reservation:
+    # UPDATE: Modify update logic and allowed fields
+    path: "/fleet/reservations/{reservation_id}"
+    method: "PUT"
+    description: "Update existing reservation"
+    
+    parameters:
+      path:
+        reservation_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/reservation_update_request"
+      example:
+        start_date: "2024-01-21"
+        start_time: "10:00"
+        end_time: "18:00"
+        purpose: "Updated: Extended client meetings"
+        passenger_count: 3
+        estimated_mileage: 75
+        notes: "Schedule changed - now includes lunch meeting"
+    
+    responses:
+      "200":
+        description: "Reservation updated successfully"
+        schema:
+          $ref: "#/schemas/reservation"
+
+  # Cancel reservation
+  cancel_reservation:
+    # UPDATE: Modify cancellation logic and policies
+    path: "/fleet/reservations/{reservation_id}/cancel"
+    method: "POST"
+    description: "Cancel a reservation"
+    
+    parameters:
+      path:
+        reservation_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          reason:
+            type: "string"
+            enum: ["user_cancelled", "vehicle_unavailable", "maintenance_required", "weather", "emergency", "other"]
+          notes:
+            type: "string"
+          refund_applicable:
+            type: "boolean"
+            description: "Whether cancellation qualifies for fee refund"
+        required: ["reason"]
+      example:
+        reason: "user_cancelled"
+        notes: "Meeting postponed to next week"
+        refund_applicable: true
+    
+    responses:
+      "200":
+        description: "Reservation cancelled successfully"
+        schema:
+          type: "object"
+          properties:
+            message:
+              type: "string"
+            reservation_id:
+              type: "string"
+            cancelled_at:
+              type: "string"
+              format: "date-time"
+            cancellation_fee:
+              type: "number"
+            refund_amount:
+              type: "number"
+
+  # Check vehicle availability
+  check_availability:
+    # UPDATE: Add availability checking endpoint
+    path: "/fleet/vehicles/{vehicle_id}/availability"
+    method: "GET"
+    description: "Check vehicle availability for specified time period"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          required: true
+      query:
+        start_datetime:
+          type: "string"
+          format: "date-time"
+          required: true
+        end_datetime:
+          type: "string"
+          format: "date-time"
+          required: true
+        exclude_reservation:
+          type: "string"
+          description: "Exclude specific reservation from conflict check"
+    
+    responses:
+      "200":
+        description: "Availability information retrieved"
+        schema:
+          type: "object"
+          properties:
+            available:
+              type: "boolean"
+            conflicts:
+              type: "array"
+              items:
+                $ref: "#/schemas/reservation_conflict"
+            next_available:
+              type: "string"
+              format: "date-time"
+            alternative_vehicles:
+              type: "array"
+              items:
+                type: "string"
+
+  # Get available vehicles
+  get_available_vehicles:
+    # UPDATE: Add vehicle search endpoint
+    path: "/fleet/vehicles/available"
+    method: "GET"
+    description: "Find available vehicles for specified time period"
+    
+    parameters:
+      query:
+        start_datetime:
+          type: "string"
+          format: "date-time"
+          required: true
+        end_datetime:
+          type: "string"
+          format: "date-time"
+          required: true
+        vehicle_type:
+          type: "string"
+          enum: ["sedan", "suv", "truck", "van", "electric"]
+        location:
+          type: "string"
+          description: "Preferred pickup location"
+        features:
+          type: "array"
+          items:
+            type: "string"
+            enum: ["gps", "bluetooth", "backup_camera", "all_wheel_drive"]
+    
+    responses:
+      "200":
+        description: "Available vehicles found"
+        schema:
+          type: "object"
+          properties:
+            available_vehicles:
+              type: "array"
+              items:
+                $ref: "#/schemas/available_vehicle"
+            total_available:
+              type: "integer"
+
+  # Approve reservation
+  approve_reservation:
+    # UPDATE: Add approval workflow if needed
+    path: "/fleet/reservations/{reservation_id}/approve"
+    method: "POST"
+    description: "Approve a pending reservation"
+    
+    parameters:
+      path:
+        reservation_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          approver_id:
+            type: "string"
+          approval_notes:
+            type: "string"
+          conditions:
+            type: "array"
+            items:
+              type: "string"
+            description: "Any conditions or restrictions"
+      example:
+        approver_id: "manager.jane@company.com"
+        approval_notes: "Approved for business use"
+        conditions: ["return_by_end_of_day", "fuel_card_required"]
+
+  # Start reservation (pickup)
+  start_reservation:
+    # UPDATE: Add pickup/checkin process
+    path: "/fleet/reservations/{reservation_id}/start"
+    method: "POST"
+    description: "Mark reservation as started (vehicle picked up)"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          actual_start_time:
+            type: "string"
+            format: "date-time"
+          starting_mileage:
+            type: "integer"
+          fuel_level:
+            type: "number"
+            minimum: 0
+            maximum: 1
+          condition_notes:
+            type: "string"
+          photos:
+            type: "array"
+            items:
+              type: "string"
+              description: "Photo URLs for vehicle condition"
+
+  # End reservation (return)
+  end_reservation:
+    # UPDATE: Add return/checkout process
+    path: "/fleet/reservations/{reservation_id}/end"
+    method: "POST"
+    description: "Mark reservation as completed (vehicle returned)"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          actual_end_time:
+            type: "string"
+            format: "date-time"
+          ending_mileage:
+            type: "integer"
+          fuel_level:
+            type: "number"
+            minimum: 0
+            maximum: 1
+          condition_notes:
+            type: "string"
+          damage_reported:
+            type: "boolean"
+          damage_description:
+            type: "string"
+          photos:
+            type: "array"
+            items:
+              type: "string"
+          total_mileage:
+            type: "integer"
+            description: "Calculated trip mileage"
+          fuel_cost:
+            type: "number"
+          toll_cost:
+            type: "number"
+          parking_cost:
+            type: "number"
+
+# Data Schemas
+# UPDATE: Modify all schemas to match your reservation data model
+schemas:
+  reservation_create_request:
+    type: "object"
+    required: ["vehicle_id", "user_id", "start_date", "start_time"]
+    properties:
+      vehicle_id:
+        type: "string"
+        pattern: "^[A-Z0-9]{6,12}$"  # UPDATE: Match your vehicle ID format
+      user_id:
+        type: "string"
+        description: "User identifier (email, employee ID, etc.)"
+      start_date:
+        type: "string"
+        format: "date"
+      start_time:
+        type: "string"
+        pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+      end_date:
+        type: "string"
+        format: "date"
+      end_time:
+        type: "string"
+        pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+      purpose:
+        type: "string"
+        maxLength: 200
+        description: "Business purpose of the trip"
+      destination:
+        type: "string"
+        description: "Primary destination address"
+      passenger_count:
+        type: "integer"
+        minimum: 1
+        maximum: 8
+        default: 1
+      special_requirements:
+        type: "array"
+        items:
+          type: "string"
+          enum: ["fuel_card", "gps", "child_seat", "wheelchair_accessible", "bluetooth"]  # UPDATE: Add your options
+      estimated_mileage:
+        type: "integer"
+        minimum: 0
+        maximum: 1000
+      department:
+        type: "string"
+      cost_center:
+        type: "string"
+      project_code:
+        type: "string"
+      requires_approval:
+        type: "boolean"
+        default: false
+      emergency_contact:
+        type: "string"
+      notes:
+        type: "string"
+        maxLength: 500
+      notification_preferences:
+        type: "array"
+        items:
+          type: "string"
+          enum: ["email", "sms", "calendar_invite", "push"]
+
+  reservation:
+    type: "object"
+    properties:
+      reservation_id:
+        type: "string"
+        description: "Unique reservation identifier"
+      confirmation_number:
+        type: "string"
+        description: "User-friendly confirmation number"
+      status:
+        type: "string"
+        enum: ["pending", "confirmed", "approved", "in_progress", "completed", "cancelled", "no_show"]
+      vehicle_info:
+        type: "object"
+        properties:
+          vehicle_id:
+            type: "string"
+          make:
+            type: "string"
+          model:
+            type: "string"
+          year:
+            type: "integer"
+          license_plate:
+            type: "string"
+          color:
+            type: "string"
+          location:
+            type: "string"
+          features:
+            type: "array"
+            items:
+              type: "string"
+      user_info:
+        type: "object"
+        properties:
+          user_id:
+            type: "string"
+          name:
+            type: "string"
+          email:
+            type: "string"
+          phone:
+            type: "string"
+          department:
+            type: "string"
+          employee_id:
+            type: "string"
+      reservation_details:
+        type: "object"
+        properties:
+          start_datetime:
+            type: "string"
+            format: "date-time"
+          end_datetime:
+            type: "string"
+            format: "date-time"
+          duration_hours:
+            type: "number"
+          purpose:
+            type: "string"
+          destination:
+            type: "string"
+          passenger_count:
+            type: "integer"
+          estimated_mileage:
+            type: "integer"
+          special_requirements:
+            type: "array"
+            items:
+              type: "string"
+      business_info:
+        type: "object"
+        properties:
+          department:
+            type: "string"
+          cost_center:
+            type: "string"
+          project_code:
+            type: "string"
+          requires_approval:
+            type: "boolean"
+          approved_by:
+            type: "string"
+          approval_date:
+            type: "string"
+            format: "date-time"
+      created_at:
+        type: "string"
+        format: "date-time"
+      last_updated:
+        type: "string"
+        format: "date-time"
+      pickup_instructions:
+        type: "string"
+      return_instructions:
+        type: "string"
+      emergency_contact:
+        type: "string"
+      notes:
+        type: "string"
+
+  reservation_detailed:
+    allOf:
+      - $ref: "#/schemas/reservation"
+      - type: "object"
+        properties:
+          trip_details:
+            type: "object"
+            properties:
+              actual_start_time:
+                type: "string"
+                format: "date-time"
+              actual_end_time:
+                type: "string"
+                format: "date-time"
+              starting_mileage:
+                type: "integer"
+              ending_mileage:
+                type: "integer"
+              total_mileage:
+                type: "integer"
+              starting_fuel_level:
+                type: "number"
+              ending_fuel_level:
+                type: "number"
+          costs:
+            type: "object"
+            properties:
+              base_cost:
+                type: "number"
+              mileage_cost:
+                type: "number"
+              fuel_cost:
+                type: "number"
+              additional_fees:
+                type: "number"
+              total_cost:
+                type: "number"
+          condition_reports:
+            type: "array"
+            items:
+              $ref: "#/schemas/condition_report"
+          approval_history:
+            type: "array"
+            items:
+              $ref: "#/schemas/approval_record"
+          modification_history:
+            type: "array"
+            items:
+              $ref: "#/schemas/modification_record"
+
+  reservation_update_request:
+    type: "object"
+    properties:
+      start_date:
+        type: "string"
+        format: "date"
+      start_time:
+        type: "string"
+      end_date:
+        type: "string"
+        format: "date"
+      end_time:
+        type: "string"
+      purpose:
+        type: "string"
+      destination:
+        type: "string"
+      passenger_count:
+        type: "integer"
+        minimum: 1
+        maximum: 8
+      estimated_mileage:
+        type: "integer"
+      special_requirements:
+        type: "array"
+        items:
+          type: "string"
+      emergency_contact:
+        type: "string"
+      notes:
+        type: "string"
+
+  reservation_conflict:
+    type: "object"
+    properties:
+      conflict_type:
+        type: "string"
+        enum: ["existing_reservation", "maintenance_scheduled", "vehicle_unavailable"]
+      conflicting_reservation_id:
+        type: "string"
+      conflict_start:
+        type: "string"
+        format: "date-time"
+      conflict_end:
+        type: "string"
+        format: "date-time"
+      description:
+        type: "string"
+
+  available_vehicle:
+    type: "object"
+    properties:
+      vehicle_id:
+        type: "string"
+      make:
+        type: "string"
+      model:
+        type: "string"
+      year:
+        type: "integer"
+      vehicle_type:
+        type: "string"
+      license_plate:
+        type: "string"
+      color:
+        type: "string"
+      current_location:
+        type: "string"
+      features:
+        type: "array"
+        items:
+          type: "string"
+      fuel_level:
+        type: "number"
+      mileage:
+        type: "integer"
+      last_service_date:
+        type: "string"
+        format: "date"
+      rating:
+        type: "number"
+        description: "User rating (1-5)"
+      availability_start:
+        type: "string"
+        format: "date-time"
+      availability_end:
+        type: "string"
+        format: "date-time"
+
+  condition_report:
+    type: "object"
+    properties:
+      report_type:
+        type: "string"
+        enum: ["pickup", "return", "damage"]
+      timestamp:
+        type: "string"
+        format: "date-time"
+      reported_by:
+        type: "string"
+      mileage:
+        type: "integer"
+      fuel_level:
+        type: "number"
+      condition_notes:
+        type: "string"
+      damage_reported:
+        type: "boolean"
+      damage_description:
+        type: "string"
+      photos:
+        type: "array"
+        items:
+          type: "string"
+
+  approval_record:
+    type: "object"
+    properties:
+      action:
+        type: "string"
+        enum: ["submitted", "approved", "rejected", "escalated"]
+      approver_id:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+      notes:
+        type: "string"
+      conditions:
+        type: "array"
+        items:
+          type: "string"
+
+  modification_record:
+    type: "object"
+    properties:
+      modified_by:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+      changes:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            field:
+              type: "string"
+            old_value:
+              type: "string"
+            new_value:
+              type: "string"
+      reason:
+        type: "string"
+
+  pagination:
+    type: "object"
+    properties:
+      current_page:
+        type: "integer"
+      total_pages:
+        type: "integer"
+      per_page:
+        type: "integer"
+      total_count:
+        type: "integer"
+
+# Business Rules
+# UPDATE: Customize reservation business rules for your organization
+business_rules:
+  reservation_creation:
+    - "Reservations must be made at least 2 hours in advance"
+    - "Maximum reservation duration is 7 days"
+    - "User cannot have more than 3 active reservations"
+    - "Reservations over 24 hours require manager approval"
+  
+  vehicle_availability:
+    - "Vehicle must be returned by previous user before new reservation"
+    - "30-minute buffer between reservations for cleaning/inspection"
+    - "Vehicles in maintenance are not available for reservation"
+    - "Holiday periods may have restricted availability"
+  
+  cancellation_policy:
+    - "Free cancellation up to 2 hours before start time"
+    - "Cancellation within 2 hours incurs $25 fee"
+    - "No-show reservations incur $50 fee"
+    - "Emergency cancellations may be fee-waived with approval"
+  
+  usage_restrictions:
+    - "Personal use requires explicit approval"
+    - "Out-of-state travel requires additional authorization"
+    - "Commercial use (rideshare, delivery) is prohibited"
+    - "Maximum passenger count cannot exceed vehicle capacity"
+
+# Natural Language Patterns
+# These help the NLP system understand reservation requests
+natural_language_patterns:
+  create_reservation:
+    - "Book vehicle {vehicle_id} for {date} at {time}"
+    - "Reserve the {make} {model} tomorrow morning"
+    - "I need a car from {start_time} to {end_time} on {date}"
+    - "Schedule vehicle for client meeting on {date}"
+  
+  check_availability:
+    - "Is vehicle {vehicle_id} available on {date}"
+    - "What vehicles are free tomorrow afternoon"
+    - "Show available cars for {date} from {time}"
+  
+  modify_reservation:
+    - "Change my reservation {reservation_id} to {new_time}"
+    - "Extend my booking until {end_time}"
+    - "Cancel reservation {confirmation_number}"
+  
+  get_reservations:
+    - "Show my upcoming reservations"
+    - "List all bookings for {date}"
+    - "What vehicles are reserved today"
+
+# Integration Points
+# UPDATE: Add your system integrations
+integrations:
+  calendar_system:
+    description: "Integration with calendar systems (Outlook, Google)"
+    purpose: "Send calendar invites and sync reservation times"
+  
+  approval_workflow:
+    description: "Integration with approval/workflow system"
+    purpose: "Route reservations requiring approval"
+  
+  vehicle_tracking:
+    description: "Integration with GPS/telematics system"
+    purpose: "Monitor vehicle location and usage during reservations"
+  
+  user_directory:
+    description: "Integration with employee directory/HR system"
+    purpose: "Validate users and get department/cost center info"
+  
+  expense_management:
+    description: "Integration with expense reporting system"
+    purpose: "Automatically create expense entries for business travel"

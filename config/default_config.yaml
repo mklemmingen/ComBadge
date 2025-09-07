@@ -1,0 +1,85 @@
+# ComBadge Fleet Management Configuration
+# This is the base configuration file with default values
+# Override values in environment-specific files or user_preferences.yaml
+
+app_name: ComBadge
+version: "1.0.0"
+environment: development
+debug_mode: false
+
+# Language Model Configuration
+llm:
+  model: "qwen2.5:14b"
+  temperature: 0.1
+  max_tokens: 2048
+  streaming: true
+  timeout: 30
+  base_url: "http://localhost:11434"
+
+# API Configuration
+api:
+  base_url: "https://fleet-api.company.com"
+  timeout: 30
+  retry_attempts: 3
+  retry_delay: 2.0
+  verify_ssl: true
+  proxy_url: null
+  authentication:
+    method: cookie
+    token_url: null
+    client_id: null
+    client_secret: null
+    api_key: null
+    username: null
+    password: null
+
+# User Interface Configuration
+ui:
+  theme: dark
+  window_size: [1200, 800]
+  font_size: 12
+  font_family: "Segoe UI"
+  auto_approve_high_confidence: false
+  confidence_threshold: 0.95
+  show_reasoning_steps: true
+  enable_sound_notifications: true
+
+# Processing Configuration
+processing:
+  confidence_threshold: 0.8
+  max_processing_time: 60
+  enable_caching: true
+  cache_ttl: 3600
+  max_cache_size_mb: 100
+  enable_fallback_models: true
+
+# Logging Configuration
+logging:
+  level: INFO
+  file_path: "logs/combadge.log"
+  max_file_size: "10MB"
+  backup_count: 5
+  audit_enabled: true
+  audit_file_path: "logs/audit.log"
+  log_to_console: true
+
+# Keyboard Shortcuts
+keyboard_shortcuts:
+  approve: "Ctrl+A"
+  edit_approve: "Ctrl+E"
+  regenerate: "Ctrl+R"
+  reject: "Ctrl+J"
+  cancel: "Escape"
+  settings: "Ctrl+,"
+  help: "F1"
+
+# Feature Flags
+enable_hot_reload: true
+enable_auto_backup: true
+enable_telemetry: false
+
+# Environment Variables Override Support
+# Set COMBADGE_<SECTION>_<KEY> to override any setting
+# Example: COMBADGE_API_BASE_URL=https://api.fleet.example.com
+#          COMBADGE_LLM_MODEL=qwen2.5:7b
+#          COMBADGE_UI_THEME=light

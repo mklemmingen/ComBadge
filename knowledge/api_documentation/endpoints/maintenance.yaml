@@ -1,0 +1,656 @@
+# Fleet Management API - Maintenance Operations  
+# UPDATE INSTRUCTIONS: Replace with your actual maintenance management API documentation
+# 1. Update all endpoint paths to match your maintenance system API structure
+# 2. Modify maintenance types, schedules, and business rules to fit your operations
+# 3. Replace technician management fields with your workforce structure
+# 4. Update service types and parts catalog integration if applicable
+# 5. Modify approval workflows and notification systems to match your processes
+
+api_version: "1.0"
+base_url: "https://api.your-fleet-system.com/v1"  # UPDATE: Replace with actual API base URL
+description: "Vehicle maintenance scheduling and management operations"
+last_updated: "2024-01-15"
+
+# Maintenance Operations Endpoints
+endpoints:
+
+  # Schedule maintenance
+  schedule_maintenance:
+    # UPDATE: Modify path to match your API structure
+    path: "/fleet/maintenance/schedule"
+    method: "POST"
+    description: "Schedule maintenance appointment for a vehicle"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/maintenance_schedule_request"
+      required_fields: ["vehicle_id", "maintenance_type", "requested_date"]  # UPDATE: Modify required fields
+      # UPDATE: Replace with actual maintenance request format
+      example:
+        vehicle_id: "VEH001"
+        maintenance_type: "preventive"
+        service_type: "oil_change"
+        requested_date: "2024-01-25"
+        requested_time: "09:00"
+        priority: "normal"
+        description: "Regular 5000-mile service"
+        estimated_duration: 2
+        preferred_technician: "TECH001"
+        location: "main_garage"
+        parts_needed:
+          - part_id: "OIL001"
+            quantity: 5
+            description: "5W-30 Motor Oil"
+        special_instructions: "Check brake fluid level"
+        contact_person: "john.doe@company.com"
+        notification_preferences: ["email", "sms"]
+    
+    responses:
+      "201":
+        description: "Maintenance scheduled successfully"
+        schema:
+          $ref: "#/schemas/maintenance_appointment"
+        # UPDATE: Replace with actual appointment response
+        example:
+          appointment_id: "MAINT001"
+          work_order_number: "WO-2024-001"
+          vehicle_id: "VEH001"
+          scheduled_date: "2024-01-25"
+          scheduled_time: "09:00"
+          estimated_completion: "11:00"
+          status: "scheduled"
+          assigned_technician:
+            technician_id: "TECH001"
+            name: "Mike Johnson"
+            specialties: ["engine", "transmission"]
+          service_bay: "Bay-A1"
+          estimated_cost: 150.00
+          created_at: "2024-01-15T14:30:00Z"
+
+  # List maintenance appointments
+  list_maintenance:
+    # UPDATE: Modify path and parameters
+    path: "/fleet/maintenance/appointments"
+    method: "GET"
+    description: "Retrieve list of maintenance appointments"
+    
+    parameters:
+      query:
+        vehicle_id:
+          type: "string"
+          description: "Filter by specific vehicle"
+        status:
+          type: "string"
+          description: "Filter by appointment status"
+          enum: ["scheduled", "in_progress", "completed", "cancelled"]  # UPDATE: Add your statuses
+        technician_id:
+          type: "string"
+          description: "Filter by assigned technician"
+        date_from:
+          type: "string"
+          format: "date"
+          description: "Start date filter"
+        date_to:
+          type: "string"
+          format: "date"
+          description: "End date filter"
+        maintenance_type:
+          type: "string"
+          enum: ["preventive", "corrective", "emergency", "inspection"]
+        location:
+          type: "string"
+          description: "Service location filter"
+        page:
+          type: "integer"
+          default: 1
+        limit:
+          type: "integer"
+          default: 50
+    
+    responses:
+      "200":
+        description: "Maintenance appointments retrieved successfully"
+        schema:
+          type: "object"
+          properties:
+            appointments:
+              type: "array"
+              items:
+                $ref: "#/schemas/maintenance_appointment"
+            pagination:
+              $ref: "#/schemas/pagination"
+
+  # Get maintenance appointment details
+  get_maintenance_appointment:
+    # UPDATE: Modify path parameter format
+    path: "/fleet/maintenance/appointments/{appointment_id}"
+    method: "GET"
+    description: "Retrieve detailed maintenance appointment information"
+    
+    parameters:
+      path:
+        appointment_id:
+          type: "string"
+          description: "Unique appointment identifier"
+          required: true
+    
+    responses:
+      "200":
+        description: "Maintenance appointment details retrieved successfully"
+        schema:
+          $ref: "#/schemas/maintenance_appointment_detailed"
+
+  # Update maintenance appointment
+  update_maintenance_appointment:
+    # UPDATE: Modify update logic and allowed fields
+    path: "/fleet/maintenance/appointments/{appointment_id}"
+    method: "PUT"
+    description: "Update maintenance appointment"
+    
+    parameters:
+      path:
+        appointment_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/maintenance_update_request"
+      example:
+        scheduled_date: "2024-01-26"
+        scheduled_time: "10:00"
+        assigned_technician: "TECH002"
+        priority: "high"
+        special_instructions: "Check transmission fluid as well"
+        estimated_duration: 3
+
+  # Cancel maintenance appointment
+  cancel_maintenance:
+    # UPDATE: Modify cancellation logic
+    path: "/fleet/maintenance/appointments/{appointment_id}/cancel"
+    method: "POST"
+    description: "Cancel scheduled maintenance appointment"
+    
+    parameters:
+      path:
+        appointment_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          reason:
+            type: "string"
+            enum: ["vehicle_unavailable", "technician_unavailable", "parts_unavailable", "customer_request", "emergency"]
+          notes:
+            type: "string"
+          reschedule:
+            type: "boolean"
+            description: "Whether to automatically reschedule"
+      example:
+        reason: "vehicle_unavailable"
+        notes: "Vehicle currently on long-term assignment"
+        reschedule: true
+
+  # Start maintenance work
+  start_maintenance:
+    # UPDATE: Add if you have work order tracking
+    path: "/fleet/maintenance/appointments/{appointment_id}/start"
+    method: "POST"
+    description: "Start maintenance work and update status"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          technician_id:
+            type: "string"
+          actual_start_time:
+            type: "string"
+            format: "date-time"
+          initial_inspection_notes:
+            type: "string"
+          parts_used:
+            type: "array"
+            items:
+              $ref: "#/schemas/part_usage"
+
+  # Complete maintenance work
+  complete_maintenance:
+    # UPDATE: Modify completion workflow
+    path: "/fleet/maintenance/appointments/{appointment_id}/complete"
+    method: "POST"
+    description: "Mark maintenance work as completed"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          completion_time:
+            type: "string"
+            format: "date-time"
+          work_performed:
+            type: "string"
+          parts_used:
+            type: "array"
+            items:
+              $ref: "#/schemas/part_usage"
+          labor_hours:
+            type: "number"
+          total_cost:
+            type: "number"
+          next_service_due:
+            type: "string"
+            format: "date"
+          recommendations:
+            type: "string"
+          quality_check_passed:
+            type: "boolean"
+          customer_signature:
+            type: "string"
+            description: "Digital signature or approval"
+
+  # Get maintenance history
+  get_maintenance_history:
+    # UPDATE: Modify history tracking
+    path: "/fleet/vehicles/{vehicle_id}/maintenance/history"
+    method: "GET"
+    description: "Retrieve maintenance history for a vehicle"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          required: true
+      query:
+        date_from:
+          type: "string"
+          format: "date"
+        date_to:
+          type: "string"
+          format: "date"
+        maintenance_type:
+          type: "string"
+        include_pending:
+          type: "boolean"
+          default: false
+
+  # Get maintenance due alerts
+  get_maintenance_due:
+    # UPDATE: Add preventive maintenance tracking
+    path: "/fleet/maintenance/due"
+    method: "GET"
+    description: "Get vehicles that are due for maintenance"
+    
+    parameters:
+      query:
+        days_ahead:
+          type: "integer"
+          description: "Look ahead this many days"
+          default: 30
+        maintenance_type:
+          type: "string"
+        location:
+          type: "string"
+        overdue_only:
+          type: "boolean"
+          default: false
+
+# Data Schemas  
+# UPDATE: Modify all schemas to match your maintenance data model
+schemas:
+  maintenance_schedule_request:
+    type: "object"
+    required: ["vehicle_id", "maintenance_type", "requested_date"]
+    properties:
+      vehicle_id:
+        type: "string"
+        pattern: "^[A-Z0-9]{6,12}$"  # UPDATE: Match your vehicle ID format
+      maintenance_type:
+        type: "string"
+        enum: ["preventive", "corrective", "emergency", "inspection", "recall"]  # UPDATE: Add your types
+      service_type:
+        type: "string"
+        enum: ["oil_change", "tire_rotation", "brake_service", "transmission", "engine", "electrical", "ac_service", "inspection"]
+      requested_date:
+        type: "string"
+        format: "date"
+      requested_time:
+        type: "string"
+        pattern: "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+      priority:
+        type: "string"
+        enum: ["low", "normal", "high", "urgent"]
+        default: "normal"
+      description:
+        type: "string"
+        maxLength: 500
+      estimated_duration:
+        type: "number"
+        description: "Estimated duration in hours"
+        minimum: 0.5
+        maximum: 24
+      preferred_technician:
+        type: "string"
+      location:
+        type: "string"
+        enum: ["main_garage", "branch_garage", "mobile_service", "external_shop"]  # UPDATE: Add your locations
+      parts_needed:
+        type: "array"
+        items:
+          $ref: "#/schemas/part_requirement"
+      special_instructions:
+        type: "string"
+      contact_person:
+        type: "string"
+      notification_preferences:
+        type: "array"
+        items:
+          type: "string"
+          enum: ["email", "sms", "push"]
+
+  maintenance_appointment:
+    type: "object"
+    properties:
+      appointment_id:
+        type: "string"
+        description: "Unique appointment identifier"
+      work_order_number:
+        type: "string"
+        description: "Work order tracking number"
+      vehicle_id:
+        type: "string"
+      vehicle_info:
+        type: "object"
+        properties:
+          make:
+            type: "string"
+          model:
+            type: "string"
+          year:
+            type: "integer"
+          license_plate:
+            type: "string"
+          current_mileage:
+            type: "integer"
+      maintenance_type:
+        type: "string"
+      service_type:
+        type: "string"
+      scheduled_date:
+        type: "string"
+        format: "date"
+      scheduled_time:
+        type: "string"
+      estimated_duration:
+        type: "number"
+      estimated_completion:
+        type: "string"
+      status:
+        type: "string"
+        enum: ["scheduled", "confirmed", "in_progress", "completed", "cancelled", "no_show"]
+      priority:
+        type: "string"
+      assigned_technician:
+        $ref: "#/schemas/technician"
+      service_bay:
+        type: "string"
+      estimated_cost:
+        type: "number"
+      description:
+        type: "string"
+      special_instructions:
+        type: "string"
+      parts_needed:
+        type: "array"
+        items:
+          $ref: "#/schemas/part_requirement"
+      created_at:
+        type: "string"
+        format: "date-time"
+      last_updated:
+        type: "string"
+        format: "date-time"
+
+  maintenance_appointment_detailed:
+    allOf:
+      - $ref: "#/schemas/maintenance_appointment"
+      - type: "object"
+        properties:
+          work_log:
+            type: "array"
+            items:
+              $ref: "#/schemas/work_log_entry"
+          parts_used:
+            type: "array"
+            items:
+              $ref: "#/schemas/part_usage"
+          labor_hours:
+            type: "number"
+          actual_cost:
+            type: "number"
+          quality_checks:
+            type: "array"
+            items:
+              $ref: "#/schemas/quality_check"
+          photos:
+            type: "array"
+            items:
+              type: "string"
+              description: "Photo URLs"
+          recommendations:
+            type: "string"
+          next_service_info:
+            type: "object"
+            properties:
+              due_date:
+                type: "string"
+                format: "date"
+              due_mileage:
+                type: "integer"
+              service_type:
+                type: "string"
+
+  technician:
+    type: "object"
+    properties:
+      technician_id:
+        type: "string"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      specialties:
+        type: "array"
+        items:
+          type: "string"
+      certification_level:
+        type: "string"
+        enum: ["apprentice", "journeyman", "master"]
+      availability:
+        type: "object"
+        properties:
+          available:
+            type: "boolean"
+          next_available:
+            type: "string"
+            format: "date-time"
+
+  part_requirement:
+    type: "object"
+    properties:
+      part_id:
+        type: "string"
+      part_number:
+        type: "string"
+      description:
+        type: "string"
+      quantity:
+        type: "integer"
+      estimated_cost:
+        type: "number"
+      in_stock:
+        type: "boolean"
+      supplier:
+        type: "string"
+
+  part_usage:
+    type: "object"
+    properties:
+      part_id:
+        type: "string"
+      part_number:
+        type: "string"
+      description:
+        type: "string"
+      quantity_used:
+        type: "integer"
+      unit_cost:
+        type: "number"
+      total_cost:
+        type: "number"
+      lot_number:
+        type: "string"
+
+  work_log_entry:
+    type: "object"
+    properties:
+      timestamp:
+        type: "string"
+        format: "date-time"
+      technician_id:
+        type: "string"
+      action:
+        type: "string"
+        enum: ["started", "paused", "resumed", "completed", "note_added"]
+      notes:
+        type: "string"
+      duration:
+        type: "number"
+        description: "Duration in minutes"
+
+  quality_check:
+    type: "object"
+    properties:
+      check_type:
+        type: "string"
+      passed:
+        type: "boolean"
+      notes:
+        type: "string"
+      inspector:
+        type: "string"
+      timestamp:
+        type: "string"
+        format: "date-time"
+
+  maintenance_update_request:
+    type: "object"
+    properties:
+      scheduled_date:
+        type: "string"
+        format: "date"
+      scheduled_time:
+        type: "string"
+      assigned_technician:
+        type: "string"
+      priority:
+        type: "string"
+        enum: ["low", "normal", "high", "urgent"]
+      estimated_duration:
+        type: "number"
+      service_bay:
+        type: "string"
+      special_instructions:
+        type: "string"
+      parts_needed:
+        type: "array"
+        items:
+          $ref: "#/schemas/part_requirement"
+
+  pagination:
+    type: "object"
+    properties:
+      current_page:
+        type: "integer"
+      total_pages:
+        type: "integer"
+      per_page:
+        type: "integer"
+      total_count:
+        type: "integer"
+
+# Business Rules
+# UPDATE: Customize maintenance business rules for your organization
+business_rules:
+  scheduling:
+    - "Maintenance cannot be scheduled on weekends without approval"
+    - "Emergency maintenance can be scheduled anytime"
+    - "Preventive maintenance requires 24-hour advance notice"
+    - "Vehicle must be available (not reserved) during maintenance window"
+  
+  technician_assignment:
+    - "Specialized services require certified technicians"
+    - "Emergency repairs assign next available technician"
+    - "Customer can request preferred technician (subject to availability)"
+  
+  parts_management:
+    - "Parts must be reserved when appointment is scheduled"
+    - "Special order parts require 3-5 business days lead time"
+    - "Critical parts (brakes, engine) must be OEM or approved equivalent"
+  
+  approval_workflow:
+    - "Maintenance over $500 requires supervisor approval"
+    - "Major repairs over $2000 require fleet manager approval"
+    - "Emergency repairs under $1000 can proceed without prior approval"
+
+# Natural Language Patterns
+# These help the NLP system understand maintenance requests
+natural_language_patterns:
+  schedule_maintenance:
+    - "Schedule maintenance for vehicle {vehicle_id}"
+    - "Book oil change for {vehicle} on {date}"
+    - "Set up brake service appointment"
+    - "Vehicle {vehicle_id} needs inspection"
+  
+  check_maintenance:
+    - "When is next service due for {vehicle_id}"
+    - "Show maintenance history for {vehicle}"
+    - "What vehicles need maintenance"
+  
+  update_appointment:
+    - "Reschedule maintenance appointment {appointment_id}"
+    - "Cancel service for vehicle {vehicle_id}"
+    - "Change technician for appointment {appointment_id}"
+
+# Integration Points
+# UPDATE: Add your system integrations
+integrations:
+  parts_inventory_system:
+    description: "Integration with parts inventory management"
+    endpoint: "/api/inventory"
+    purpose: "Check parts availability and pricing"
+  
+  technician_scheduling:
+    description: "Integration with workforce management system"
+    endpoint: "/api/scheduling"
+    purpose: "Check technician availability and skills"
+  
+  vehicle_telematics:
+    description: "Integration with vehicle tracking system"
+    endpoint: "/api/telematics"
+    purpose: "Get real-time vehicle data and diagnostics"
+  
+  notification_service:
+    description: "Integration with notification system"
+    endpoint: "/api/notifications"
+    purpose: "Send appointment reminders and updates"

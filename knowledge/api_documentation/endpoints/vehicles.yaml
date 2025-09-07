@@ -1,0 +1,603 @@
+# Fleet Management API - Vehicle Operations
+# UPDATE INSTRUCTIONS: Replace with your actual fleet management API documentation
+# 1. Update base_url with your API base URL
+# 2. Replace authentication section with your auth method (OAuth, API keys, etc.)
+# 3. Update all endpoint paths to match your API structure
+# 4. Modify field schemas to match your vehicle data model
+# 5. Update response examples with actual API responses
+# 6. Add any custom headers, parameters, or business logic specific to your API
+
+api_version: "1.0"
+base_url: "https://api.your-fleet-system.com/v1"  # UPDATE: Replace with actual API base URL
+description: "Vehicle management operations for fleet systems"
+last_updated: "2024-01-15"
+
+# UPDATE: Replace with your actual authentication method
+authentication:
+  type: "bearer"  # OPTIONS: bearer, api_key, oauth2, basic
+  description: "Bearer token authentication"
+  header_name: "Authorization"
+  token_prefix: "Bearer "
+  # For API key authentication, use:
+  # type: "api_key"
+  # header_name: "X-API-Key"
+  # For OAuth2, add oauth2_flow, scopes, etc.
+
+# UPDATE: Adjust rate limits based on your API
+rate_limiting:
+  requests_per_minute: 100
+  requests_per_hour: 1000
+  burst_limit: 20
+
+# Vehicle Operations Endpoints
+endpoints:
+  
+  # List all vehicles
+  list_vehicles:
+    # UPDATE: Modify path to match your API structure
+    path: "/fleet/vehicles"
+    method: "GET"
+    description: "Retrieve list of all vehicles in the fleet"
+    
+    # UPDATE: Add/remove parameters based on your API
+    parameters:
+      query:
+        page:
+          type: "integer"
+          description: "Page number for pagination"
+          default: 1
+          minimum: 1
+        limit:
+          type: "integer"
+          description: "Number of vehicles per page"
+          default: 50
+          minimum: 1
+          maximum: 100
+        status:
+          type: "string"
+          description: "Filter by vehicle status"
+          enum: ["active", "inactive", "maintenance", "retired"]
+        location:
+          type: "string"
+          description: "Filter by current location"
+        make:
+          type: "string"
+          description: "Filter by vehicle make"
+        model:
+          type: "string" 
+          description: "Filter by vehicle model"
+        assigned_driver:
+          type: "string"
+          description: "Filter by assigned driver ID"
+    
+    responses:
+      "200":
+        description: "List of vehicles retrieved successfully"
+        schema:
+          type: "object"
+          properties:
+            vehicles:
+              type: "array"
+              items:
+                $ref: "#/schemas/vehicle"
+            pagination:
+              $ref: "#/schemas/pagination"
+            total_count:
+              type: "integer"
+        # UPDATE: Replace with actual API response format
+        example:
+          vehicles:
+            - vehicle_id: "VEH001"
+              make: "Toyota"
+              model: "Camry"
+              year: 2023
+              vin: "1HGCM82633A123456"
+              license_plate: "ABC123"
+              status: "active"
+              current_location: "Headquarters"
+              assigned_driver: "john.doe@company.com"
+              mileage: 15234
+              fuel_level: 0.75
+              last_updated: "2024-01-15T10:30:00Z"
+          pagination:
+            current_page: 1
+            total_pages: 5
+            per_page: 50
+          total_count: 247
+
+  # Get single vehicle
+  get_vehicle:
+    # UPDATE: Modify path parameter format if needed
+    path: "/fleet/vehicles/{vehicle_id}"
+    method: "GET"
+    description: "Retrieve detailed information about a specific vehicle"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          description: "Unique vehicle identifier"
+          pattern: "^[A-Z0-9]{6,12}$"  # UPDATE: Modify pattern to match your ID format
+          required: true
+    
+    responses:
+      "200":
+        description: "Vehicle information retrieved successfully"
+        schema:
+          $ref: "#/schemas/vehicle_detailed"
+        # UPDATE: Replace with actual detailed vehicle response
+        example:
+          vehicle_id: "VEH001"
+          make: "Toyota"
+          model: "Camry"
+          year: 2023
+          vin: "1HGCM82633A123456"
+          license_plate: "ABC123"
+          status: "active"
+          current_location: "Headquarters"
+          assigned_driver: 
+            user_id: "john.doe@company.com"
+            name: "John Doe"
+            department: "Sales"
+          vehicle_details:
+            color: "Silver"
+            fuel_type: "Gasoline"
+            transmission: "Automatic"
+            engine_size: "2.5L"
+          tracking_info:
+            gps_enabled: true
+            last_gps_update: "2024-01-15T10:25:00Z"
+            current_coordinates:
+              latitude: 40.7128
+              longitude: -74.0060
+          maintenance_info:
+            last_service_date: "2023-12-15"
+            next_service_due: "2024-03-15"
+            service_interval_miles: 5000
+          usage_stats:
+            total_mileage: 15234
+            monthly_mileage: 1250
+            fuel_efficiency: 28.5
+            last_trip_date: "2024-01-15"
+
+  # Create new vehicle
+  create_vehicle:
+    # UPDATE: Modify endpoint path
+    path: "/fleet/vehicles"
+    method: "POST"
+    description: "Add a new vehicle to the fleet"
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/vehicle_create_request"
+      # UPDATE: Modify required fields based on your business logic
+      required_fields: ["make", "model", "year", "vin", "license_plate"]
+      # UPDATE: Replace with actual create request format
+      example:
+        make: "Honda"
+        model: "Accord"
+        year: 2024
+        vin: "1HGCV1F30LA123456"
+        license_plate: "XYZ789"
+        color: "Blue"
+        fuel_type: "Gasoline"
+        assigned_driver: "jane.smith@company.com"
+        department: "Engineering"
+        purchase_date: "2024-01-10"
+        initial_mileage: 25
+        notes: "Executive vehicle for engineering department"
+    
+    responses:
+      "201":
+        description: "Vehicle created successfully"
+        schema:
+          $ref: "#/schemas/vehicle"
+        example:
+          vehicle_id: "VEH025"
+          make: "Honda"
+          model: "Accord"
+          year: 2024
+          vin: "1HGCV1F30LA123456"
+          license_plate: "XYZ789"
+          status: "active"
+          created_at: "2024-01-15T14:30:00Z"
+          assigned_driver: "jane.smith@company.com"
+
+  # Update vehicle
+  update_vehicle:
+    # UPDATE: Modify path format
+    path: "/fleet/vehicles/{vehicle_id}"
+    method: "PUT"
+    description: "Update vehicle information"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          description: "Unique vehicle identifier"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        $ref: "#/schemas/vehicle_update_request"
+      # UPDATE: Modify updatable fields
+      example:
+        assigned_driver: "mike.johnson@company.com"
+        current_location: "Branch Office"
+        status: "active"
+        notes: "Reassigned to sales team"
+        mileage: 15750
+    
+    responses:
+      "200":
+        description: "Vehicle updated successfully"
+        schema:
+          $ref: "#/schemas/vehicle"
+
+  # Delete/Retire vehicle
+  delete_vehicle:
+    # UPDATE: Modify path and business logic (soft delete vs hard delete)
+    path: "/fleet/vehicles/{vehicle_id}"
+    method: "DELETE"
+    description: "Remove vehicle from active fleet (soft delete - marks as retired)"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          description: "Unique vehicle identifier"
+          required: true
+      query:
+        reason:
+          type: "string"
+          description: "Reason for removal"
+          enum: ["sold", "totaled", "end_of_lease", "maintenance_issues", "other"]
+        notes:
+          type: "string"
+          description: "Additional notes about removal"
+    
+    responses:
+      "200":
+        description: "Vehicle retired successfully"
+        example:
+          message: "Vehicle VEH001 has been retired"
+          vehicle_id: "VEH001"
+          retired_at: "2024-01-15T16:00:00Z"
+          reason: "end_of_lease"
+
+  # Vehicle status update
+  update_vehicle_status:
+    # UPDATE: Add if you have separate status endpoint
+    path: "/fleet/vehicles/{vehicle_id}/status"
+    method: "PATCH"
+    description: "Update vehicle operational status"
+    
+    parameters:
+      path:
+        vehicle_id:
+          type: "string"
+          required: true
+    
+    request_body:
+      content_type: "application/json"
+      schema:
+        type: "object"
+        properties:
+          status:
+            type: "string"
+            enum: ["available", "in_use", "maintenance", "out_of_service"]
+          location:
+            type: "string"
+          mileage:
+            type: "integer"
+          fuel_level:
+            type: "number"
+            minimum: 0
+            maximum: 1
+          notes:
+            type: "string"
+      example:
+        status: "maintenance"
+        location: "Service Center"
+        mileage: 15850
+        notes: "Scheduled oil change"
+
+# Data Schemas
+# UPDATE: Modify all schemas to match your actual data models
+schemas:
+  vehicle:
+    type: "object"
+    properties:
+      vehicle_id:
+        type: "string"
+        description: "Unique vehicle identifier"
+        pattern: "^[A-Z0-9]{6,12}$"  # UPDATE: Modify pattern
+      make:
+        type: "string"
+        description: "Vehicle manufacturer"
+        examples: ["Toyota", "Honda", "Ford", "Chevrolet"]  # UPDATE: Add your fleet makes
+      model:
+        type: "string"
+        description: "Vehicle model"
+      year:
+        type: "integer"
+        description: "Manufacturing year"
+        minimum: 2000
+        maximum: 2030
+      vin:
+        type: "string"
+        description: "Vehicle Identification Number"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      license_plate:
+        type: "string"
+        description: "License plate number"
+        pattern: "^[A-Z0-9-]{2,10}$"  # UPDATE: Modify based on your region
+      status:
+        type: "string"
+        description: "Current vehicle status"
+        enum: ["active", "inactive", "maintenance", "retired"]  # UPDATE: Add your statuses
+      current_location:
+        type: "string"
+        description: "Current vehicle location"
+      assigned_driver:
+        type: "string"
+        description: "Currently assigned driver ID/email"
+      mileage:
+        type: "integer"
+        description: "Current odometer reading"
+        minimum: 0
+      fuel_level:
+        type: "number"
+        description: "Fuel level (0-1 scale)"
+        minimum: 0
+        maximum: 1
+      last_updated:
+        type: "string"
+        format: "date-time"
+        description: "Last update timestamp"
+
+  vehicle_detailed:
+    allOf:
+      - $ref: "#/schemas/vehicle"
+      - type: "object"
+        properties:
+          vehicle_details:
+            type: "object"
+            properties:
+              color:
+                type: "string"
+              fuel_type:
+                type: "string"
+                enum: ["gasoline", "diesel", "hybrid", "electric"]
+              transmission:
+                type: "string"
+                enum: ["manual", "automatic", "cvt"]
+              engine_size:
+                type: "string"
+          tracking_info:
+            type: "object"
+            properties:
+              gps_enabled:
+                type: "boolean"
+              last_gps_update:
+                type: "string"
+                format: "date-time"
+              current_coordinates:
+                type: "object"
+                properties:
+                  latitude:
+                    type: "number"
+                  longitude:
+                    type: "number"
+
+  vehicle_create_request:
+    type: "object"
+    required: ["make", "model", "year", "vin", "license_plate"]  # UPDATE: Modify required fields
+    properties:
+      make:
+        type: "string"
+      model:
+        type: "string"
+      year:
+        type: "integer"
+        minimum: 2000
+        maximum: 2030
+      vin:
+        type: "string"
+        pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+      license_plate:
+        type: "string"
+      color:
+        type: "string"
+      fuel_type:
+        type: "string"
+        enum: ["gasoline", "diesel", "hybrid", "electric"]
+      assigned_driver:
+        type: "string"
+      department:
+        type: "string"
+      purchase_date:
+        type: "string"
+        format: "date"
+      initial_mileage:
+        type: "integer"
+        default: 0
+      notes:
+        type: "string"
+
+  vehicle_update_request:
+    type: "object"
+    properties:
+      assigned_driver:
+        type: "string"
+      current_location:
+        type: "string"
+      status:
+        type: "string"
+        enum: ["active", "inactive", "maintenance", "retired"]
+      mileage:
+        type: "integer"
+      fuel_level:
+        type: "number"
+        minimum: 0
+        maximum: 1
+      notes:
+        type: "string"
+
+  pagination:
+    type: "object"
+    properties:
+      current_page:
+        type: "integer"
+      total_pages:
+        type: "integer"
+      per_page:
+        type: "integer"
+
+# Error Responses
+# UPDATE: Customize error codes and messages for your system
+error_responses:
+  "400":
+    description: "Bad Request - Invalid input data"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "INVALID_INPUT"
+        message:
+          type: "string"
+          example: "Invalid vehicle data provided"
+        details:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              field:
+                type: "string"
+              error:
+                type: "string"
+          example:
+            - field: "vin"
+              error: "Invalid VIN format"
+            - field: "year"
+              error: "Year must be between 2000 and 2030"
+  
+  "401":
+    description: "Unauthorized - Invalid or missing authentication"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "UNAUTHORIZED"
+        message:
+          type: "string"
+          example: "Invalid or expired authentication token"
+
+  "403":
+    description: "Forbidden - Insufficient permissions"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "FORBIDDEN"
+        message:
+          type: "string"
+          example: "Insufficient permissions to access this resource"
+
+  "404":
+    description: "Not Found - Vehicle not found"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "VEHICLE_NOT_FOUND"
+        message:
+          type: "string"
+          example: "Vehicle with ID 'VEH001' not found"
+
+  "409":
+    description: "Conflict - Duplicate vehicle data"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "DUPLICATE_VEHICLE"
+        message:
+          type: "string"
+          example: "Vehicle with VIN '1HGCM82633A123456' already exists"
+
+  "429":
+    description: "Too Many Requests - Rate limit exceeded"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "RATE_LIMIT_EXCEEDED"
+        message:
+          type: "string"
+          example: "API rate limit exceeded. Try again later."
+        retry_after:
+          type: "integer"
+          description: "Seconds to wait before retrying"
+
+  "500":
+    description: "Internal Server Error"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "INTERNAL_SERVER_ERROR"
+        message:
+          type: "string"
+          example: "An unexpected error occurred"
+
+# Business Logic Notes
+# UPDATE: Add your specific business rules and constraints
+business_rules:
+  vehicle_creation:
+    - "VIN must be unique across all vehicles"
+    - "License plate must be unique within active vehicles"
+    - "Vehicle year cannot be more than 1 year in the future"
+    - "Assigned driver must be valid user in the system"
+  
+  vehicle_updates:
+    - "Only certain fields can be updated after creation"
+    - "Status changes may require approval workflow"
+    - "Mileage can only increase, not decrease"
+  
+  vehicle_deletion:
+    - "Vehicles with active reservations cannot be deleted"
+    - "Deletion requires reason and authorization"
+    - "Soft delete preferred - marks as 'retired'"
+
+# Natural Language Patterns
+# These help the NLP system understand user requests
+natural_language_patterns:
+  create_vehicle:
+    - "Add new vehicle {make} {model}"
+    - "Register vehicle with VIN {vin}"
+    - "Create vehicle entry for {license_plate}"
+  
+  get_vehicle:
+    - "Show vehicle {vehicle_id}"
+    - "Get details for {license_plate}"
+    - "Find vehicle assigned to {driver}"
+  
+  update_vehicle:
+    - "Assign {vehicle_id} to {driver}"
+    - "Update vehicle {vehicle_id} location to {location}"
+    - "Change vehicle {vehicle_id} status to {status}"
+  
+  list_vehicles:
+    - "Show all vehicles"
+    - "List vehicles by {make}"
+    - "Show vehicles at {location}"

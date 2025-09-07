@@ -1,0 +1,96 @@
+{
+  "template_metadata": {
+    "name": "assign_parking",
+    "version": "1.0",
+    "category": "parking",
+    "description": "Assigns parking space to a vehicle",
+    "required_entities": ["vehicle_id", "location"],
+    "optional_entities": ["parking_spot", "duration", "user"],
+    "api_endpoint": "/api/v1/parking/assign",
+    "http_method": "POST"
+  },
+  "template": {
+    "vehicle_id": "{vehicle_id}",
+    "parking_assignment": {
+      "location": "{location}",
+      "spot_number": "{parking_spot|null}",
+      "spot_type": "{spot_type|standard}",
+      "level_or_floor": "{level|1}",
+      "zone": "{zone|A}"
+    },
+    "timing": {
+      "assignment_start": "{start_time|current_timestamp}",
+      "assignment_end": "{end_time|null}",
+      "duration_hours": "{duration|null}",
+      "temporary_assignment": "{temporary|false}"
+    },
+    "assignment_details": {
+      "assigned_to": "{user|null}",
+      "assignment_reason": "{reason|Standard assignment}",
+      "priority_level": "{priority|normal}",
+      "accessibility_required": "{accessibility|false}"
+    },
+    "location_details": {
+      "building_name": "{building|null}",
+      "address": "{address|null}",
+      "entrance": "{entrance|main}",
+      "security_level": "{security|standard}"
+    },
+    "restrictions": {
+      "time_restrictions": "{time_limits|null}",
+      "vehicle_size_limits": "{size_limits|null}",
+      "permit_required": "{permit|false}",
+      "special_conditions": "{conditions|null}"
+    },
+    "contact_and_notifications": {
+      "contact_person": "{contact|null}",
+      "notification_method": "{notification|email}",
+      "parking_instructions": "{instructions|null}",
+      "emergency_contact": "{emergency|security}"
+    },
+    "metadata": {
+      "created_at": "{current_timestamp}",
+      "status": "active",
+      "assignment_type": "automatic",
+      "last_updated": "{current_timestamp}",
+      "assignment_id": "{assignment_id|auto_generate}"
+    }
+  },
+  "validation_rules": {
+    "vehicle_id": {
+      "required": true,
+      "type": "string",
+      "pattern": "^[A-Z0-9-]{3,15}$"
+    },
+    "location": {
+      "required": true,
+      "type": "string",
+      "min_length": 2
+    },
+    "parking_spot": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]{1,10}$"
+    },
+    "level": {
+      "type": "string",
+      "pattern": "^[0-9A-Z]{1,3}$"
+    },
+    "zone": {
+      "type": "string",
+      "pattern": "^[A-Z]{1,2}$"
+    },
+    "duration": {
+      "type": "number",
+      "min": 0.5,
+      "max": 8760
+    },
+    "priority": {
+      "type": "string",
+      "allowed_values": ["low", "normal", "high", "reserved"]
+    },
+    "spot_type": {
+      "type": "string",
+      "allowed_values": ["standard", "compact", "oversized", "electric", "handicap", "visitor"]
+    }
+  }
+}

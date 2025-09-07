@@ -1,0 +1,359 @@
+# Temporal Entity Extraction Patterns
+# UPDATE INSTRUCTIONS: Customize these patterns for your organization's scheduling needs
+# 1. Update business hours and operating schedules to match your organization
+# 2. Modify time zone handling based on your geographic operations
+# 3. Add organization-specific time references and scheduling patterns
+# 4. Update holiday calendars and blackout periods for your business
+# 5. Include shift schedules and operational time windows specific to your fleet
+# 6. Add emergency vs regular scheduling time patterns
+
+## DATE EXTRACTION PATTERNS
+
+### Absolute Date Formats
+
+**Standard Date Formats:**
+- ISO Format: 2024-01-15, 2024/01/15
+- US Format: 01/15/2024, 1/15/24, 01-15-2024
+- European Format: 15/01/2024, 15.01.2024, 15-01-2024
+- Written Format: January 15, 2024; Jan 15, 2024; 15 Jan 2024
+
+**Date with Day of Week:**
+- "Monday, January 15, 2024"
+- "Mon Jan 15"
+- "Monday the 15th"
+- "15th of January"
+
+**Short Date References:**
+- Today: 2024-01-15 (if today is 2024-01-15)
+- Tomorrow: 2024-01-16
+- Yesterday: 2024-01-14
+- This/Next/Last + Day: "This Monday", "Next Friday", "Last Tuesday"
+
+### Relative Date Patterns
+
+**Week-based References:**
+- This week: Current Monday through Sunday
+- Next week: Following Monday through Sunday  
+- Last week: Previous Monday through Sunday
+- Week of [date]: Week containing specified date
+- In 2 weeks: Two weeks from current date
+
+**Month-based References:**
+- This month: Current calendar month
+- Next month: Following calendar month
+- Last month: Previous calendar month
+- End of month: Last day of current month
+- Beginning of month: First day of current month
+
+**Business Day References:**
+# UPDATE: Customize based on your business calendar
+- Next business day: Next Monday-Friday (excluding holidays)
+- 2 business days: Two weekdays from now
+- End of week: This Friday
+- Beginning of week: This Monday
+
+### Fuzzy Date References
+
+**Temporal Proximity:**
+- Soon: Within 3 days
+- Later this week: Thursday-Friday if today is Monday-Wednesday
+- Early next week: Monday-Tuesday of next week
+- Mid-month: Days 10-20 of current month
+- Quarter end: Last month of current quarter
+
+**Seasonal References:**
+- This quarter: Current 3-month business quarter
+- Next quarter: Following 3-month period
+- End of year: December (last month of fiscal/calendar year)
+- Beginning of year: January (first month of year)
+
+## TIME EXTRACTION PATTERNS
+
+### Standard Time Formats
+
+**12-Hour Format:**
+- 9:00 AM, 9 AM, 9:00am, 9am
+- 2:30 PM, 2:30pm, 2:30 P.M.
+- 12:00 PM (noon), 12:00 AM (midnight)
+- Half-hour increments: 9:30, 2:15, 11:45
+
+**24-Hour Format:**
+- 09:00, 14:30, 23:45
+- 0900 hours, 1430 hours (military time)
+- 9h00, 14h30 (international format)
+
+**Casual Time References:**
+- Morning: 6:00 AM - 11:59 AM
+- Afternoon: 12:00 PM - 5:59 PM  
+- Evening: 6:00 PM - 9:59 PM
+- Night: 10:00 PM - 5:59 AM
+
+### Business Time Patterns
+# UPDATE: Customize based on your organization's schedule
+
+**Standard Business Hours:**
+- Business hours: 8:00 AM - 6:00 PM (Monday-Friday)
+- Office hours: 9:00 AM - 5:00 PM
+- Extended hours: 7:00 AM - 8:00 PM
+- Weekend hours: 9:00 AM - 3:00 PM (if applicable)
+
+**Shift-based References:**
+# UPDATE: Add your specific shift patterns
+- First shift: 7:00 AM - 3:00 PM
+- Second shift: 3:00 PM - 11:00 PM
+- Third shift: 11:00 PM - 7:00 AM
+- Day shift: 6:00 AM - 6:00 PM
+- Night shift: 6:00 PM - 6:00 AM
+
+**Meeting Time Conventions:**
+- Start of day: 8:00 AM - 9:00 AM
+- Mid-morning: 9:30 AM - 11:00 AM
+- Lunch time: 12:00 PM - 1:00 PM
+- Mid-afternoon: 2:00 PM - 4:00 PM
+- End of day: 4:00 PM - 6:00 PM
+
+### Time Range Extraction
+
+**Explicit Ranges:**
+- "From 9 AM to 5 PM"
+- "Between 2:00 and 4:30"
+- "9:00 - 11:30"
+- "Starting at 10 AM until 2 PM"
+
+**Implicit Ranges:**
+- "Morning meeting" → 9:00 AM - 11:00 AM
+- "Lunch appointment" → 12:00 PM - 1:00 PM
+- "Afternoon service" → 1:00 PM - 5:00 PM
+- "All day" → Business hours (8:00 AM - 6:00 PM)
+
+**Duration-based Ranges:**
+- "For 2 hours starting at 9 AM" → 9:00 AM - 11:00 AM
+- "30-minute appointment at 2 PM" → 2:00 PM - 2:30 PM
+- "Quick 15-minute service" → Duration: 15 minutes
+
+## COMBINED DATE-TIME EXTRACTION
+
+### Complete DateTime Patterns
+
+**Formal Scheduling:**
+- "January 15, 2024 at 2:30 PM"
+- "2024-01-15 14:30"
+- "Monday, Jan 15th, 2:30pm"
+- "15/01/2024 at 14:30"
+
+**Casual Scheduling:**
+- "Tomorrow at 9"
+- "Next Monday morning"
+- "Friday afternoon around 3"
+- "End of week, say 4 PM"
+
+**Business Context:**
+- "Next Tuesday during business hours"
+- "This Wednesday after lunch"  
+- "First thing Thursday morning"
+- "End of day Friday"
+
+### Priority and Urgency Indicators
+
+**Urgency Levels:**
+- Emergency/ASAP: Within 1 hour
+- Urgent: Same day
+- High priority: Within 24 hours
+- Normal priority: Within business week
+- Low priority: When convenient
+
+**Emergency Time Patterns:**
+- "As soon as possible" → ASAP flag, earliest available slot
+- "Immediately" → Emergency flag, interrupt current schedule
+- "First available" → Next open appointment slot
+- "At your earliest convenience" → Normal priority scheduling
+
+## SEASONAL AND CALENDAR AWARENESS
+
+### Holiday Handling
+# UPDATE: Customize for your business calendar
+
+**US Federal Holidays:**
+- New Year's Day: January 1
+- Martin Luther King Jr. Day: Third Monday in January
+- Presidents Day: Third Monday in February
+- Memorial Day: Last Monday in May
+- Independence Day: July 4
+- Labor Day: First Monday in September
+- Columbus Day: Second Monday in October
+- Veterans Day: November 11
+- Thanksgiving: Fourth Thursday in November
+- Christmas Day: December 25
+
+**Business Impact:**
+- Holiday weeks: Reduced availability
+- Day before/after holidays: Limited scheduling
+- Holiday periods: Emergency-only services
+- Blackout dates: No routine maintenance
+
+### Seasonal Patterns
+# UPDATE: Add patterns relevant to your industry
+
+**Weather-Related Scheduling:**
+- Winter months: Increased maintenance frequency
+- Summer months: Peak usage periods
+- Spring: Vehicle inspection season
+- Fall: Preparation for winter operations
+
+**Business Cycle Patterns:**
+- Month-end: Increased reporting activities
+- Quarter-end: Budget and planning activities
+- Year-end: Inventory and audit activities
+- Fiscal year timing: Budget-dependent operations
+
+## TIME ZONE AND GEOGRAPHIC HANDLING
+
+### Time Zone Awareness
+# UPDATE: Customize for your operational geography
+
+**Common Time Zone References:**
+- EST/EDT: Eastern Standard/Daylight Time
+- CST/CDT: Central Standard/Daylight Time  
+- MST/MDT: Mountain Standard/Daylight Time
+- PST/PDT: Pacific Standard/Daylight Time
+- UTC: Coordinated Universal Time
+
+**Multi-Location Scheduling:**
+- Local time assumption: Default to user's location
+- Explicit zone: "3 PM Eastern", "2 PM Pacific"
+- Cross-zone coordination: Convert and confirm times
+- Travel time consideration: Account for location changes
+
+### Regional Variations
+
+**Date Format Preferences:**
+- US: MM/DD/YYYY preferred
+- European: DD/MM/YYYY preferred  
+- ISO: YYYY-MM-DD for international
+- Context clues: Determine format from other indicators
+
+**Cultural Time References:**
+- Business lunch: 12:00-1:00 PM in US, 1:00-2:00 PM in Europe
+- End of business: 5:00 PM US, 6:00 PM Europe
+- Weekend patterns: Saturday-Sunday US, varies internationally
+
+## VALIDATION AND CONFIDENCE SCORING
+
+### High Confidence Patterns (0.9-1.0)
+- Explicit date and time: "January 15, 2024 at 2:30 PM"
+- Standard formats: "2024-01-15 14:30"
+- Clear business context: "Next Tuesday at 9 AM"
+- Validated against calendar: Confirmed valid date
+
+### Medium Confidence Patterns (0.7-0.89)
+- Relative dates: "Next Monday"  
+- Casual times: "Morning", "Afternoon"
+- Implicit ranges: "Lunch meeting"
+- Ambiguous formats: "01/02/2024" (could be Jan 2 or Feb 1)
+
+### Low Confidence Patterns (0.5-0.69)
+- Very casual: "Later", "Soon"
+- Ambiguous references: "Next week sometime"
+- Missing components: Date without time or vice versa
+- Conflicting information: "Monday the 15th" when 15th isn't Monday
+
+### Validation Rules
+
+**Date Validation:**
+- Must be valid calendar date
+- Cannot be in distant past (older than 1 year typically)
+- Cannot be too far in future (beyond 2 years typically)
+- Must account for leap years
+- Verify day-of-week matches if both specified
+
+**Time Validation:**
+- Valid 24-hour range: 00:00-23:59
+- Valid 12-hour range with AM/PM
+- Business hour constraints for routine operations
+- Emergency time allowances for urgent requests
+
+**Cross-Validation:**
+- Date/time combination must be logical
+- Must not conflict with known blackout periods
+- Should align with business operational hours
+- Consider time zone consistency
+
+## CONTEXT AND BUSINESS RULES
+
+### Scheduling Context
+# UPDATE: Customize for your business processes
+
+**Operation-Specific Timing:**
+- Maintenance: Typically during off-hours or low-usage periods
+- Reservations: Any time during operational hours
+- Inspections: Usually business hours for documentation
+- Emergency services: Any time, 24/7 availability
+
+**Resource Availability:**
+- Technician schedules: Match with staff availability
+- Facility hours: Align with service location hours
+- Vehicle availability: Avoid conflicts with existing reservations
+- Equipment needs: Consider tool and bay availability
+
+### Learning and Adaptation
+
+**Pattern Recognition:**
+- User preference learning: Remember individual scheduling patterns
+- Organizational patterns: Learn company-specific timing preferences
+- Seasonal adaptation: Adjust expectations based on time of year
+- Error pattern analysis: Improve based on correction feedback
+
+**Context Integration:**
+- Previous scheduling context: Remember recent time references
+- User role context: Executive vs. technician scheduling privileges
+- Location context: Time zone and regional considerations
+- Business process context: Different timing rules by operation type
+
+## EXTRACTION EXAMPLES
+
+### Successful Extractions
+
+**Input:** "Schedule maintenance for VEH001 next Tuesday at 10:30 AM"
+**Extracted:**
+- date: 2024-01-23 (next Tuesday)
+- time: 10:30:00
+- datetime: 2024-01-23T10:30:00
+- confidence: 0.95
+
+**Input:** "Book the Honda for tomorrow morning client meeting"
+**Extracted:**
+- date: 2024-01-16 (tomorrow)
+- time_period: morning (9:00-11:00)
+- purpose: client meeting
+- confidence: 0.80
+
+**Input:** "Emergency repair needed ASAP for VEH001"
+**Extracted:**
+- urgency: emergency
+- priority: immediate
+- scheduling_preference: asap
+- confidence: 0.90
+
+### Ambiguous Cases
+
+**Input:** "Schedule it for next week"
+**Issues:** No specific day or time
+**Response:** Request clarification for specific day/time
+**Confidence:** 0.50
+
+**Input:** "Book for 01/02/2024" 
+**Issues:** Ambiguous date format (Jan 2 vs Feb 1)
+**Response:** Confirm date interpretation based on context
+**Confidence:** 0.60
+
+# CUSTOMIZATION CHECKLIST:
+# □ Update business hours and operational schedules
+# □ Modify holiday calendar for your business
+# □ Add shift patterns and time windows specific to your operations
+# □ Include emergency vs routine scheduling patterns
+# □ Customize time zone handling for your geographic scope
+# □ Add industry-specific temporal patterns
+# □ Update seasonal patterns relevant to your business
+# □ Include organization-specific time references and terminology
+# □ Test extraction with your actual scheduling data
+# □ Validate against your calendar and scheduling systems

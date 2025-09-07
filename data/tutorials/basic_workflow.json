@@ -1,0 +1,184 @@
+{
+  "id": "basic_workflow",
+  "title": "Basic ComBadge Workflow",
+  "description": "Learn the fundamental workflow of making requests in ComBadge - from input to approval to execution.",
+  "category": "getting_started",
+  "difficulty": "beginner",
+  "estimated_duration": 15,
+  "prerequisites": [],
+  "steps": [
+    {
+      "id": "welcome",
+      "title": "Welcome to ComBadge",
+      "description": "Welcome! This tutorial will guide you through your first ComBadge request. You'll learn how to make a vehicle reservation using natural language.",
+      "action_type": "info",
+      "tips": [
+        "Take your time - there's no rush",
+        "You can pause this tutorial at any time",
+        "Click 'Next' when you're ready to continue"
+      ]
+    },
+    {
+      "id": "interface_overview",
+      "title": "Interface Overview",
+      "description": "The ComBadge interface has three main areas: Input Panel (left), AI Analysis Panel (center), and Approval Panel (right). Let's start with the input area.",
+      "action_type": "info",
+      "target_element": "input_panel",
+      "tips": [
+        "The input panel is where you type your requests",
+        "The analysis panel shows how ComBadge understood your request"
+      ]
+    },
+    {
+      "id": "first_request",
+      "title": "Make Your First Request",
+      "description": "Click in the input field and type: 'Reserve vehicle F-123 for tomorrow 2pm to 4pm'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "Reserve vehicle F-123 for tomorrow 2pm to 4pm",
+      "validation_func": "check_input_text",
+      "tips": [
+        "Be specific with vehicle IDs and times",
+        "Use clear, natural language",
+        "Don't worry about perfect grammar"
+      ]
+    },
+    {
+      "id": "submit_request",
+      "title": "Submit the Request",
+      "description": "Now click the 'Analyze' button or press Enter to submit your request for analysis.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_analysis_started",
+      "tips": [
+        "The 'Analyze' button processes your natural language",
+        "You can also press Ctrl+Enter as a shortcut",
+        "Analysis usually takes 1-3 seconds"
+      ]
+    },
+    {
+      "id": "review_analysis",
+      "title": "Review AI Analysis",
+      "description": "ComBadge has analyzed your request! Look at the Analysis Panel to see how it understood your request. Check the intent, confidence score, and extracted information.",
+      "action_type": "info",
+      "target_element": "analysis_panel",
+      "tips": [
+        "Green confidence scores (90%+) are very reliable",
+        "Yellow scores (70-89%) should be reviewed carefully",
+        "Red scores (<70%) likely need clarification"
+      ]
+    },
+    {
+      "id": "check_extracted_info",
+      "title": "Verify Extracted Information",
+      "description": "In the analysis panel, verify that ComBadge correctly identified: Vehicle ID (F-123), Date (tomorrow), Time (2pm-4pm), and Intent (vehicle reservation).",
+      "action_type": "info",
+      "target_element": "extracted_entities",
+      "tips": [
+        "All extracted information should be correct",
+        "If something is wrong, you can edit it in the next step"
+      ]
+    },
+    {
+      "id": "approval_options",
+      "title": "Understanding Approval Options",
+      "description": "The Approval Panel shows four options: Approve (✓), Edit (✏️), Regenerate (🔄), and Reject (❌). These let you control what happens with your request.",
+      "action_type": "info",
+      "target_element": "approval_panel",
+      "tips": [
+        "Approve: Execute the request as analyzed",
+        "Edit: Modify any extracted information",
+        "Regenerate: Re-analyze your original request",
+        "Reject: Cancel and start over"
+      ]
+    },
+    {
+      "id": "try_edit",
+      "title": "Try the Edit Feature",
+      "description": "Click the 'Edit' button to see how you can modify the extracted information before approval.",
+      "action_type": "click",
+      "target_element": "edit_button",
+      "validation_func": "check_edit_mode_opened",
+      "tips": [
+        "Edit mode lets you correct any mistakes",
+        "You can change times, dates, vehicles, etc.",
+        "Changes are validated before you can proceed"
+      ]
+    },
+    {
+      "id": "edit_interface",
+      "title": "Using the Edit Interface",
+      "description": "The edit interface shows all extracted information in editable fields. Try changing the end time from 4pm to 5pm.",
+      "action_type": "type",
+      "target_element": "end_time_field",
+      "expected_value": "5pm",
+      "validation_func": "check_time_changed",
+      "tips": [
+        "Use the time picker or type directly",
+        "Changes are validated in real-time",
+        "Invalid values will be highlighted in red"
+      ]
+    },
+    {
+      "id": "apply_changes",
+      "title": "Apply Your Changes",
+      "description": "Click 'Apply Changes' to save your edits and return to the approval interface.",
+      "action_type": "click",
+      "target_element": "apply_changes_button",
+      "validation_func": "check_changes_applied",
+      "tips": [
+        "Applied changes update the analysis",
+        "You'll see the new information reflected",
+        "You can make further edits if needed"
+      ]
+    },
+    {
+      "id": "final_approval",
+      "title": "Final Approval",
+      "description": "Now that you've reviewed and edited the request, click 'Approve' to execute the vehicle reservation.",
+      "action_type": "click",
+      "target_element": "approve_button",
+      "validation_func": "check_request_approved",
+      "tips": [
+        "This will make the actual API call",
+        "You'll see a confirmation message",
+        "The request will be logged in your history"
+      ]
+    },
+    {
+      "id": "confirmation",
+      "title": "Request Completed",
+      "description": "Congratulations! You've successfully completed your first ComBadge request. The vehicle reservation has been processed and you should see a confirmation message.",
+      "action_type": "info",
+      "target_element": "confirmation_message",
+      "tips": [
+        "Success! Your reservation is confirmed",
+        "Check the history panel for previous requests",
+        "You can now make more complex requests"
+      ]
+    },
+    {
+      "id": "next_steps",
+      "title": "What's Next?",
+      "description": "You've mastered the basic workflow! Try these next: Practice with different request types, explore voice input, or check out the Best Practices guide.",
+      "action_type": "info",
+      "tips": [
+        "Try 'Schedule maintenance for vehicle F-456 next Friday'",
+        "Explore the Examples button for more patterns",
+        "Check out the Best Practices tutorial next"
+      ]
+    }
+  ],
+  "completion_criteria": {
+    "min_steps_completed": 12,
+    "required_actions": [
+      "submit_request",
+      "try_edit",
+      "final_approval"
+    ],
+    "validation_checks": [
+      "request_successfully_processed",
+      "user_understands_workflow"
+    ]
+  }
+}

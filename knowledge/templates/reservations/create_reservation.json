@@ -1,0 +1,91 @@
+{
+  "template_metadata": {
+    "name": "create_reservation",
+    "version": "1.0", 
+    "category": "reservations",
+    "description": "Creates a new vehicle reservation",
+    "required_entities": ["vehicle_id", "user", "start_time"],
+    "optional_entities": ["end_time", "purpose", "location", "passengers"],
+    "api_endpoint": "/api/v1/reservations",
+    "http_method": "POST"
+  },
+  "template": {
+    "vehicle_id": "{vehicle_id}",
+    "reservation_details": {
+      "start_time": "{start_time}",
+      "end_time": "{end_time|null}",
+      "duration_hours": "{duration|4}",
+      "purpose": "{purpose|Business use}",
+      "destination": "{destination|null}"
+    },
+    "user_information": {
+      "user_id": "{user}",
+      "user_name": "{user_name|null}",
+      "department": "{department|null}",
+      "contact_phone": "{phone|null}",
+      "contact_email": "{email|null}"
+    },
+    "trip_details": {
+      "estimated_mileage": "{mileage|null}",
+      "passenger_count": "{passengers|1}",
+      "special_requirements": "{requirements|null}",
+      "pickup_location": "{pickup_location|headquarters}",
+      "return_location": "{return_location|headquarters}"
+    },
+    "authorization": {
+      "approved_by": "{approver|null}",
+      "approval_required": "{requires_approval|false}",
+      "cost_center": "{cost_center|null}",
+      "project_code": "{project_code|null}"
+    },
+    "preferences": {
+      "fuel_card_required": "{fuel_card|true}",
+      "insurance_verified": "{insurance|true}",
+      "emergency_contact": "{emergency_contact|null}",
+      "additional_drivers": "{additional_drivers|[]}"
+    },
+    "metadata": {
+      "created_at": "{current_timestamp}",
+      "status": "pending",
+      "reservation_type": "standard",
+      "cancellation_policy": "24_hour_notice",
+      "confirmation_number": "{confirmation|auto_generate}"
+    }
+  },
+  "validation_rules": {
+    "vehicle_id": {
+      "required": true,
+      "type": "string",
+      "pattern": "^[A-Z0-9-]{3,15}$"
+    },
+    "user": {
+      "required": true,
+      "type": "string",
+      "min_length": 2
+    },
+    "start_time": {
+      "required": true,
+      "type": "string",
+      "format": "datetime"
+    },
+    "end_time": {
+      "type": "string", 
+      "format": "datetime"
+    },
+    "duration": {
+      "type": "number",
+      "min": 0.5,
+      "max": 168
+    },
+    "passengers": {
+      "type": "integer",
+      "min": 1,
+      "max": 20
+    },
+    "mileage": {
+      "type": "integer",
+      "min": 0,
+      "max": 10000
+    }
+  }
+}

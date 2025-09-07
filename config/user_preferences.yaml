@@ -1,0 +1,36 @@
+# User Preferences Configuration
+# This file stores user-specific customizations and preferences
+# It will be created automatically when users modify settings through the UI
+
+# UI Customizations
+ui:
+  theme: dark                        # User's preferred theme
+  font_size: 12                      # User's preferred font size
+  window_size: [1200, 800]          # User's preferred window size
+  show_reasoning_steps: true         # Whether to show AI reasoning
+
+# Workflow Preferences
+processing:
+  confidence_threshold: 0.8          # User's confidence threshold
+  
+ui:
+  auto_approve_high_confidence: false # User's auto-approval preference
+  confidence_threshold: 0.95          # User's threshold for auto-approval
+
+# Keyboard Shortcut Customizations
+keyboard_shortcuts:
+  approve: "Ctrl+A"
+  edit_approve: "Ctrl+E"
+  regenerate: "Ctrl+R"
+  reject: "Ctrl+J"
+  cancel: "Escape"
+  settings: "Ctrl+,"
+  help: "F1"
+
+# Personal Settings
+ui:
+  enable_sound_notifications: true   # Sound preferences
+
+# Note: This file is automatically managed by the application
+# You can edit it manually, but changes may be overwritten
+# Use the Settings dialog (Ctrl+,) for the best experience

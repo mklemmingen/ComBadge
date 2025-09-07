@@ -1,0 +1,249 @@
+{
+  "id": "confidence_mastery",
+  "title": "Mastering Confidence Scores",
+  "description": "Learn how to interpret confidence scores and improve your requests for better results. Understanding confidence is key to effective ComBadge usage.",
+  "category": "skills_development",
+  "difficulty": "intermediate",
+  "estimated_duration": 20,
+  "prerequisites": ["basic_workflow"],
+  "steps": [
+    {
+      "id": "intro_confidence",
+      "title": "Understanding Confidence Scores",
+      "description": "Confidence scores tell you how certain ComBadge is about understanding your request. Scores range from 0-100%, with higher scores meaning better understanding.",
+      "action_type": "info",
+      "tips": [
+        "90-100%: High confidence - safe to approve",
+        "80-89%: Medium confidence - review carefully",
+        "70-79%: Low confidence - consider editing",
+        "Below 70%: Very low - rephrase recommended"
+      ]
+    },
+    {
+      "id": "low_confidence_example",
+      "title": "Creating a Low Confidence Request",
+      "description": "Type a vague request to see low confidence in action: 'I need a car sometime'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "I need a car sometime",
+      "validation_func": "check_vague_input",
+      "tips": [
+        "This request lacks specific details",
+        "No vehicle ID, date, or time specified",
+        "ComBadge will struggle to understand this"
+      ]
+    },
+    {
+      "id": "analyze_low_confidence",
+      "title": "Analyze the Vague Request",
+      "description": "Click 'Analyze' and observe the low confidence score that results from the vague request.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_low_confidence_result",
+      "tips": [
+        "Notice the confidence score is likely below 50%",
+        "The AI reasoning shows what information is missing",
+        "Red confidence indicators warn about low reliability"
+      ]
+    },
+    {
+      "id": "identify_problems",
+      "title": "Identifying the Problems",
+      "description": "Look at the AI Analysis panel. ComBadge will highlight what makes this request unclear: missing vehicle ID, no specific time, vague purpose.",
+      "action_type": "info",
+      "target_element": "analysis_panel",
+      "tips": [
+        "Missing vehicle identifier (which car?)",
+        "No specific time ('sometime' is too vague)",
+        "No clear purpose or duration",
+        "Ambiguous intent (reservation? information?)"
+      ]
+    },
+    {
+      "id": "improve_request",
+      "title": "Improving the Request",
+      "description": "Now type an improved version: 'Reserve vehicle F-123 for client meeting tomorrow 2pm to 4pm'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "Reserve vehicle F-123 for client meeting tomorrow 2pm to 4pm",
+      "validation_func": "check_improved_input",
+      "tips": [
+        "Specific vehicle ID (F-123)",
+        "Clear action (Reserve)",
+        "Specific time (tomorrow 2pm to 4pm)",
+        "Clear purpose (client meeting)"
+      ]
+    },
+    {
+      "id": "analyze_improved",
+      "title": "Analyze the Improved Request",
+      "description": "Click 'Analyze' to see how the improved request achieves much higher confidence.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_high_confidence_result",
+      "tips": [
+        "Notice the confidence score is now likely 90%+",
+        "Green confidence indicators show high reliability",
+        "All required information is clearly extracted"
+      ]
+    },
+    {
+      "id": "confidence_factors",
+      "title": "What Affects Confidence?",
+      "description": "ComBadge confidence depends on several factors. Let's explore each one:",
+      "action_type": "info",
+      "tips": [
+        "Specificity: Exact IDs, times, dates",
+        "Clarity: Clear action words (reserve, schedule, check)",
+        "Completeness: All required information present",
+        "Context: Previous requests can provide context"
+      ]
+    },
+    {
+      "id": "test_specificity",
+      "title": "Testing Specificity",
+      "description": "Try this medium-specific request: 'Reserve a sedan for Friday afternoon meeting'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "Reserve a sedan for Friday afternoon meeting",
+      "validation_func": "check_medium_specificity",
+      "tips": [
+        "Vehicle type specified (sedan) but not ID",
+        "Time frame given (Friday afternoon) but not exact",
+        "Should result in medium confidence"
+      ]
+    },
+    {
+      "id": "analyze_medium",
+      "title": "Analyze Medium Specificity",
+      "description": "Click 'Analyze' to see how partial specificity affects confidence.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_medium_confidence_result",
+      "tips": [
+        "Confidence likely 70-85%",
+        "Some information is clear, some is ambiguous",
+        "Yellow indicators suggest careful review"
+      ]
+    },
+    {
+      "id": "using_context",
+      "title": "Building Context",
+      "description": "ComBadge remembers context within a session. First, ask: 'What vehicles are available tomorrow afternoon?'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "What vehicles are available tomorrow afternoon?",
+      "validation_func": "check_context_query",
+      "tips": [
+        "This establishes context about availability",
+        "ComBadge will remember the timeframe",
+        "Context helps with follow-up requests"
+      ]
+    },
+    {
+      "id": "analyze_context_query",
+      "title": "Analyze Context Query",
+      "description": "Click 'Analyze' to process the availability query and establish context.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_context_established",
+      "tips": [
+        "This should have high confidence (clear question)",
+        "Results will show available vehicles",
+        "Context is now established for follow-up"
+      ]
+    },
+    {
+      "id": "context_followup",
+      "title": "Context-Aware Follow-up",
+      "description": "Now make a context-aware request: 'Reserve the sedan for my meeting'",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "Reserve the sedan for my meeting",
+      "validation_func": "check_context_followup",
+      "tips": [
+        "'The sedan' refers to previous results",
+        "'My meeting' uses established timeframe",
+        "Context should boost confidence"
+      ]
+    },
+    {
+      "id": "analyze_context_followup",
+      "title": "Analyze Context Follow-up",
+      "description": "Click 'Analyze' to see how context improves understanding of the vague follow-up.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_context_confidence_boost",
+      "tips": [
+        "Context provides missing details",
+        "Confidence should be higher than without context",
+        "ComBadge fills gaps from previous interaction"
+      ]
+    },
+    {
+      "id": "confidence_strategies",
+      "title": "Confidence Improvement Strategies",
+      "description": "Here are proven strategies to consistently achieve high confidence scores:",
+      "action_type": "info",
+      "tips": [
+        "Use specific vehicle IDs (F-123, not 'the car')",
+        "Include exact times (2pm-4pm, not 'afternoon')",
+        "State clear actions (reserve, schedule, cancel)",
+        "Provide context (purpose, duration, location)"
+      ]
+    },
+    {
+      "id": "practice_improvement",
+      "title": "Practice: Improve This Request",
+      "description": "Here's a low-confidence request to improve: 'Fix the truck'. Rewrite it for high confidence using what you've learned.",
+      "action_type": "type",
+      "target_element": "input_field",
+      "expected_value": "",
+      "validation_func": "check_improvement_attempt",
+      "tips": [
+        "What specific truck? (Add vehicle ID)",
+        "What kind of fix? (Specify service type)",
+        "When should it happen? (Add timing)",
+        "Example: 'Schedule brake repair for vehicle T-456 next Tuesday'"
+      ]
+    },
+    {
+      "id": "final_practice",
+      "title": "Final Practice Analysis",
+      "description": "Click 'Analyze' to test your improved request and see if you achieved high confidence.",
+      "action_type": "click",
+      "target_element": "analyze_button",
+      "validation_func": "check_final_improvement",
+      "tips": [
+        "Did you achieve 85%+ confidence?",
+        "Are all key details specified?",
+        "Is the intent crystal clear?"
+      ]
+    },
+    {
+      "id": "confidence_mastery_complete",
+      "title": "Confidence Mastery Complete!",
+      "description": "Excellent work! You now understand how to read confidence scores and improve your requests. Use this knowledge to get better results from ComBadge.",
+      "action_type": "info",
+      "tips": [
+        "Always check confidence before approving",
+        "Low confidence = add more details",
+        "Use context to build conversational flow",
+        "Practice makes perfect!"
+      ]
+    }
+  ],
+  "completion_criteria": {
+    "min_steps_completed": 15,
+    "required_actions": [
+      "analyze_low_confidence",
+      "analyze_improved", 
+      "practice_improvement"
+    ],
+    "validation_checks": [
+      "demonstrated_confidence_understanding",
+      "successfully_improved_vague_request",
+      "achieved_high_confidence_score"
+    ]
+  }
+}

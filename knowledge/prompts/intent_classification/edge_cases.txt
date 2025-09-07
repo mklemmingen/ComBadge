@@ -1,0 +1,299 @@
+# Fleet Management Intent Classification - Edge Cases and Ambiguity Handling
+# UPDATE INSTRUCTIONS: Customize these edge cases for your specific operational challenges
+# 1. Add edge cases specific to your fleet management system and business rules
+# 2. Update ambiguous scenarios that commonly occur in your organization
+# 3. Modify context resolution patterns to match your decision-making processes
+# 4. Include challenging cases from your actual user interactions
+# 5. Update fallback strategies to align with your error handling preferences
+
+## AMBIGUOUS LANGUAGE RESOLUTION
+
+### Multiple Possible Interpretations
+
+**Case: "Service the vehicle"**
+- INTERPRETATION 1: Schedule maintenance service (SCHEDULE_MAINTENANCE)
+- INTERPRETATION 2: Customer service issue (ADMINISTRATIVE) 
+- RESOLUTION STRATEGY: In fleet management context, prioritize maintenance interpretation
+- DEFAULT: SCHEDULE_MAINTENANCE with medium confidence (0.70)
+- CLARIFICATION: Request vehicle ID and service type
+
+**Case: "Available vehicles"**
+- INTERPRETATION 1: Vehicles available for reservation (CHECK_AVAILABILITY)
+- INTERPRETATION 2: List of all non-reserved vehicles (GENERAL_INQUIRY)
+- INTERPRETATION 3: Vehicles available for purchase/assignment (VEHICLE_OPERATIONS)
+- RESOLUTION STRATEGY: Context analysis - if time mentioned → CHECK_AVAILABILITY, if listing → GENERAL_INQUIRY
+- DEFAULT: CHECK_AVAILABILITY with medium confidence (0.65)
+
+**Case: "Update the car"**
+- INTERPRETATION 1: Update vehicle record (UPDATE_VEHICLE)
+- INTERPRETATION 2: Update vehicle status (UPDATE_STATUS)
+- INTERPRETATION 3: Update maintenance record (UPDATE_MAINTENANCE)
+- RESOLUTION STRATEGY: Look for specific fields mentioned (location, status, service dates)
+- DEFAULT: UPDATE_VEHICLE with low confidence (0.55)
+- CLARIFICATION: Request specific field to update
+
+### Context-Dependent Resolutions
+
+**Case: "Schedule it for tomorrow"**
+CONTEXT ANALYSIS:
+- Previous conversation about maintenance → SCHEDULE_MAINTENANCE
+- Previous conversation about reservations → MAKE_RESERVATION  
+- Previous conversation about meetings → Context unclear, request clarification
+- No previous context → GENERAL_INQUIRY with very low confidence (0.30)
+
+**Case: "Is it ready?"**
+CONTEXT ANALYSIS:
+- Vehicle in maintenance → QUERY_MAINTENANCE (check if service complete)
+- Vehicle being prepared for reservation → CHECK_AVAILABILITY
+- New vehicle being processed → QUERY_VEHICLE (check registration status)
+- No clear context → Request clarification
+
+**Case: "Move it to Building A"**
+CONTEXT ANALYSIS:
+- Talking about vehicle → UPDATE_VEHICLE (location change)
+- Talking about parking → ASSIGN_PARKING (parking reassignment)
+- Talking about maintenance → Could be moving for service
+- RESOLUTION: Default to UPDATE_VEHICLE (0.70 confidence) as most common
+
+## INCOMPLETE INFORMATION HANDLING
+
+### Missing Critical Information
+
+**Case: "Schedule maintenance"**
+MISSING: Vehicle identification, service type, timing
+RESPONSE STRATEGY: 
+- Classify as SCHEDULE_MAINTENANCE (0.60 confidence)
+- Flag missing entities: vehicle_id, maintenance_type, date
+- Provide clarification prompts: "Which vehicle needs maintenance? What type of service? When would you like to schedule it?"
+
+**Case: "Book the car"**  
+MISSING: Which car, when, for whom
+RESPONSE STRATEGY:
+- Classify as MAKE_RESERVATION (0.65 confidence)
+- Flag missing entities: vehicle_id, date, time, user
+- Request: "Which vehicle would you like to book? For what date and time? Who will be using it?"
+
+**Case: "Check if available"**
+MISSING: What to check (vehicle, parking, maintenance slot)
+RESPONSE STRATEGY:
+- Classify as CHECK_AVAILABILITY (0.55 confidence)
+- Flag ambiguous subject
+- Request: "What would you like to check availability for? A specific vehicle, parking space, or maintenance appointment?"
+
+### Partial Entity Information
+
+**Case: "The blue Honda needs service"**
+AVAILABLE: Color (blue), make (Honda), action (service)
+MISSING: Specific vehicle ID, service type, timing
+HANDLING: 
+- Classify as SCHEDULE_MAINTENANCE (0.75 confidence)
+- Use available entities for vehicle identification
+- Request missing scheduling details
+
+**Case: "Book VEH001 for the meeting"**
+AVAILABLE: Vehicle ID (VEH001), purpose (meeting)
+MISSING: Date, time, duration, user
+HANDLING:
+- Classify as MAKE_RESERVATION (0.80 confidence)
+- Strong vehicle identification increases confidence
+- Request scheduling details
+
+## CONFLICTING INFORMATION
+
+### Contradictory Instructions
+
+**Case: "Schedule maintenance for VEH001 tomorrow but make sure it's available for the client meeting"**
+CONFLICT: Maintenance scheduling vs availability requirement
+RESOLUTION STRATEGY:
+- Primary intent: SCHEDULE_MAINTENANCE (0.70)
+- Secondary intent: CHECK_AVAILABILITY (0.65)
+- Mark as multi-intent with conflict flag
+- Suggest: "There may be a conflict between maintenance and availability. Would you like me to check if both can be accommodated?"
+
+**Case: "Assign the Honda to John but it's already reserved by Jane"**
+CONFLICT: Assignment request with existing reservation
+RESOLUTION STRATEGY:
+- Classify as ASSIGN_USER (0.60) but flag conflict
+- Note potential business rule violation
+- Suggest: "VEH001 appears to have an existing reservation. Should I check availability before reassigning?"
+
+### Temporal Conflicts
+
+**Case: "Schedule oil change for VEH001 today at 2 PM but the vehicle is currently on a trip until 5 PM"**
+TEMPORAL CONFLICT: Service timing vs vehicle availability
+RESOLUTION STRATEGY:
+- Classify as SCHEDULE_MAINTENANCE (0.75)
+- Flag scheduling conflict
+- Suggest: "The vehicle may not be available at the requested time. Would you like to schedule for after 5 PM or choose a different date?"
+
+## DOMAIN-SPECIFIC AMBIGUITIES
+
+### Fleet Management Terminology
+
+**Case: "Service level agreement"**
+AMBIGUITY: Could mean maintenance SLA or customer service SLA
+FLEET CONTEXT: Likely maintenance-related
+CLASSIFICATION: QUERY_MAINTENANCE or ADMINISTRATIVE depending on full context
+CONFIDENCE: 0.60 (requires clarification)
+
+**Case: "Driver assignment"**
+AMBIGUITY: Could mean assigning driver to vehicle or assigning vehicle to driver
+BUSINESS RULE: Both are valid USER_MANAGEMENT operations
+CLASSIFICATION: ASSIGN_USER (0.80 confidence)
+HANDLING: Request clarification on direction of assignment
+
+**Case: "Vehicle turnaround"**
+AMBIGUITY: Could mean maintenance turnaround time, reservation turnaround, or vehicle return process
+RESOLUTION: Analyze surrounding context words
+- With "time" or "schedule" → QUERY_MAINTENANCE
+- With "reservation" or "booking" → RESERVATION_BOOKING
+- With "return" or "checkout" → STATUS_UPDATE
+
+### Technical vs Business Language
+
+**Case: "VIN verification"**
+BUSINESS MEANING: Verify vehicle identification number in system
+TECHNICAL MEANING: Database validation process
+CLASSIFICATION: QUERY_VEHICLE (verification implies checking existing data)
+CONFIDENCE: 0.85
+
+**Case: "System maintenance"**
+AMBIGUITY: IT system maintenance vs vehicle maintenance
+CONTEXT CLUES: 
+- If "vehicle" mentioned → SCHEDULE_MAINTENANCE
+- If "system," "database," "server" mentioned → ADMINISTRATIVE
+- If unclear → Request clarification
+
+## MULTI-LANGUAGE AND MIXED INPUT
+
+### Multilingual Patterns (if applicable)
+**UPDATE: Add patterns for your organization's languages**
+
+**Case: "Vehículo VEH001 necesita mantenimiento"**
+TRANSLATION: "Vehicle VEH001 needs maintenance"
+CLASSIFICATION: SCHEDULE_MAINTENANCE (0.90)
+HANDLING: Process in original language if supported, otherwise request English
+
+**Case: Mixed language technical terms**
+EXAMPLE: "Schedule entretien for VEH001" (mixing English/French)
+STRATEGY: Extract recognizable terms, request clarification for unknown terms
+
+### Abbreviations and Acronyms
+
+**Case: "Sched maint for V001 ASAP"**
+INTERPRETATION: "Schedule maintenance for VEH001 as soon as possible"
+CLASSIFICATION: SCHEDULE_MAINTENANCE (0.85)
+ENTITIES: vehicle_id=VEH001, priority=urgent
+HANDLING: Expand common abbreviations, process normally
+
+**Case: "ETA for prev maint on blue Honda?"**
+INTERPRETATION: "Estimated time of arrival/completion for preventive maintenance on blue Honda"
+CLASSIFICATION: QUERY_MAINTENANCE (0.80)
+ENTITIES: maintenance_type=preventive, vehicle_color=blue, make=Honda
+
+## ERROR RECOVERY STRATEGIES
+
+### Graceful Degradation
+
+**When Confidence < 0.5:**
+1. Classify as GENERAL_INQUIRY
+2. Provide list of possible interpretations
+3. Request user to select or clarify
+4. Learn from user selection for future improvements
+
+**When Multiple High-Confidence Intents:**
+1. Present both options to user
+2. Ask for confirmation of intended action
+3. Process selected intent with high confidence
+4. Log pattern for future disambiguation
+
+### Clarification Strategies
+
+**Progressive Clarification:**
+1. Start with most critical missing information
+2. Provide example formats when possible
+3. Offer quick-select options for common values
+4. Build complete request incrementally
+
+**Context Preservation:**
+1. Remember previous clarifications in conversation
+2. Don't re-ask for information already provided
+3. Maintain conversation state across multiple exchanges
+4. Confirm complete understanding before execution
+
+## BUSINESS RULE CONFLICTS
+
+### Policy Violations
+
+**Case: "Reserve VEH001 for personal use next weekend"**
+INTENT: MAKE_RESERVATION (0.90)
+POLICY CONFLICT: Personal use may require special approval
+HANDLING: 
+- Process intent normally but flag policy requirement
+- Include business rule check in response
+- Suggest: "Personal vehicle use requires manager approval. Should I route this request for approval?"
+
+**Case: "Schedule maintenance during peak business hours"**
+INTENT: SCHEDULE_MAINTENANCE (0.85)
+BUSINESS CONFLICT: May violate availability requirements
+HANDLING:
+- Process intent but warn about potential conflicts
+- Suggest alternative timing
+- Check vehicle reservation conflicts
+
+### Approval Workflow Triggers
+
+**Case: "Assign the executive vehicle to the intern"**
+INTENT: ASSIGN_USER (0.80)
+APPROVAL REQUIRED: Executive vehicles may have restricted access
+HANDLING:
+- Process intent but flag for approval workflow
+- Include authorization check
+- Route to appropriate approval chain
+
+**Case: "Emergency maintenance override - schedule immediately"**
+INTENT: SCHEDULE_MAINTENANCE (0.95)
+SPECIAL HANDLING: Emergency procedures may bypass normal rules
+HANDLING:
+- Process with emergency priority flag
+- Skip normal availability checks
+- Notify relevant stakeholders
+
+## LEARNING AND ADAPTATION
+
+### Pattern Recognition Improvement
+
+**Track Ambiguous Cases:**
+- Log cases where confidence < 0.7
+- Monitor user corrections and clarifications
+- Identify recurring patterns that need better handling
+- Update classification rules based on feedback
+
+**Context Learning:**
+- Build understanding of user preferences
+- Learn organization-specific terminology
+- Adapt to departmental language patterns
+- Improve multi-intent detection over time
+
+**Feedback Integration:**
+- Use user corrections to improve confidence scoring
+- Adjust keyword weights based on success rates
+- Refine business rule integration
+- Update entity extraction patterns
+
+### Continuous Improvement Process
+
+1. **Daily Review:** Check low-confidence classifications
+2. **Weekly Analysis:** Identify recurring ambiguity patterns  
+3. **Monthly Updates:** Refine classification rules and prompts
+4. **Quarterly Assessment:** Evaluate overall accuracy and user satisfaction
+
+# CUSTOMIZATION CHECKLIST:
+# □ Add organization-specific ambiguous terms and phrases
+# □ Include common abbreviations and acronyms used in your fleet operations
+# □ Update business rule conflicts specific to your policies
+# □ Add multilingual patterns if applicable to your organization
+# □ Customize clarification strategies to match your user support style
+# □ Update approval workflow triggers for your authorization processes
+# □ Include edge cases from your actual system usage patterns
+# □ Modify confidence thresholds based on your accuracy requirements

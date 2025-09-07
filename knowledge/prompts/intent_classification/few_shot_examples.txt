@@ -1,0 +1,364 @@
+# Fleet Management Intent Classification Examples
+# UPDATE INSTRUCTIONS: Customize these examples with your actual fleet scenarios
+# 1. Replace vehicle IDs with your naming convention (VEH001 vs FLT-2024-001 vs license plates)
+# 2. Update location names to match your facilities (Headquarters vs Building A vs Dallas Office)
+# 3. Modify user references to match your system (email vs employee ID vs name)
+# 4. Replace make/model examples with your actual fleet composition
+# 5. Update time references and business scenarios to match your operations
+# 6. Add examples specific to your industry or organization type
+
+## VEHICLE_OPERATIONS Examples
+
+### CREATE_VEHICLE
+Input: "Add new vehicle - Honda Accord 2024, license plate ABC-123, assign to sales department"
+Intent: CREATE_VEHICLE
+Confidence: 0.95
+Entities: make=Honda, model=Accord, year=2024, license_plate=ABC-123, department=sales
+Reasoning: Clear vehicle creation request with all key details
+
+Input: "Register the new Toyota Camry that just arrived"
+Intent: CREATE_VEHICLE  
+Confidence: 0.85
+Entities: make=Toyota, model=Camry
+Reasoning: Vehicle registration implies adding to system, though missing some details
+
+Input: "Need to add VEH-2024-045 to the fleet database"
+Intent: CREATE_VEHICLE
+Confidence: 0.90
+Entities: vehicle_id=VEH-2024-045
+Reasoning: Direct instruction to add vehicle to system
+
+### UPDATE_VEHICLE
+Input: "Update vehicle VEH001 location to downtown branch office"
+Intent: UPDATE_VEHICLE
+Confidence: 0.95
+Entities: vehicle_id=VEH001, location=downtown branch office
+Reasoning: Clear update request with specific field and value
+
+Input: "Change the assigned driver for the blue Honda to John Smith"
+Intent: UPDATE_VEHICLE
+Confidence: 0.88
+Entities: vehicle_color=blue, make=Honda, assigned_driver=John Smith
+Reasoning: Update request, though vehicle identification could be more specific
+
+Input: "Vehicle ABC-123 is now in maintenance status"
+Intent: UPDATE_VEHICLE
+Confidence: 0.85
+Entities: license_plate=ABC-123, status=maintenance
+Reasoning: Status update for specific vehicle
+
+### QUERY_VEHICLE
+Input: "Show me details for vehicle VEH001"
+Intent: QUERY_VEHICLE
+Confidence: 0.95
+Entities: vehicle_id=VEH001
+Reasoning: Direct query for specific vehicle information
+
+Input: "What vehicles are assigned to the marketing department?"
+Intent: QUERY_VEHICLE
+Confidence: 0.90
+Entities: department=marketing
+Reasoning: Query filtered by department assignment
+
+Input: "Find all Honda Civics in our fleet"
+Intent: QUERY_VEHICLE
+Confidence: 0.92
+Entities: make=Honda, model=Civic
+Reasoning: Search query with specific make/model criteria
+
+## MAINTENANCE_REQUEST Examples
+
+### SCHEDULE_MAINTENANCE
+Input: "Schedule oil change for VEH001 next Tuesday at 10 AM"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.95
+Entities: vehicle_id=VEH001, maintenance_type=oil_change, date=next Tuesday, time=10 AM
+Reasoning: Complete maintenance scheduling request
+
+Input: "Vehicle ABC-123 needs brake service as soon as possible"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.90
+Entities: license_plate=ABC-123, maintenance_type=brake_service, priority=urgent
+Reasoning: Maintenance request with urgency indicator
+
+Input: "Book preventive maintenance for the Toyota Camry"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.88
+Entities: make=Toyota, model=Camry, maintenance_type=preventive
+Reasoning: Maintenance booking, though no specific time mentioned
+
+Input: "The red Honda needs its 50K mile service"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.85
+Entities: vehicle_color=red, make=Honda, maintenance_type=50K_mile_service
+Reasoning: Service request based on mileage milestone
+
+### QUERY_MAINTENANCE
+Input: "When is the next service due for VEH001?"
+Intent: QUERY_MAINTENANCE
+Confidence: 0.95
+Entities: vehicle_id=VEH001
+Reasoning: Direct query about maintenance schedule
+
+Input: "Show me all maintenance appointments for this week"
+Intent: QUERY_MAINTENANCE
+Confidence: 0.90
+Entities: time_period=this week
+Reasoning: Query for maintenance schedule within timeframe
+
+Input: "What's the maintenance history for vehicle ABC-123?"
+Intent: QUERY_MAINTENANCE
+Confidence: 0.92
+Entities: license_plate=ABC-123
+Reasoning: Request for historical maintenance data
+
+## RESERVATION_BOOKING Examples
+
+### MAKE_RESERVATION
+Input: "Reserve the Honda Civic for tomorrow 9 AM to 5 PM for client meetings"
+Intent: MAKE_RESERVATION
+Confidence: 0.95
+Entities: make=Honda, model=Civic, start_date=tomorrow, start_time=9 AM, end_time=5 PM, purpose=client meetings
+Reasoning: Complete reservation request with all details
+
+Input: "I need a car for the downtown presentation on Friday"
+Intent: MAKE_RESERVATION
+Confidence: 0.82
+Entities: date=Friday, purpose=downtown presentation
+Reasoning: Reservation request, though missing specific vehicle and times
+
+Input: "Book VEH001 for John Smith from 2 PM to 6 PM today"
+Intent: MAKE_RESERVATION
+Confidence: 0.93
+Entities: vehicle_id=VEH001, user=John Smith, start_time=2 PM, end_time=6 PM, date=today
+Reasoning: Specific reservation with vehicle, user, and time details
+
+### CHECK_AVAILABILITY
+Input: "Is the blue Toyota available tomorrow afternoon?"
+Intent: CHECK_AVAILABILITY
+Confidence: 0.90
+Entities: vehicle_color=blue, make=Toyota, date=tomorrow afternoon
+Reasoning: Direct availability inquiry
+
+Input: "What vehicles are free on Monday between 10 AM and 2 PM?"
+Intent: CHECK_AVAILABILITY
+Confidence: 0.95
+Entities: date=Monday, start_time=10 AM, end_time=2 PM
+Reasoning: Availability query with specific time range
+
+### CANCEL_RESERVATION
+Input: "Cancel my reservation for VEH001 tomorrow"
+Intent: CANCEL_RESERVATION
+Confidence: 0.95
+Entities: vehicle_id=VEH001, date=tomorrow
+Reasoning: Clear cancellation request
+
+Input: "I need to cancel the Honda booking for Friday"
+Intent: CANCEL_RESERVATION
+Confidence: 0.88
+Entities: make=Honda, date=Friday
+Reasoning: Cancellation request with partial details
+
+## PARKING_ASSIGNMENT Examples
+
+### ASSIGN_PARKING
+Input: "Assign parking space A-25 to vehicle VEH001"
+Intent: ASSIGN_PARKING
+Confidence: 0.95
+Entities: parking_spot=A-25, vehicle_id=VEH001
+Reasoning: Direct parking assignment with specific spot
+
+Input: "Park the new Honda in the executive parking area"
+Intent: ASSIGN_PARKING
+Confidence: 0.85
+Entities: make=Honda, location=executive parking area
+Reasoning: Parking assignment with area preference
+
+### QUERY_PARKING
+Input: "Where is vehicle ABC-123 parked?"
+Intent: QUERY_PARKING
+Confidence: 0.95
+Entities: license_plate=ABC-123
+Reasoning: Direct query for parking location
+
+Input: "What parking spaces are available in Building A?"
+Intent: QUERY_PARKING
+Confidence: 0.90
+Entities: location=Building A
+Reasoning: Query for available parking spaces
+
+## STATUS_UPDATE Examples
+
+### UPDATE_STATUS
+Input: "Mark vehicle VEH001 as available"
+Intent: UPDATE_STATUS
+Confidence: 0.95
+Entities: vehicle_id=VEH001, status=available
+Reasoning: Direct status update command
+
+Input: "The Honda Civic is now out of service due to accident damage"
+Intent: UPDATE_STATUS
+Confidence: 0.90
+Entities: make=Honda, model=Civic, status=out_of_service, reason=accident damage
+Reasoning: Status update with detailed reason
+
+### REPORT_ISSUE
+Input: "Report damage to the front bumper of vehicle ABC-123"
+Intent: REPORT_ISSUE
+Confidence: 0.92
+Entities: license_plate=ABC-123, issue_type=damage, location=front bumper
+Reasoning: Issue reporting with specific damage details
+
+Input: "Vehicle VEH001 has a flat tire"
+Intent: REPORT_ISSUE
+Confidence: 0.88
+Entities: vehicle_id=VEH001, issue_type=flat tire
+Reasoning: Mechanical issue reporting
+
+## INFORMATION_QUERY Examples
+
+### GENERAL_INQUIRY
+Input: "Show me all vehicles currently in use"
+Intent: GENERAL_INQUIRY
+Confidence: 0.90
+Entities: status=in_use
+Reasoning: General query with status filter
+
+Input: "List all Honda vehicles in the fleet"
+Intent: GENERAL_INQUIRY
+Confidence: 0.92
+Entities: make=Honda
+Reasoning: List query with make filter
+
+Input: "How many vehicles do we have available today?"
+Intent: GENERAL_INQUIRY
+Confidence: 0.88
+Entities: status=available, date=today
+Reasoning: Count query with availability filter
+
+### REPORT_REQUEST
+Input: "Generate maintenance report for last month"
+Intent: REPORT_REQUEST
+Confidence: 0.95
+Entities: report_type=maintenance, time_period=last month
+Reasoning: Specific report generation request
+
+Input: "Create utilization report for all vehicles"
+Intent: REPORT_REQUEST
+Confidence: 0.92
+Entities: report_type=utilization
+Reasoning: Report generation with specific type
+
+## USER_MANAGEMENT Examples
+
+### ASSIGN_USER
+Input: "Assign John Smith as driver for vehicle VEH001"
+Intent: ASSIGN_USER
+Confidence: 0.95
+Entities: user=John Smith, vehicle_id=VEH001, role=driver
+Reasoning: Clear user-vehicle assignment
+
+Input: "Make Jane the primary user of the blue Toyota"
+Intent: ASSIGN_USER
+Confidence: 0.88
+Entities: user=Jane, vehicle_color=blue, make=Toyota, role=primary_user
+Reasoning: User assignment with role specification
+
+### QUERY_USER
+Input: "Who is the current driver of VEH001?"
+Intent: QUERY_USER
+Confidence: 0.95
+Entities: vehicle_id=VEH001, role=driver
+Reasoning: User query for specific vehicle
+
+Input: "Show me all vehicles assigned to John Smith"
+Intent: QUERY_USER
+Confidence: 0.90
+Entities: user=John Smith
+Reasoning: Query for user's vehicle assignments
+
+## MULTI-INTENT Examples
+
+Input: "Schedule maintenance for VEH001 and then assign it to Marketing after service"
+Primary Intent: SCHEDULE_MAINTENANCE (0.90)
+Secondary Intent: ASSIGN_USER (0.85)
+Multi-intent: true
+Overall Confidence: 0.88
+Reasoning: Sequential operations - maintenance first, then reassignment
+
+Input: "If the Honda Civic is available tomorrow, book it for the client meeting, otherwise show me what else is free"
+Primary Intent: CHECK_AVAILABILITY (0.85)
+Secondary Intent: MAKE_RESERVATION (0.80)  
+Secondary Intent: GENERAL_INQUIRY (0.75)
+Multi-intent: true
+Overall Confidence: 0.80
+Reasoning: Conditional booking with fallback to alternatives
+
+Input: "Update vehicle ABC-123 location to downtown and schedule oil change for next week"
+Primary Intent: UPDATE_VEHICLE (0.90)
+Secondary Intent: SCHEDULE_MAINTENANCE (0.88)
+Multi-intent: true
+Overall Confidence: 0.89
+Reasoning: Two independent operations for same vehicle
+
+## EDGE CASES AND AMBIGUITIES
+
+### Low Confidence Examples
+Input: "Need help with the car situation"
+Intent: GENERAL_INQUIRY
+Confidence: 0.35
+Reasoning: Extremely vague, could be any type of fleet-related issue
+
+Input: "What about tomorrow?"
+Intent: GENERAL_INQUIRY
+Confidence: 0.25
+Reasoning: No context provided, likely needs clarification
+
+Input: "Can you check that for me?"
+Intent: GENERAL_INQUIRY
+Confidence: 0.20
+Reasoning: No specific subject or action identified
+
+### Ambiguous Intent Resolution
+Input: "Service the vehicle"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.70
+Reasoning: "Service" most likely refers to maintenance in fleet context, though could be customer service
+
+Input: "Is it available?"
+Intent: CHECK_AVAILABILITY
+Confidence: 0.60
+Reasoning: Likely availability check, though missing subject (vehicle, parking, etc.)
+
+Input: "Update the status"
+Intent: UPDATE_STATUS
+Confidence: 0.65
+Reasoning: Status update implied, though missing specific vehicle and new status
+
+### Domain-Specific Patterns
+Input: "VEH001 needs inspection before the lease expires"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.88
+Entities: vehicle_id=VEH001, maintenance_type=inspection, reason=lease_expiration
+Reasoning: Inspection is a type of maintenance service
+
+Input: "The executive sedan is due for its quarterly service"
+Intent: SCHEDULE_MAINTENANCE
+Confidence: 0.85
+Entities: vehicle_type=executive sedan, maintenance_type=quarterly service
+Reasoning: Scheduled maintenance based on time interval
+
+Input: "Transfer VEH001 from Sales to Marketing department"
+Intent: UPDATE_VEHICLE
+Confidence: 0.92
+Entities: vehicle_id=VEH001, from_department=Sales, to_department=Marketing
+Reasoning: Department transfer is a vehicle update operation
+
+# CUSTOMIZATION NOTES:
+# - Update vehicle ID formats to match your system (VEH001, FLT-2024-001, license plates)
+# - Replace location names with your actual facilities and branches
+# - Modify user reference patterns (email addresses, employee IDs, full names)
+# - Update make/model examples to reflect your fleet composition  
+# - Add industry-specific terminology and scenarios
+# - Include your organization's specific maintenance types and schedules
+# - Update business processes to match your operational workflows
