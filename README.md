@@ -89,64 +89,65 @@ ComBadge follows a modular 3-tier design:
 ```mermaid
 graph TB
     subgraph "User Input Layer"
-        A[Single Text Input Interface<br/>CustomTkinter Text Area<br/>Email Content or Natural Language Commands<br/>Placeholder: "Paste email or enter your command..."]
+        A["Single Text Input Interface<br/>CustomTkinter Text Area<br/>Email Content or Natural Language Commands<br/>Placeholder: Paste email or enter your command..."]
     end
     
     subgraph "Local LLM Management Layer"
-        B[Ollama Server Manager<br/>llm_manager.py]
-        B1[Qwen 2.5-14B Model Loading<br/>4-bit Quantization (Q4_K_M)<br/>Automatic Server Lifecycle]
-        B2[Health Monitoring<br/>/api/tags endpoint checking<br/>Model Cache Management]
+        B["Ollama Server Manager<br/>llm_manager.py"]
+        B1["Qwen 2.5-14B Model Loading<br/>4-bit Quantization Q4_K_M<br/>Automatic Server Lifecycle"]
+        B2["Health Monitoring<br/>API tags endpoint checking<br/>Model Cache Management"]
     end
     
     subgraph "Natural Language Processing Engine"
-        C[Reasoning Engine<br/>reasoning_engine.py<br/>Chain of Thought Processing]
+        C["Reasoning Engine<br/>reasoning_engine.py<br/>Chain of Thought Processing"]
         
         subgraph "Chain of Thought Streaming"
-            C1[Real-time Stream Processing<br/>50ms Update Intervals<br/>Queue-based UI Updates]
-            C2[Reasoning Visualization<br/>Semantic Highlighting<br/>Step-by-step Analysis Display]
+            C1["Real-time Stream Processing<br/>50ms Update Intervals<br/>Queue-based UI Updates"]
+            C2["Reasoning Visualization<br/>Semantic Highlighting<br/>Step-by-step Analysis Display"]
         end
         
         subgraph "Core NLP Components"
-            D[Intent Classifier<br/>intent_classifier.py<br/>VEHICLE_OPERATION, MAINTENANCE_REQUEST<br/>RESERVATION_BOOKING, PARKING_ASSIGNMENT]
-            E[Entity Extractor<br/>entity_extractor.py<br/>Vehicle IDs, VINs, Dates, Locations<br/>Confidence Scoring 0-1.0]
-            F[Input Processor<br/>email_parser.py + command_processor.py<br/>Email Header Detection + Content Cleaning]
+            D["Intent Classifier<br/>intent_classifier.py<br/>VEHICLE_OPERATION MAINTENANCE_REQUEST<br/>RESERVATION_BOOKING PARKING_ASSIGNMENT"]
+            E["Entity Extractor<br/>entity_extractor.py<br/>Vehicle IDs VINs Dates Locations<br/>Confidence Scoring 0-1.0"]
+            F["Input Processor<br/>email_parser.py + command_processor.py<br/>Email Header Detection + Content Cleaning"]
         end
     end
     
     subgraph "Fleet Management Intelligence"
-        G[Template Management System<br/>template_manager.py]
-        G1[Template Selection<br/>template_selector.py<br/>Intent-based Template Matching]
-        G2[JSON Generation<br/>json_generator.py<br/>Entity Population + Validation]
-        G3[Knowledge Base Integration<br/>knowledge/ directory<br/>API Docs, Business Rules, Prompts]
+        G["Template Management System<br/>template_manager.py"]
+        G1["Template Selection<br/>template_selector.py<br/>Intent-based Template Matching"]
+        G2["JSON Generation<br/>json_generator.py<br/>Entity Population + Validation"]
+        G3["Knowledge Base Integration<br/>knowledge directory<br/>API Docs Business Rules Prompts"]
     end
     
     subgraph "Human-in-the-Loop Approval"
-        H[Approval Workflow Interface<br/>approval_workflow.py<br/>CustomTkinter Components]
-        H1[Request Preview<br/>Human-readable Summary<br/>Technical JSON Display<br/>Confidence Indicators]
-        H2[User Actions<br/>Approve | Edit & Approve<br/>Regenerate | Reject]
-        H3[Inline Editing<br/>JSON Editor with Validation<br/>Syntax Highlighting]
+        H["Approval Workflow Interface<br/>approval_workflow.py<br/>CustomTkinter Components"]
+        H1["Request Preview<br/>Human-readable Summary<br/>Technical JSON Display<br/>Confidence Indicators"]
+        H2["User Actions<br/>Approve | Edit & Approve<br/>Regenerate | Reject"]
+        H3["Inline Editing<br/>JSON Editor with Validation<br/>Syntax Highlighting"]
     end
     
     subgraph "API Execution Layer"
-        I[HTTP Client Manager<br/>client.py + authentication.py]
-        I1[Authentication Management<br/>Cookie/Token Storage<br/>Windows Credential Manager]
-        I2[Request Execution<br/>Retry Logic + Error Handling<br/>TLS 1.3 + Certificate Validation]
-        I3[Response Processing<br/>Status Code Handling<br/>Success/Error Reporting]
+        I["HTTP Client Manager<br/>client.py + authentication.py"]
+        I1["Authentication Management<br/>Cookie Token Storage<br/>Windows Credential Manager"]
+        I2["Request Execution<br/>Retry Logic + Error Handling<br/>TLS 1.3 + Certificate Validation"]
+        I3["Response Processing<br/>Status Code Handling<br/>Success Error Reporting"]
     end
     
     subgraph "Data Persistence & Audit"
-        J[SQLite Database<br/>connection_manager.py]
-        J1[Audit Logging<br/>audit_logger.py<br/>All User Actions + API Calls<br/>Tamper-evident Storage]
-        J2[Configuration Storage<br/>config_repository.py<br/>User Preferences + Settings]
-        J3[Performance Metrics<br/>Processing Time, Success Rate<br/>Memory Usage Tracking]
+        J["SQLite Database<br/>connection_manager.py"]
+        J1["Audit Logging<br/>audit_logger.py<br/>All User Actions + API Calls<br/>Tamper-evident Storage"]
+        J2["Configuration Storage<br/>config_repository.py<br/>User Preferences + Settings"]
+        J3["Performance Metrics<br/>Processing Time Success Rate<br/>Memory Usage Tracking"]
     end
     
     subgraph "Output & Results"
-        K[API Response Display<br/>Success/Error Status<br/>Response Details]
-        L[Audit Trail Export<br/>CSV/JSON Format<br/>Compliance Reporting]
-        M[Session Management<br/>Request History<br/>User Preferences Persistence]
+        K["API Response Display<br/>Success Error Status<br/>Response Details"]
+        L["Audit Trail Export<br/>CSV JSON Format<br/>Compliance Reporting"]
+        M["Session Management<br/>Request History<br/>User Preferences Persistence"]
     end
     
+    %% Connections
     A --> B
     B --> B1
     B1 --> B2
@@ -178,16 +179,24 @@ graph TB
     J3 --> L
     J3 --> M
     
-    style A fill:#e3f2fd
-    style B fill:#f3e5f5
-    style C fill:#fff3e0
-    style G fill:#e8f5e8
-    style H fill:#ffecb3
-    style I fill:#fce4ec
-    style J fill:#f0f8ff
-    style K fill:#e8f5e8
-    style L fill:#e8f5e8
-    style M fill:#e8f5e8
+    %% Styling
+    classDef inputLayer fill:#e3f2fd
+    classDef llmLayer fill:#f3e5f5
+    classDef nlpLayer fill:#fff3e0
+    classDef fleetLayer fill:#e8f5e8
+    classDef approvalLayer fill:#ffecb3
+    classDef apiLayer fill:#fce4ec
+    classDef dataLayer fill:#f0f8ff
+    classDef outputLayer fill:#e8f5e8
+    
+    class A inputLayer
+    class B,B1,B2 llmLayer
+    class C,C1,C2,D,E,F nlpLayer
+    class G,G1,G2,G3 fleetLayer
+    class H,H1,H2,H3 approvalLayer
+    class I,I1,I2,I3 apiLayer
+    class J,J1,J2,J3 dataLayer
+    class K,L,M outputLayer
 ```
 
 ## Installation
