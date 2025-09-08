@@ -1,5 +1,7 @@
 # ComBadge - Natural Language to API Converter
 
+<img src="https://github.com/mklemmingen/ComBadge/blob/e25f0a39ae53464b13468861891140e33060cfef/NLP2API_Architecture.drawio.png?raw=true" alt="NLP2API Architecture">
+
 ComBadge transforms natural language requests into API calls. Simply type or paste your request, review the AI's 
 understanding, and approve the generated API call.
 
